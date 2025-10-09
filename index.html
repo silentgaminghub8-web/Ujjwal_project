@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silent Gamers</title>
+    <!-- Font Awesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Google Fonts for premium look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+
+    <!-- Embedded Styles -->
+    <style>
+        /* CSS Variables for Color Palette */
+        :root {
+            --color-black: #000000;
+            --color-white: #ffffff;
+            --color-gold: #ffd700;
+            --color-orange: #ffa500;
+            --header-height: 80px; /* Default header height */
+        }
+
+        /* Basic Reset and Body Styling */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--color-black);
+            color: var(--color-white);
+            line-height: 1.6;
+        }
+        
+        /* 1. Overall Page Structure & Responsiveness */
+        /* The main content area must start below the header. This is handled by JS. */
+        main {
+            padding-top: var(--header-height); /* Initial padding, will be updated by JS */
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 100px; /* Space above footer */
+        }
+
+        /* 2. Header Styling */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            height: var(--header-height);
+            /* "Black liquid glass" effect */
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); /* Safari support */
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            transition: height 0.3s ease;
+        }
+
+        /* Header Left Column (Logo) */
+        .logo-link {
+            display: inline-block;
+        }
+        .logo-img {
+            height: 60px;
+            width: 60px;
+            object-fit: cover;
+            border-radius: 50%;
+            /* "Glossy border" effect */
+            border: 3px solid var(--color-gold);
+            box-shadow: 0 0 5px var(--color-gold), 0 0 15px var(--color-orange), inset 0 0 8px rgba(255, 255, 255, 0.6);
+            transition: transform 0.3s ease;
+        }
+        .logo-img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Header Middle Column (Title) */
+        .header-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--color-white);
+            text-align: center;
+            flex-grow: 1; /* Allows title to take up space and center properly */
+            /* "Glow with luxury touch" effect */
+            text-shadow: 
+                0 0 5px rgba(255, 255, 255, 0.8),
+                0 0 10px var(--color-gold),
+                0 0 15px var(--color-orange);
+        }
+
+        /* Header Right Column (Menu Trigger) */
+        .menu-trigger {
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            padding: 5px;
+            z-index: 1002; /* Above nav but below the menu itself when open */
+        }
+        .menu-trigger .line {
+            width: 100%;
+            height: 3px;
+            background-color: var(--color-white);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 2px var(--color-gold));
+        }
+
+        /* Hamburger animation to 'X' */
+        .menu-open .line1 {
+            transform: rotate(45deg) translate(7px, 7px);
+        }
+        .menu-open .line2 {
+            opacity: 0;
+        }
+        .menu-open .line3 {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* 3. Slide-Out Navigation Menu */
+        .slide-out-nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 50%;
+            max-width: 400px;
+            height: 100vh;
+            background-color: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 1001;
+            /* Initial hidden state */
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            padding: 100px 40px 40px;
+            display: flex;
+            flex-direction: column;
+        }
+        /* Active state */
+        .slide-out-nav.open {
+            transform: translateX(0);
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-list {
+            list-style: none;
+        }
+
+        .nav-list li {
+            margin-bottom: 20px;
+        }
+
+        .nav-list a {
+            color: var(--color-white);
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: text-shadow 0.3s ease;
+        }
+
+        .nav-list a:hover,
+        .nav-list a:focus {
+            /* Minimal white glow effect */
+            text-shadow: 0 0 5px var(--color-white), 0 0 10px var(--color-white);
+        }
+        
+        .close-menu-btn {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: none;
+            border: none;
+            color: var(--color-white);
+            font-size: 2.5rem;
+            cursor: pointer;
+            line-height: 1;
+            filter: drop-shadow(0 0 3px var(--color-gold));
+        }
+
+
+        /* 4. Main Content Area */
+        .main-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .main-button {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--color-orange), var(--color-gold));
+            color: var(--color-black);
+            font-weight: bold;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            margin: 15px 5px;
+            border: 2px solid var(--color-gold);
+            box-shadow: 0 4px 15px rgba(255, 165, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+        .main-button:hover, .main-button:focus {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 165, 0, 0.6);
+        }
+        
+        .content-box {
+            display: block;
+            position: relative;
+            margin: 40px 0;
+            border: 4px solid var(--color-gold);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px var(--color-orange);
+            cursor: pointer;
+        }
+        .content-box-img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .content-box:hover .content-box-img {
+            transform: scale(1.05);
+        }
+        
+        .content-box-title {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: var(--color-white);
+            background-color: rgba(0,0,0,0.5);
+            padding: 5px 15px;
+            border-radius: 5px;
+            text-shadow: 0 0 10px var(--color-orange);
+        }
+
+        .promo-gif {
+            max-width: 300px;
+            margin: 20px auto;
+            border-radius: 10px;
+            border: 2px solid var(--color-gold);
+        }
+
+        .placeholder-text {
+            text-align: left;
+            margin-top: 50px;
+        }
+        .placeholder-text h2 { color: var(--color-orange); margin-bottom: 10px; }
+
+
+        /* 5. Footer */
+        .site-footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            margin-top: 50px;
+        }
+        .social-links a {
+            color: var(--color-white);
+            font-size: 2.5rem;
+            margin: 0 15px;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        .social-links a .fab {
+            /* White icon with gold glow */
+            filter: drop-shadow(0 0 5px var(--color-gold));
+        }
+        .social-links a:hover {
+            transform: scale(1.2);
+        }
+        
+        /* 6. Floating Support Widget */
+        .support-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1010;
+        }
+
+        .support-options {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            margin-bottom: 15px;
+        }
+
+        .support-option {
+            display: flex;
+            align-items: center;
+            background-color: var(--color-gold);
+            color: var(--color-black);
+            padding: 8px 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+            white-space: nowrap;
+            /* Initial hidden state for options */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+        }
+
+        .support-option i {
+            margin-right: 8px;
+        }
+        
+        /* Active state for widget */
+        .support-widget.active .support-option {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        /* Staggered animation */
+        .support-widget.active .support-option:nth-child(1) { transition-delay: 0.1s; }
+        .support-widget.active .support-option:nth-child(2) { transition-delay: 0s; }
+
+
+        .fab-main {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--color-orange), var(--color-gold));
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            border: none;
+            transition: transform 0.3s ease;
+        }
+        
+        .fab-main:hover {
+            transform: scale(1.1);
+        }
+
+        .fab-main i {
+            font-size: 1.8rem;
+            color: var(--color-black);
+        }
+        
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            :root {
+                --header-height: 70px;
+            }
+            .header-title {
+                font-size: 1.5rem;
+            }
+            .logo-img {
+                height: 50px;
+                width: 50px;
+            }
+            .slide-out-nav {
+                width: 80%; /* Wider menu on smaller screens */
+            }
+            .content-box-title {
+                font-size: 1.8rem;
+                top: 10px;
+                left: 10px;
+            }
+        }
+        @media (max-width: 480px) {
+            :root {
+                --header-height: 60px;
+            }
+            .header-title {
+                font-size: 1.2rem;
+            }
+            .logo-img {
+                height: 40px;
+                width: 40px;
+            }
+            .main-button {
+                padding: 12px 25px;
+                font-size: 0.9rem;
+                display: block;
+                margin: 15px auto;
+            }
+            .content-box-title {
+                font-size: 1.5rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- 2. Header -->
+    <header class="site-header" id="site-header">
+        <!-- Left Column (Logo) -->
+        <a href="index.html" class="logo-link">
+            <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-19_15-42-42-048.png?updatedAt=1758287984590&ik-s=818768f764ed7e928bf055f4f632c881cb77ec24" alt="Silent Gamers Logo" class="logo-img">
+        </a>
+        <!-- Middle Column (Title) -->
+        <h1 class="header-title">SILENT GAMERS</h1>
+        <!-- Right Column (Menu Trigger) -->
+        <button class="menu-trigger" id="menu-trigger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="slide-out-nav">
+            <span class="line line1"></span>
+            <span class="line line2"></span>
+            <span class="line line3"></span>
+        </button>
+    </header>
+
+    <!-- 3. Slide-Out Navigation Menu -->
+    <nav class="slide-out-nav" id="slide-out-nav" aria-hidden="true">
+        <button class="close-menu-btn" id="close-menu-btn" aria-label="Close navigation menu">&times;</button>
+        <ul class="nav-list">
+            <li><a href="home.html">home</a></li>
+            <li><a href="profile.html">profile</a></li>
+            <li><a href="shop.html">shop</a></li>
+            <li><a href="signup.html">create new account</a></li>
+            <li><a href="ceo.html">ceo</a></li>
+            <li><a href="coo.html">coo</a></li>
+            <li><a href="boo.html">anti-hacker</a></li>
+            <li><a href="roshi.html">management</a></li>
+            <li><a href="esport.html">e-sport</a></li>
+            <li><a href="tutorial.html">Tutorial ?</a></li>
+        </ul>
+    </nav>
+
+    <!-- 4. Main Content Area -->
+    <main class="site-main" id="site-main">
+        <div class="main-content">
+            <a href="signup.html" class="main-button">Create new account</a>
+            <a href="tournament.html" class="main-button">Start Tournament</a>
+            <a href="shop.html" class="main-button">Shop</a>
+
+            <a href="home.html" class="content-box">
+                <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-18_02-49-16-996.jpg?updatedAt=1758210646096&ik-s=27b563dd19b086b5a19cb5c89f8b3c2253c469e6" alt="Gaming montage" class="content-box-img">
+                <h2 class="content-box-title">home</h2>
+            </a>
+
+            <a href="home.html" class="main-button">Home</a>
+
+            <img src="https://ik.imagekit.io/silentgamers/logo?updatedAt=1759325329840&ik-s=187e5d55268ffe33c83cef44eb12c5f9dc086cff" alt="Silent Gamers Promo GIF" class="promo-gif">
+            
+        </div>
+    </main>
+
+    <!-- 5. Footer -->
+    <footer class="site-footer">
+        <div class="social-links">
+            <a href="https://www.instagram.com/silent.gamers?igsh=MWN6bGdsdzhyb3Nicw==" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.youtube.com/@SilentGaminghub1" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                <i class="fab fa-youtube"></i>
+            </a>
+        </div>
+    </footer>
+
+    <!-- 6. Floating Support Widget -->
+    <div class="support-widget" id="support-widget">
+        <div class="support-options">
+             <a href="https://wa.me/7037843807?text=hello%20sir%20i%20want%20a%20help%20about%20silentgamers" class="support-option" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-whatsapp"></i> Chat Support
+            </a>
+            <a href="tel:7078343501" class="support-option">
+                <i class="fas fa-phone"></i> Call Support
+            </a>
+        </div>
+        <button class="fab-main" id="fab-main" aria-label="Open support options">
+            <i class="fas fa-headset"></i>
+        </button>
+    </div>
+
+    <!-- Embedded JavaScript -->
+    <script>
+        // Encapsulate all JS to run after the DOM is fully loaded.
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            /**
+             * Function to dynamically set main content padding-top based on header height.
+             * This prevents the fixed header from obscuring the main content.
+             */
+            function adjustMainContentPadding() {
+                const header = document.getElementById('site-header');
+                const main = document.getElementById('site-main');
+                if (header && main) {
+                    const headerHeight = header.offsetHeight;
+                    main.style.paddingTop = `${headerHeight}px`;
+                    // Also update CSS variable for other potential uses
+                    document.documentElement.style.setProperty('--header-height', `${headerHeight}px`);
+                }
+            }
+            
+            // Adjust padding on initial load and on window resize.
+            adjustMainContentPadding();
+            window.addEventListener('resize', adjustMainContentPadding);
+
+
+            /**
+             * Menu Toggle Logic: Handles opening and closing the slide-out navigation.
+             * It uses a class 'open' on the nav element and 'menu-open' on the trigger button.
+             */
+            const menuTrigger = document.getElementById('menu-trigger');
+            const closeMenuBtn = document.getElementById('close-menu-btn');
+            const navMenu = document.getElementById('slide-out-nav');
+
+            if (menuTrigger && navMenu && closeMenuBtn) {
+                const toggleMenu = () => {
+                    const isExpanded = menuTrigger.getAttribute('aria-expanded') === 'true';
+                    navMenu.classList.toggle('open');
+                    menuTrigger.classList.toggle('menu-open');
+                    menuTrigger.setAttribute('aria-expanded', !isExpanded);
+                    navMenu.setAttribute('aria-hidden', isExpanded);
+                };
+                
+                menuTrigger.addEventListener('click', toggleMenu);
+                closeMenuBtn.addEventListener('click', toggleMenu);
+            }
+
+
+            /**
+             * Support Widget Logic: Toggles the visibility of the support option buttons.
+             * It adds an 'active' class to the main widget container on click.
+             */
+            const supportWidget = document.getElementById('support-widget');
+            const fabMain = document.getElementById('fab-main');
+
+            if (supportWidget && fabMain) {
+                fabMain.addEventListener('click', function() {
+                    supportWidget.classList.toggle('active');
+                });
+
+                // Optional: Close widget if user clicks outside of it
+                document.addEventListener('click', function(event) {
+                    if (!supportWidget.contains(event.target)) {
+                        supportWidget.classList.remove('active');
+                    }
+                });
+            }
+
+        });
+    </script>
+
+</body>
+</html>
