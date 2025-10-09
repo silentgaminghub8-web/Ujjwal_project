@@ -220,6 +220,14 @@
             box-shadow: 0 8px 25px rgba(255, 165, 0, 0.6);
         }
         
+        /* Positioning fix for the standalone home button on desktop */
+        .home-button-standalone {
+            display: block;
+            margin: 15px auto 20px auto; /* top, horizontal, bottom */
+            width: -moz-fit-content;
+            width: fit-content;
+        }
+
         .content-box {
             display: block;
             position: relative;
@@ -258,12 +266,6 @@
             border-radius: 10px;
             border: 2px solid var(--color-gold);
         }
-
-        .placeholder-text {
-            text-align: left;
-            margin-top: 50px;
-        }
-        .placeholder-text h2 { color: var(--color-orange); margin-bottom: 10px; }
 
 
         /* 5. Footer */
@@ -401,6 +403,10 @@
             .content-box-title {
                 font-size: 1.5rem;
             }
+            /* On mobile, the standalone class isn't strictly needed, but we reset width */
+            .home-button-standalone {
+                width: auto;
+            }
         }
 
     </style>
@@ -452,7 +458,7 @@
                 <h2 class="content-box-title">home</h2>
             </a>
 
-            <a href="home.html" class="main-button">Home</a>
+            <a href="home.html" class="main-button home-button-standalone">Home</a>
 
             <img src="https://ik.imagekit.io/silentgamers/logo?updatedAt=1759325329840&ik-s=187e5d55268ffe33c83cef44eb12c5f9dc086cff" alt="Silent Gamers Promo GIF" class="promo-gif">
             
