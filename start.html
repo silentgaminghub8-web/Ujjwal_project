@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silent Gamers - Tournament</title>
+    
+    <!-- Google Fonts: Cinzel for title, Poppins for body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* --- 1. Global Styles & Variables --- */
+        :root {
+            --color-black: #000000;
+            --color-white: #FFFFFF;
+            --color-gold: #FFD700;
+            --color-orange: #FFA500;
+            --font-title: 'Cinzel', serif;
+            --font-body: 'Poppins', sans-serif;
+            --header-height: 70px; /* Default height, will be updated by JS */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-black);
+            color: var(--color-white);
+            line-height: 1.6;
+            padding-top: var(--header-height); /* Placeholder for fixed header */
+        }
+
+        /* --- 2. Header --- */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--header-height);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            
+            /* Black Liquid Glass Effect */
+            background-color: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); /* For Safari */
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        /* Header Left: Logo */
+        .header-logo a {
+            display: block;
+        }
+
+        .header-logo img {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            
+            /* Glossy Border Effect */
+            border: 2px solid var(--color-gold);
+            box-shadow: 0 0 5px var(--color-gold), 
+                        0 0 15px var(--color-orange), 
+                        inset 0 0 5px rgba(255, 255, 255, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .header-logo img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 8px var(--color-gold), 
+                        0 0 25px var(--color-orange), 
+                        inset 0 0 8px rgba(255, 255, 255, 0.7);
+        }
+
+        /* Header Middle: Title */
+        .header-title h1 {
+            font-family: var(--font-title);
+            font-size: 2rem;
+            color: var(--color-white);
+            
+            /* Glow with Luxury Touch Effect */
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8),
+                         0 0 10px var(--color-gold),
+                         0 0 15px var(--color-gold),
+                         0 0 20px var(--color-orange);
+        }
+        
+        /* Header Right: Menu Trigger */
+        .menu-trigger {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.8rem;
+            color: var(--color-white);
+            
+            /* Gold Glow Effect on Icon */
+            filter: drop-shadow(0 0 3px var(--color-gold));
+            transition: filter 0.3s ease, transform 0.3s ease;
+        }
+        
+        .menu-trigger:hover {
+            filter: drop-shadow(0 0 6px var(--color-gold));
+            transform: scale(1.1);
+        }
+
+        /* --- 3. Slide-Out Navigation Menu --- */
+        .slide-out-nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 50%;
+            max-width: 400px;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 1100;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            display: flex;
+            flex-direction: column;
+            padding: 80px 40px 40px;
+            border-left: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .slide-out-nav.menu-open {
+            transform: translateX(0);
+        }
+
+        .slide-out-nav .close-menu-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: var(--color-white);
+            background: none;
+            border: none;
+            cursor: pointer;
+            filter: drop-shadow(0 0 3px var(--color-gold));
+        }
+
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-bottom: 20px;
+        }
+
+        .nav-links a {
+            color: var(--color-white);
+            text-decoration: none;
+            font-size: 1.2rem;
+            text-transform: capitalize;
+            transition: text-shadow 0.3s ease, color 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a:focus {
+            color: var(--color-gold);
+            /* Minimal white glow effect */
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Overlay for when menu is open */
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1050;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        
+        .nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* --- 4. Main Content --- */
+        .main-content {
+            padding: 40px 5%;
+            min-height: calc(100vh - var(--header-height) - 70px); /* 70px for footer */
+            text-align: center; /* Center align content */
+        }
+        
+        .main-content h2 {
+            font-family: var(--font-title);
+            color: var(--color-orange);
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 5px var(--color-orange);
+        }
+
+        .tournament-banner-img {
+            max-width: 100%;
+            height: auto;
+            width: 100%;
+            max-width: 700px;
+            border-radius: 15px;
+            border: 2px solid var(--color-gold);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+            margin-bottom: 40px;
+        }
+
+        .start-button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, var(--color-orange), var(--color-gold));
+            color: var(--color-black);
+            font-weight: bold;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(255, 165, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 165, 0, 0.6);
+        }
+        
+        /* --- 4.1. Tournament Start Modal --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1200;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: #111;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid var(--color-gold);
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            text-align: left; /* Reset text align for form */
+        }
+        
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--color-white);
+            cursor: pointer;
+        }
+        
+        .modal-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        .modal-header h3 {
+            font-family: var(--font-title);
+            color: var(--color-gold);
+            font-size: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--color-orange);
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--color-gold);
+            border-radius: 5px;
+            color: var(--color-white);
+            font-size: 1rem;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            box-shadow: 0 0 8px var(--color-gold);
+        }
+
+        #tournamentTime {
+            background-color: rgba(255, 255, 255, 0.1);
+            cursor: not-allowed;
+        }
+
+        #startNote {
+            font-size: 0.8rem;
+            color: #ccc;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        #modalStartBtn.loading {
+            cursor: wait;
+            opacity: 0.7;
+        }
+
+        /* --- 5. Footer --- */
+        .site-footer {
+            background-color: #0a0a0a;
+            padding: 20px 5%;
+            text-align: center;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .social-links a {
+            color: var(--color-white);
+            font-size: 2rem;
+            margin: 0 15px;
+            display: inline-block;
+            transition: transform 0.3s ease, filter 0.3s ease;
+            filter: drop-shadow(0 0 3px var(--color-gold));
+        }
+
+        .social-links a:hover {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 8px var(--color-orange));
+        }
+
+        /* --- 6. Floating Support Widget --- */
+        .fab-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+        }
+
+        .fab-options {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(10px);
+            visibility: hidden;
+        }
+
+        .fab-container.active .fab-options {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+        
+        .fab-option {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            color: var(--color-white);
+            text-decoration: none;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid var(--color-gold);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        
+        .fab-container.active .fab-option {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Staggered animation for options */
+        .fab-container.active .fab-option:nth-child(1) { transition-delay: 0.1s; }
+        .fab-container.active .fab-option:nth-child(2) { transition-delay: 0.2s; }
+        
+        .fab-option .fab-icon {
+            font-size: 1.2rem;
+            margin-right: 10px;
+            filter: drop-shadow(0 0 2px var(--color-gold));
+        }
+        
+        .fab-main {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--color-orange), var(--color-gold));
+            border: none;
+            box-shadow: 0 4px 15px rgba(255, 165, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .fab-main:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 165, 0, 0.7);
+        }
+
+        .fab-main .fab-icon {
+            font-size: 1.8rem;
+            color: var(--color-black);
+        }
+        
+        .fab-main .fa-times { display: none; }
+        .fab-main .fa-headset { display: block; }
+        
+        .fab-container.active .fab-main .fa-times { display: block; }
+        .fab-container.active .fab-main .fa-headset { display: none; }
+
+
+        /* --- 7. Responsiveness --- */
+        @media (max-width: 768px) {
+            :root {
+                --header-height: 60px;
+            }
+            .header-title h1 {
+                font-size: 1.5rem;
+            }
+            .header-logo img {
+                height: 40px;
+                width: 40px;
+            }
+            .slide-out-nav {
+                width: 80%;
+                max-width: 300px;
+            }
+            .main-content h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. HEADER -->
+    <header class="site-header" id="siteHeader">
+        <div class="header-logo">
+            <a href="/">
+                <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-19_15-42-42-048.png?updatedAt=1758287984590&ik-s=818768f764ed7e928bf055f4f632c881cb77ec24" alt="Silent Gamers Logo">
+            </a>
+        </div>
+        <div class="header-title">
+            <h1>SILENT GAMERS</h1>
+        </div>
+        <button class="menu-trigger" id="menuTrigger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="slideOutNav">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+
+    <!-- 2. SLIDE-OUT NAVIGATION -->
+    <div class="nav-overlay" id="navOverlay"></div>
+    <nav class="slide-out-nav" id="slideOutNav">
+        <button class="close-menu-btn" id="closeMenuBtn" aria-label="Close navigation menu">&times;</button>
+        <ul class="nav-links">
+            <li><a href="home.html">home</a></li>
+            <li><a href="profile.html">profile</a></li>
+            <li><a href="shop.html">shop</a></li>
+            <li><a href="signup.html">create new account</a></li>
+            <li><a href="ceo.html">ceo</a></li>
+            <li><a href="coo.html">coo</a></li>
+            <li><a href="boo.html">anti-hacker</a></li>
+            <li><a href="roshi.html">management</a></li>
+            <li><a href="esport.html">e-sport</a></li>
+            <li><a href="tutorial.html">Tutorial ?</a></li>
+        </ul>
+    </nav>
+
+    <!-- 3. MAIN CONTENT -->
+    <main class="main-content" id="mainContent">
+        <h2>start your booked tournament</h2>
+
+        <img src="https://ik.imagekit.io/silentgamers/SILENT_20251003_221351_0000.png?updatedAt=1759509913373&ik-s=cb4c5eae95a6875aebd044eb130081992ac1feb3" alt="Start Your Tournament Banner" class="tournament-banner-img">
+
+        <div class="start-button-container">
+            <button class="cta-button" id="openModalBtn">Start Tournament</button>
+        </div>
+    </main>
+    
+    <!-- 3.1. MODAL FOR TOURNAMENT START -->
+    <div class="modal-overlay" id="tournamentModal">
+        <div class="modal-content">
+            <button class="modal-close-btn" id="closeModalBtn">&times;</button>
+            <div class="modal-header">
+                <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-22_00-09-34-964.png?updatedAt=1758480146212&ik-s=4f744f417100daea8710c3389638e583c2987985" alt="Tournament Logo">
+                <h3>Select Your Booked Tournament</h3>
+            </div>
+            <form id="tournamentForm">
+                <div class="form-group">
+                    <label for="tournamentType">Tournament Number</label>
+                    <select id="tournamentType" name="tournamentType" required>
+                        <option value="" disabled selected>Select a tournament...</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tournamentTime">Tournament Time</label>
+                    <input type="text" id="tournamentTime" name="tournamentTime" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="mobileNumber">Mobile Number</label>
+                    <input type="tel" id="mobileNumber" name="mobileNumber" placeholder="Enter your mobile number" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                <div class="start-button-container">
+                    <button type="submit" class="cta-button" id="modalStartBtn">Start</button>
+                    <p id="startNote">Select a tournament to see start time details.</p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- 4. FOOTER -->
+    <footer class="site-footer">
+        <div class="social-links">
+            <a href="https://www.instagram.com/silent.gamers?igsh=MWN6bGdsdzhyb3Nicw==" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.youtube.com/@SilentGaminghub1" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                <i class="fab fa-youtube"></i>
+            </a>
+        </div>
+    </footer>
+
+    <!-- 5. FLOATING SUPPORT WIDGET -->
+    <div class="fab-container" id="fabContainer">
+        <div class="fab-options">
+            <a href="tel:7078343501" class="fab-option">
+                <i class="fas fa-phone fab-icon"></i>
+                <span>Call Support</span>
+            </a>
+            <a href="https://wa.me/7037843807?text=hello%20sir%20i%20want%20a%20help%20about%20silentgamers" target="_blank" rel="noopener noreferrer" class="fab-option">
+                <i class="fab fa-whatsapp fab-icon"></i>
+                <span>Chat Support</span>
+            </a>
+        </div>
+        <button class="fab-main" id="fabMainBtn" aria-label="Toggle support options">
+            <i class="fas fa-headset fab-icon"></i>
+            <i class="fas fa-times fab-icon"></i>
+        </button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Configuration ---
+            // THIS IS YOUR LIVE BACKEND URL. DO NOT CHANGE.
+            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwWNatLJnhTPi4Vg3LlSi9K7DK24YH3o4wx8XzA9Puh65ZalpNPIO86Cu4dJlgevY1EFw/exec';
+
+            // --- Element Selectors ---
+            const header = document.getElementById('siteHeader');
+            const mainContent = document.getElementById('mainContent');
+            
+            // Menu elements
+            const menuTrigger = document.getElementById('menuTrigger');
+            const navMenu = document.getElementById('slideOutNav');
+            const closeMenuBtn = document.getElementById('closeMenuBtn');
+            const navOverlay = document.getElementById('navOverlay');
+
+            // FAB elements
+            const fabContainer = document.getElementById('fabContainer');
+            const fabMainBtn = document.getElementById('fabMainBtn');
+            
+            // Modal elements
+            const openModalBtn = document.getElementById('openModalBtn');
+            const tournamentModal = document.getElementById('tournamentModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const tournamentForm = document.getElementById('tournamentForm');
+            const tournamentTypeSelect = document.getElementById('tournamentType');
+            const tournamentTimeInput = document.getElementById('tournamentTime');
+            const startNote = document.getElementById('startNote');
+            const modalStartBtn = document.getElementById('modalStartBtn');
+
+            // --- Core Functions ---
+
+            /**
+             * Dynamically sets the top padding of the main content to prevent
+             * it from being obscured by the fixed header.
+             * Runs on load and on window resize.
+             */
+            function adjustMainContentPadding() {
+                const headerHeight = header.offsetHeight;
+                document.documentElement.style.setProperty('--header-height', `${headerHeight}px`);
+                mainContent.style.paddingTop = `${headerHeight + 40}px`; // 40px is original padding
+            }
+
+            /**
+             * Toggles the visibility of the slide-out navigation menu.
+             * @param {boolean} forceClose - If true, forces the menu to close.
+             */
+            function toggleMenu(forceClose = false) {
+                const isMenuOpen = navMenu.classList.contains('menu-open');
+                if (forceClose || isMenuOpen) {
+                    navMenu.classList.remove('menu-open');
+                    navOverlay.classList.remove('active');
+                    menuTrigger.setAttribute('aria-expanded', 'false');
+                } else {
+                    navMenu.classList.add('menu-open');
+                    navOverlay.classList.add('active');
+                    menuTrigger.setAttribute('aria-expanded', 'true');
+                }
+            }
+
+            /**
+             * Toggles the visibility of the Floating Action Button options.
+             */
+            function toggleFab() {
+                fabContainer.classList.toggle('active');
+            }
+            
+            /**
+             * Toggles the visibility of the tournament start modal.
+             * @param {boolean} show - If true, shows the modal; otherwise, hides it.
+             */
+            function toggleModal(show) {
+                if (show) {
+                    tournamentModal.classList.add('active');
+                } else {
+                    tournamentModal.classList.remove('active');
+                }
+            }
+
+            /**
+             * Updates the tournament time and start button note based on the
+             * selected tournament number from the dropdown.
+             */
+            function updateTournamentDetails() {
+                const selectedValue = tournamentTypeSelect.value;
+                const tournamentData = {
+                    '1': { time: '12:00 PM', note: 'Link active from 11:50 AM - 12:00 PM' },
+                    '2': { time: '01:00 PM', note: 'Link active from 12:50 PM - 01:00 PM' },
+                    '3': { time: '02:00 PM', note: 'Link active from 01:50 PM - 02:00 PM' },
+                    '4': { time: '03:00 PM', note: 'Link active from 02:50 PM - 03:00 PM' }
+                };
+                
+                if (tournamentData[selectedValue]) {
+                    tournamentTimeInput.value = tournamentData[selectedValue].time;
+                    startNote.textContent = tournamentData[selectedValue].note;
+                } else {
+                    tournamentTimeInput.value = '';
+                    startNote.textContent = 'Select a tournament to see start time details.';
+                }
+            }
+
+            /**
+             * Handles the form submission to the Google Apps Script backend.
+             * @param {Event} event - The form submission event.
+             */
+            async function handleTournamentStart(event) {
+                event.preventDefault();
+
+                if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL') {
+                    alert('Backend URL not configured. Please contact the administrator.');
+                    return;
+                }
+
+                modalStartBtn.disabled = true;
+                modalStartBtn.textContent = 'Verifying...';
+                modalStartBtn.classList.add('loading');
+                
+                const formData = new FormData(tournamentForm);
+                const payload = {
+                    tournamentType: formData.get('tournamentType'),
+                    mobileNumber: formData.get('mobileNumber'),
+                    password: formData.get('password')
+                };
+
+                try {
+                    const response = await fetch(GOOGLE_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'cors',
+                        cache: 'no-cache',
+                        headers: {
+                            'Content-Type': 'text/plain;charset=utf-g', // Required for Apps Script
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const result = await response.json();
+
+                    if (result.status === 'success') {
+                        alert('Verification successful! Redirecting to tournament...');
+                        window.location.href = result.url;
+                    } else {
+                        throw new Error(result.message || 'An unknown error occurred.');
+                    }
+
+                } catch (error) {
+                    alert(`Error: ${error.message}`);
+                } finally {
+                    modalStartBtn.disabled = false;
+                    modalStartBtn.textContent = 'Start';
+                    modalStartBtn.classList.remove('loading');
+                }
+            }
+
+            // --- Event Listeners ---
+            
+            // Initial setup
+            window.addEventListener('load', adjustMainContentPadding);
+            window.addEventListener('resize', adjustMainContentPadding);
+
+            // Menu functionality
+            menuTrigger.addEventListener('click', () => toggleMenu());
+            closeMenuBtn.addEventListener('click', () => toggleMenu(true));
+            navOverlay.addEventListener('click', () => toggleMenu(true));
+            
+            // FAB functionality
+            fabMainBtn.addEventListener('click', toggleFab);
+
+            // Modal functionality
+            openModalBtn.addEventListener('click', () => toggleModal(true));
+            closeModalBtn.addEventListener('click', () => toggleModal(false));
+            tournamentModal.addEventListener('click', (e) => {
+                if (e.target === tournamentModal) { // Close if clicking on the overlay
+                    toggleModal(false);
+                }
+            });
+            tournamentTypeSelect.addEventListener('change', updateTournamentDetails);
+            tournamentForm.addEventListener('submit', handleTournamentStart);
+        });
+    </script>
+</body>
+</html>
