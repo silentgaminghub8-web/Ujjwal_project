@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - Silent Gamers</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@400;500&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Reset and Global Styles */
+        :root {
+            --color-black: #0a0a0a;
+            --color-white: #ffffff;
+            --color-gold: #ffd700;
+            --color-orange: #ff8c00;
+            --color-dark-grey: #1a1a1a;
+            --color-red: #ff4757;
+            --color-blue: #3742fa;
+            --color-green: #2ed573;
+            --header-height: 70px; /* Default header height */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--color-black);
+            color: var(--color-white);
+            padding-top: var(--header-height); /* Space for fixed header */
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        @keyframes text-glow {
+            from { text-shadow: 0 0 5px var(--color-white), 0 0 10px var(--color-gold), 0 0 15px var(--color-orange); }
+            to { text-shadow: 0 0 10px var(--color-white), 0 0 20px var(--color-gold), 0 0 30px var(--color-orange); }
+        }
+
+        /* 1. Header Styling */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--header-height);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 1000;
+            /* "Black liquid glass" effect */
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .header-logo a { display: block; }
+        .header-logo img {
+            height: 50px;
+            width: auto;
+            /* "Glossy border" effect */
+            border: 2px solid var(--color-gold);
+            border-radius: 50%;
+            box-shadow: 0 0 5px var(--color-gold), 0 0 10px var(--color-gold), 0 0 15px var(--color-orange), inset 0 0 5px rgba(255, 255, 255, 0.5);
+            transition: transform 0.3s ease;
+        }
+        .header-logo img:hover { transform: scale(1.1); }
+
+        .header-title { flex-grow: 1; text-align: center; }
+        .header-title h1 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            color: var(--color-white);
+            /* "Glow with luxury touch" effect */
+            animation: text-glow 2s ease-in-out infinite alternate;
+        }
+
+        .menu-trigger {
+            cursor: pointer;
+            width: 30px;
+            height: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: none;
+            border: none;
+        }
+        .menu-trigger span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: var(--color-white);
+            border-radius: 3px;
+            filter: drop-shadow(0 0 2px var(--color-gold)); /* Gold glow on icons */
+        }
+        
+        /* 2. Slide-Out Navigation Menu */
+        nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 50%;
+            max-width: 400px;
+            height: 100vh;
+            background-color: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 999;
+            transform: translateX(100%); /* Initially hidden off-screen */
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        nav.menu-open { transform: translateX(0); }
+        nav ul { list-style: none; width: 100%; text-align: center; }
+        nav ul li a {
+            display: block; padding: 15px 20px; color: var(--color-white);
+            text-decoration: none; font-size: 1.2rem; text-transform: uppercase;
+            transition: text-shadow 0.3s ease, color 0.3s ease;
+        }
+        nav ul li a:hover, nav ul li a:focus {
+            color: var(--color-gold);
+            /* Minimal white glow on hover */
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.7), 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        /* 3. Main Content Area */
+        main {
+            padding: 40px 20px;
+            min-height: calc(100vh - var(--header-height) - 100px); /* Adjust for header and footer */
+        }
+        .main-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            display: none; /* Hidden until user is logged in */
+        }
+        .main-content.visible {
+            display: block;
+        }
+        .welcome-message {
+            background: var(--color-dark-grey);
+            border: 1px solid var(--color-gold);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .welcome-message h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--color-gold);
+        }
+        .welcome-message p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #ccc;
+        }
+        .user-data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+        .data-item {
+            background: var(--color-dark-grey);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--color-orange);
+        }
+        .data-item .label {
+            font-weight: bold;
+            color: #aaa;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        .data-item .value {
+            font-size: 1.1rem;
+            color: var(--color-white);
+            word-wrap: break-word;
+        }
+        .data-item .value .token-red { color: var(--color-red); }
+        .data-item .value .token-blue { color: var(--color-blue); }
+        .data-item .value .token-power { color: var(--color-gold); }
+
+        .conversion-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            animation: text-glow 3s ease-in-out infinite alternate;
+        }
+
+        .conversion-box {
+            background: var(--color-dark-grey);
+            border: 1px solid var(--color-gold);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        .conversion-box h3 { margin-bottom: 15px; font-size: 1.5rem; }
+        .conversion-box .note { font-size: 0.9rem; color: #aaa; margin-bottom: 20px; }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+        .input-group input {
+            flex-grow: 1;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid var(--color-gold);
+            background: #333;
+            color: white;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--color-orange);
+            box-shadow: 0 0 10px var(--color-orange);
+        }
+        .btn-convert, .btn-withdraw {
+            padding: 12px 25px;
+            background: linear-gradient(45deg, var(--color-orange), var(--color-gold));
+            color: var(--color-black);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: transform 0.2s;
+            font-family: 'Orbitron', sans-serif;
+        }
+        .btn-convert:hover, .btn-withdraw:hover { transform: scale(1.05); }
+        .btn-convert:disabled, .btn-withdraw:disabled {
+            background: #555;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .logout-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 40px;
+            font-size: 1.1rem;
+            background: linear-gradient(45deg, #c0392b, var(--color-red));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+        
+        /* Login Overlay */
+        .login-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(10px);
+            z-index: 9999; display: flex; justify-content: center; align-items: center;
+        }
+        .login-overlay.hidden { display: none; }
+        .login-form-container {
+            background: var(--color-dark-grey); border: 2px solid var(--color-gold);
+            padding: 40px; border-radius: 15px; text-align: center;
+            box-shadow: 0 0 30px var(--color-orange); width: 90%; max-width: 400px;
+        }
+        .login-form-container h2 { margin-bottom: 20px; font-size: 1.8rem; }
+        .login-form-container input { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 5px; border: 1px solid var(--color-gold); background: #333; color: white; font-family: inherit; }
+        .login-form-container button { width: 100%; padding: 12px; background: linear-gradient(45deg, var(--color-orange), var(--color-gold)); color: var(--color-black); border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1.1rem; margin-top: 10px; }
+        .login-error { color: var(--color-red); margin-top: 15px; min-height: 20px; }
+        .remind-me-container { display: flex; align-items: center; justify-content: start; margin-bottom: 15px; font-size: 0.9rem; }
+        .remind-me-container input[type="checkbox"] { width: auto; margin: 0 10px 0 0; }
+
+        /* Loading Spinner & Modal */
+        .loading-spinner { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 10001; display: none; justify-content: center; align-items: center; }
+        .loading-spinner i { font-size: 4rem; color: var(--color-gold); animation: fa-spin 2s linear infinite; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10002; display: none; justify-content: center; align-items: center; }
+        .modal-overlay.active { display: flex; }
+        .modal-content { background: var(--color-dark-grey); padding: 30px; border-radius: 10px; border: 2px solid var(--color-gold); width: 90%; max-width: 500px; position: relative; text-align: center; }
+        .modal-close { position: absolute; top: 10px; right: 15px; background: none; border: none; color: white; font-size: 2rem; cursor: pointer; }
+
+        /* 4. Footer */
+        footer {
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        .social-links a {
+            color: var(--color-white);
+            font-size: 2rem;
+            margin: 0 15px;
+            display: inline-block;
+            transition: color 0.3s ease, filter 0.3s ease;
+        }
+        .social-links a i {
+            filter: drop-shadow(0 0 3px var(--color-gold)); /* Gold glow on icons */
+        }
+        .social-links a:hover {
+            color: var(--color-gold);
+            filter: drop-shadow(0 0 8px var(--color-gold));
+        }
+
+        /* 5. Floating Support Widget */
+        .fab-container { position: fixed; bottom: 20px; right: 20px; z-index: 900; }
+        .fab-main {
+            width: 60px; height: 60px; background-color: var(--color-orange); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+        .fab-main i { font-size: 1.8rem; color: var(--color-white); filter: drop-shadow(0 0 2px var(--color-gold)); }
+        .fab-options {
+            position: absolute; bottom: 70px; right: 5px; display: flex; flex-direction: column;
+            gap: 10px; visibility: hidden; opacity: 0; transform: translateY(10px);
+            transition: all 0.3s;
+        }
+        .fab-container.active .fab-options { visibility: visible; opacity: 1; transform: translateY(0); }
+        .fab-option {
+            display: flex; align-items: center; background-color: var(--color-orange); color: var(--color-white);
+            padding: 8px 15px; border-radius: 20px; text-decoration: none; white-space: nowrap;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .fab-option i { margin-right: 10px; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Login Overlay: Shown by default -->
+    <div id="login-overlay" class="login-overlay">
+        <div class="login-form-container">
+            <h2>User Login</h2>
+            <form id="login-form">
+                <input type="tel" id="mobile" placeholder="Mobile Number" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <div class="remind-me-container">
+                    <input type="checkbox" id="remind-me">
+                    <label for="remind-me">Remember Me</label>
+                </div>
+                <button type="submit">Log In</button>
+                <p class="login-error" id="login-error"></p>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Loading Spinner & Modal -->
+    <div id="loading-spinner" class="loading-spinner"><i class="fas fa-spinner"></i></div>
+    <div class="modal-overlay" id="feedback-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close-btn">&times;</button>
+            <h3 id="modal-title"></h3>
+            <p id="modal-message"></p>
+        </div>
+    </div>
+
+    <!-- 1. Header -->
+    <header id="header">
+        <div class="header-logo">
+            <a href="index.html">
+                <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-19_15-42-42-048.png?updatedAt=1758287984590&ik-s=818768f764ed7e928bf055f4f632c881cb77ec24" alt="Silent Gamers Logo">
+            </a>
+        </div>
+        <div class="header-title"><h1>SILENT GAMERS</h1></div>
+        <button class="menu-trigger" id="menu-trigger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-menu">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
+
+    <!-- 2. Slide-Out Navigation Menu -->
+    <nav id="nav-menu">
+        <ul>
+            <li><a href="home.html">home</a></li>
+            <li><a href="profile.html">profile</a></li>
+            <li><a href="shop.html">shop</a></li>
+            <li><a href="signup.html">create new account</a></li>
+            <li><a href="ceo.html">ceo</a></li>
+            <li><a href="coo.html">coo</a></li>
+            <li><a href="boo.html">anti-hacker</a></li>
+            <li><a href="roshi.html">management</a></li>
+            <li><a href="esport.html">e-sport</a></li>
+            <li><a href="tutorial.html">Tutorial ?</a></li>
+        </ul>
+    </nav>
+
+    <!-- 3. Main Content Area -->
+    <main id="main-container">
+        <!-- This content is revealed after successful login -->
+        <div class="main-content" id="main-content">
+            <div class="welcome-message">
+                <h2>Welcome, <span id="welcome-username">Username</span></h2>
+                <p>
+                    Hi <strong id="msg-username">username</strong>, your game UID is <strong id="msg-game-uid">game uid</strong> and your game name is <strong id="msg-game-name">game name</strong>.
+                    If you change your game name, please inform customer care to update it. Entry into games will not be permitted without matching details.
+                </p>
+            </div>
+
+            <!-- User non-changeable data -->
+            <div class="user-data-grid">
+                <div class="data-item"><span class="label">Username</span><span class="value" id="user-username"></span></div>
+                <div class="data-item"><span class="label">Mobile Number</span><span class="value" id="user-mobile"></span></div>
+                <div class="data-item"><span class="label">Email</span><span class="value" id="user-email"></span></div>
+                <div class="data-item"><span class="label">Red Token</span><span class="value token-red" id="user-red-token">0</span></div>
+                <div class="data-item"><span class="label">Blue Token</span><span class="value token-blue" id="user-blue-token">0</span></div>
+                <div class="data-item"><span class="label">Power Coin</span><span class="value token-power" id="user-power-coin">0</span></div>
+                <div class="data-item"><span class="label">UPI ID (for withdrawals)</span><span class="value" id="user-upi"></span></div>
+            </div>
+
+            <div class="conversion-section">
+                <h2>Convert Tokens</h2>
+                
+                <!-- Box 1: Blue to Red -->
+                <div class="conversion-box">
+                    <h3>Convert Blue Token to Red Token</h3>
+                    <div class="input-group">
+                        <input type="number" id="b2r-amount" placeholder="Amount of Blue Tokens" min="1">
+                        <button class="btn-convert" id="b2r-btn">Convert</button>
+                    </div>
+                </div>
+
+                <!-- Box 2: Red to Power Coin -->
+                <div class="conversion-box">
+                    <h3>Convert Red Token to Power Coin</h3>
+                    <div class="input-group">
+                        <input type="number" id="r2p-amount" placeholder="Amount of Red Tokens" min="1">
+                        <button class="btn-convert" id="r2p-btn">Convert</button>
+                    </div>
+                </div>
+
+                <!-- Box 3: Withdraw Blue to Money -->
+                <div class="conversion-box">
+                    <h3>Withdraw Blue Token to Money</h3>
+                    <p class="note">Minimum withdrawal is 50 Blue Tokens.</p>
+                    <div class="input-group">
+                        <input type="number" id="withdraw-amount" placeholder="Amount to Withdraw" min="50">
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="withdraw-upi" placeholder="Your UPI ID">
+                    </div>
+                    <button class="btn-withdraw" id="withdraw-btn">Withdraw</button>
+                </div>
+            </div>
+
+            <button class="logout-btn" id="logout-btn">Log Out</button>
+        </div>
+    </main>
+
+    <!-- 4. Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="https://www.instagram.com/silent.gamers?igsh=MWN6bGdsdzhyb3Nicw==" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@SilentGaminghub1" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+    </footer>
+
+    <!-- 5. Floating Support Widget -->
+    <div class="fab-container" id="fab-container">
+        <div class="fab-main" id="fab-main" role="button" aria-label="Open support options"><i class="fas fa-headset"></i></div>
+        <div class="fab-options">
+            <a href="tel:7078343501" class="fab-option"><i class="fas fa-phone-alt"></i><span>Call Support</span></a>
+            <a href="https://wa.me/7037843807?text=hello%20sir%20i%20want%20a%20help%20about%20silentgamers" target="_blank" rel="noopener noreferrer" class="fab-option"><i class="fab fa-whatsapp"></i><span>Chat Support</span></a>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- CONFIGURATION ---
+        // Your Deployed Google Apps Script Web App URL is now here.
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwAaFmX9XyrV-QkF0nBSLrflCtSJK-tjCtQ_RapXT803mH981VfmLybV614N7nSp9ZWiQ/exec';
+
+        // --- STATE MANAGEMENT ---
+        let userData = null;
+
+        // --- DOM ELEMENT SELECTION ---
+        const header = document.getElementById('header');
+        const mainContainer = document.getElementById('main-container');
+        const menuTrigger = document.getElementById('menu-trigger');
+        const navMenu = document.getElementById('nav-menu');
+        const fabContainer = document.getElementById('fab-container');
+        const loginOverlay = document.getElementById('login-overlay');
+        const loginForm = document.getElementById('login-form');
+        const mobileInput = document.getElementById('mobile');
+        const passwordInput = document.getElementById('password');
+        const remindMeCheckbox = document.getElementById('remind-me');
+        const loginError = document.getElementById('login-error');
+        const mainContent = document.getElementById('main-content');
+        const logoutBtn = document.getElementById('logout-btn');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        const feedbackModal = document.getElementById('feedback-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalMessage = document.getElementById('modal-message');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+
+        // Conversion buttons and inputs
+        const b2rBtn = document.getElementById('b2r-btn');
+        const r2pBtn = document.getElementById('r2p-btn');
+        const withdrawBtn = document.getElementById('withdraw-btn');
+        const b2rAmountInput = document.getElementById('b2r-amount');
+        const r2pAmountInput = document.getElementById('r2p-amount');
+        const withdrawAmountInput = document.getElementById('withdraw-amount');
+        const withdrawUpiInput = document.getElementById('withdraw-upi');
+
+        // --- CORE UI LOGIC (Template) ---
+
+        // Adjust main content padding to account for fixed header height
+        const adjustMainContentPadding = () => {
+            mainContainer.style.paddingTop = `${header.offsetHeight}px`;
+        };
+        adjustMainContentPadding();
+        window.addEventListener('resize', adjustMainContentPadding);
+
+        // Toggle slide-out navigation menu
+        menuTrigger.addEventListener('click', () => {
+            const isExpanded = navMenu.classList.toggle('menu-open');
+            menuTrigger.setAttribute('aria-expanded', isExpanded);
+        });
+
+        // Toggle Floating Action Button (FAB) options
+        fabContainer.addEventListener('click', (event) => {
+            if (event.target.closest('#fab-main')) {
+                fabContainer.classList.toggle('active');
+            }
+        });
+        // Close FAB if clicking outside of it
+        document.addEventListener('click', (event) => {
+            if (!fabContainer.contains(event.target)) {
+                fabContainer.classList.remove('active');
+            }
+        });
+
+        // --- UTILITY FUNCTIONS ---
+        const showLoader = () => loadingSpinner.style.display = 'flex';
+        const hideLoader = () => loadingSpinner.style.display = 'none';
+
+        const showModal = (title, message) => {
+            modalTitle.textContent = title;
+            modalMessage.innerHTML = message;
+            feedbackModal.classList.add('active');
+        };
+        const hideModal = () => feedbackModal.classList.remove('active');
+        modalCloseBtn.addEventListener('click', hideModal);
+        feedbackModal.addEventListener('click', (e) => {
+             if (e.target === feedbackModal) hideModal();
+        });
+
+        /**
+         * A centralized function to communicate with the Google Apps Script Web App.
+         * @param {string} functionName - The name of the function to call in your Apps Script.
+         * @param {Array} args - An array of arguments to pass to the function.
+         * @returns {Promise<any>} - The data returned from the script.
+         */
+        async function callAppsScript(functionName, args = []) {
+            showLoader();
+            try {
+                const response = await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    redirect: 'follow',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ functionName, args }),
+                });
+                if (!response.ok) throw new Error(`Network error: ${response.statusText}`);
+                const result = await response.json();
+                if (result.status === 'error') throw new Error(result.message);
+                return result.data;
+            } catch (error) {
+                console.error('Apps Script Call Error:', error);
+                showModal('Error', error.message || 'An unexpected error occurred. Please try again.');
+                throw error; // Re-throw to be caught by the calling function
+            } finally {
+                hideLoader();
+            }
+        }
+
+        // --- APPLICATION LOGIC (Profile Page) ---
+
+        /**
+         * Populates the entire UI with the fetched user data.
+         * @param {object} data - The user data object from the Google Sheet.
+         */
+        function populateUI(data) {
+            if (!data) return;
+            // Welcome Message
+            document.getElementById('welcome-username').textContent = data.Username || 'User';
+            document.getElementById('msg-username').textContent = data.Username || 'N/A';
+            document.getElementById('msg-game-uid').textContent = data['Game UID'] || 'N/A';
+            document.getElementById('msg-game-name').textContent = data['Game Name'] || 'N/A';
+
+            // User Data Grid
+            document.getElementById('user-username').textContent = data.Username || 'N/A';
+            document.getElementById('user-mobile').textContent = data['Mobile Number'] || 'N/A';
+            document.getElementById('user-email').textContent = data.Email || 'N/A';
+            document.getElementById('user-red-token').textContent = data['Red Token'] || 0;
+            document.getElementById('user-blue-token').textContent = data['Blue Token'] || 0;
+            document.getElementById('user-power-coin').textContent = data['Power Coin'] || 0;
+            document.getElementById('user-upi').textContent = data['UPI id'] || 'Not set';
+            
+            // Pre-fill UPI for withdrawal
+            withdrawUpiInput.value = data['UPI id'] || '';
+        }
+
+        /**
+         * Handles the login form submission.
+         * @param {Event} e - The form submit event.
+         */
+        async function handleLogin(e) {
+            e.preventDefault();
+            const mobile = mobileInput.value;
+            const password = passwordInput.value;
+            loginError.textContent = '';
+
+            try {
+                const data = await callAppsScript('loginUser', [mobile, password]);
+                if (data && data.Username) {
+                    onLoginSuccess(data);
+                    if (remindMeCheckbox.checked) {
+                        localStorage.setItem('savedMobile', mobile);
+                        localStorage.setItem('savedPassword', password);
+                    } else {
+                        localStorage.removeItem('savedMobile');
+                        localStorage.removeItem('savedPassword');
+                    }
+                } else {
+                    throw new Error("Invalid mobile number or password.");
+                }
+            } catch (error) {
+                loginError.textContent = error.message;
+            }
+        }
+
+        /**
+         * Actions to perform after a successful login.
+         * @param {object} data - The logged-in user's data.
+         */
+        function onLoginSuccess(data) {
+            userData = data;
+            populateUI(userData);
+            loginOverlay.classList.add('hidden');
+            mainContent.classList.add('visible');
+        }
+
+        /**
+         * Fetches the latest user data and updates the UI.
+         */
+        async function refreshUserData() {
+            if (!userData || !userData['Mobile Number']) return;
+            try {
+                const updatedData = await callAppsScript('getUserData', [userData['Mobile Number']]);
+                userData = updatedData; // Update global state
+                populateUI(userData);
+            } catch (error) {
+                // Error is already shown by callAppsScript, just log it
+                console.error("Failed to refresh user data.");
+            }
+        }
+        
+        // --- Conversion Event Handlers ---
+
+        b2rBtn.addEventListener('click', async () => {
+            const amount = parseInt(b2rAmountInput.value, 10);
+            if (isNaN(amount) || amount <= 0) {
+                showModal('Invalid Input', 'Please enter a valid positive number.');
+                return;
+            }
+            if (amount > (userData['Blue Token'] || 0)) {
+                showModal('Insufficient Funds', 'You do not have enough Blue Tokens.');
+                return;
+            }
+            try {
+                const result = await callAppsScript('convertBlueToRed', [userData['Mobile Number'], amount]);
+                showModal('Success', result.message);
+                b2rAmountInput.value = '';
+                await refreshUserData();
+            } catch (error) {/* Error handled in callAppsScript */}
+        });
+
+        r2pBtn.addEventListener('click', async () => {
+            const amount = parseInt(r2pAmountInput.value, 10);
+            if (isNaN(amount) || amount <= 0) {
+                showModal('Invalid Input', 'Please enter a valid positive number.');
+                return;
+            }
+            if (amount > (userData['Red Token'] || 0)) {
+                showModal('Insufficient Funds', 'You do not have enough Red Tokens.');
+                return;
+            }
+            try {
+                const result = await callAppsScript('convertRedToPower', [userData['Mobile Number'], amount]);
+                showModal('Success', result.message);
+                r2pAmountInput.value = '';
+                await refreshUserData();
+            } catch (error) {/* Error handled in callAppsScript */}
+        });
+
+        withdrawBtn.addEventListener('click', async () => {
+            const amount = parseInt(withdrawAmountInput.value, 10);
+            const upiId = withdrawUpiInput.value.trim();
+            if (isNaN(amount) || amount < 50) {
+                showModal('Invalid Amount', 'Minimum withdrawal amount is 50.');
+                return;
+            }
+            if (!upiId) {
+                showModal('UPI ID Required', 'Please enter your UPI ID for withdrawal.');
+                return;
+            }
+            if (amount > (userData['Blue Token'] || 0)) {
+                showModal('Insufficient Funds', 'You do not have enough Blue Tokens for this withdrawal.');
+                return;
+            }
+            try {
+                const result = await callAppsScript('withdrawBlueTokens', [userData['Mobile Number'], amount, upiId]);
+                showModal('Success', result.message);
+                withdrawAmountInput.value = '';
+                // Don't clear UPI ID in case they want to do another one
+                await refreshUserData();
+            } catch (error) {/* Error handled in callAppsScript */}
+        });
+
+        // --- Logout Logic ---
+        function handleLogout() {
+            userData = null;
+            localStorage.clear();
+            mainContent.classList.remove('visible');
+            loginOverlay.classList.remove('hidden');
+            loginForm.reset();
+        }
+        logoutBtn.addEventListener('click', handleLogout);
+
+        // --- Initialisation ---
+        loginForm.addEventListener('submit', handleLogin);
+
+        // Attempt auto-login if credentials are saved
+        const savedMobile = localStorage.getItem('savedMobile');
+        const savedPassword = localStorage.getItem('savedPassword');
+        if (savedMobile && savedPassword) {
+            mobileInput.value = savedMobile;
+            passwordInput.value = savedPassword;
+            remindMeCheckbox.checked = true;
+            loginError.textContent = 'Attempting auto-login...';
+            handleLogin(new Event('submit'));
+        }
+    });
+    </script>
+</body>
+</html>
