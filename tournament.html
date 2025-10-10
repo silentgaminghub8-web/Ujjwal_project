@@ -4,38 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Silent Gamers</title>
-    <!-- Font Awesome CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
-
-    <!-- Embedded CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@400;500&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
+        /* CSS Reset and Global Styles */
         :root {
-            --color-black: #050505;
-            --color-dark-grey: #1a1a1a;
+            --color-black: #0a0a0a;
             --color-white: #ffffff;
             --color-gold: #ffd700;
-            --color-orange: #ffa500;
+            --color-orange: #ff8c00;
+            --header-height: 70px; /* Default header height */
+            /* Additional colors from this page's content */
+            --color-dark-grey: #1a1a1a;
             --color-red: #ff4757;
             --color-blue: #3742fa;
             --color-green: #2ed573;
-            --header-height: 80px;
         }
 
-        /* --- BASIC SETUP & KEYFRAMES --- */
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Orbitron', sans-serif; /* Font for this page's content */
             background-color: var(--color-black);
             color: var(--color-white);
-            line-height: 1.6;
+            padding-top: var(--header-height); /* Space for fixed header */
             overflow-x: hidden;
         }
-        main { padding-top: var(--header-height); }
 
         @keyframes text-glow {
             from { text-shadow: 0 0 5px var(--color-white), 0 0 10px var(--color-gold), 0 0 15px var(--color-orange); }
@@ -54,7 +60,104 @@
             100% { width: 100%; }
         }
 
-        /* --- LOGIN OVERLAY ENHANCEMENTS --- */
+        /* 1. Header Styling (from template) */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--header-height);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .header-logo a { display: block; }
+
+        .header-logo img {
+            height: 50px;
+            width: auto;
+            border: 2px solid var(--color-gold);
+            border-radius: 50%;
+            box-shadow: 0 0 5px var(--color-gold), 0 0 10px var(--color-gold), 0 0 15px var(--color-orange), inset 0 0 5px rgba(255, 255, 255, 0.5);
+            transition: transform 0.3s ease;
+        }
+        .header-logo img:hover { transform: scale(1.1); }
+
+        .header-title { flex-grow: 1; text-align: center; }
+
+        .header-title h1 {
+            font-family: 'Cinzel', serif; /* Font from template */
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            color: var(--color-white);
+            animation: text-glow 2s ease-in-out infinite alternate;
+        }
+
+        .menu-trigger {
+            cursor: pointer;
+            width: 30px;
+            height: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .menu-trigger span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: var(--color-white);
+            border-radius: 3px;
+            filter: drop-shadow(0 0 2px var(--color-gold));
+        }
+        
+        /* 2. Slide-Out Navigation Menu (from template) */
+        nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 50%;
+            max-width: 400px;
+            height: 100vh;
+            background-color: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 999;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        nav.menu-open { transform: translateX(0); }
+        nav ul { list-style: none; width: 100%; text-align: center; }
+        nav ul li a {
+            display: block; padding: 15px 20px; color: var(--color-white);
+            text-decoration: none; font-size: 1.2rem; text-transform: uppercase;
+            transition: text-shadow 0.3s ease, color 0.3s ease; font-family: 'Roboto', sans-serif;
+        }
+        nav ul li a:hover, nav ul li a:focus {
+            color: var(--color-gold);
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.7), 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        /* 3. Main Content Area */
+        main {
+            padding: 40px 20px;
+            min-height: calc(100vh - var(--header-height) - 100px);
+        }
+        .main-content { max-width: 1200px; margin: 0 auto; text-align: center; }
+        
+        /* --- STYLES FOR THIS PAGE'S UNIQUE CONTENT --- */
+        
+        /* Login Overlay */
         .login-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(10px);
@@ -63,7 +166,7 @@
         }
         .login-overlay.hidden { opacity: 0; pointer-events: none; }
         .login-form-container {
-             background: var(--color-dark-grey); border: 2px solid var(--color-gold);
+            background: var(--color-dark-grey); border: 2px solid var(--color-gold);
             padding: 25px 40px 40px 40px; border-radius: 15px; text-align: center;
             box-shadow: 0 0 30px var(--color-orange); width: 90%; max-width: 400px;
         }
@@ -86,81 +189,26 @@
             color: var(--color-black); border: none; border-radius: 5px; cursor: pointer;
             font-weight: bold; font-size: 1.1rem; transition: transform 0.2s; margin-top: 10px;
         }
-        .login-form-container button:hover { transform: scale(1.05); }
         #login-error { color: var(--color-red); margin-top: 15px; min-height: 20px; }
-        .remind-me-container {
-            display: flex; align-items: center; justify-content: flex-start;
-            margin-bottom: 15px; text-align: left;
-        }
-        .remind-me-container input[type="checkbox"] {
-            width: auto; margin: 0 10px 0 0;
-        }
-        .remind-me-container label {
-            font-size: 0.9rem; color: #ccc;
-        }
-        /* --- NEW LOGIN PROGRESS ANIMATION --- */
+        .remind-me-container { display: flex; align-items: center; margin-bottom: 15px; }
+        .remind-me-container input[type="checkbox"] { width: auto; margin: 0 10px 0 0; }
+        
         #login-progress-container { display: none; text-align: center; }
         .progress-bar-container {
             width: 90%; height: 10px; background: #333; border-radius: 5px;
             border: 1px solid var(--color-gold); overflow: hidden; margin: 20px auto;
         }
         .progress-bar-fill {
-            width: 0%; height: 100%;
-            background: linear-gradient(90deg, var(--color-orange), var(--color-gold));
+            width: 0%; height: 100%; background: linear-gradient(90deg, var(--color-orange), var(--color-gold));
             border-radius: 5px;
         }
-        .progress-bar-fill.animating {
-            animation: fill-progress 2.5s ease-out forwards;
-        }
+        .progress-bar-fill.animating { animation: fill-progress 2.5s ease-out forwards; }
         #login-progress-text {
             color: var(--color-gold); margin-top: 15px; font-size: 1.2rem;
             animation: slow-beep-glow 2s linear infinite;
         }
 
-
-        /* --- HEADER & NAVIGATION --- */
-        .site-header {
-            position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height);
-            z-index: 1000; display: flex; justify-content: space-between; align-items: center;
-            padding: 10px 20px; background-color: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
-        }
-        .logo-img {
-            height: 60px; width: 60px; object-fit: cover; border-radius: 50%;
-            border: 3px solid var(--color-gold);
-            box-shadow: 0 0 5px var(--color-gold), 0 0 15px var(--color-orange), inset 0 0 8px rgba(255, 255, 255, 0.6);
-        }
-        .header-title {
-            font-size: clamp(1.2rem, 5vw, 2rem); color: var(--color-white); text-align: center; flex-grow: 1;
-            animation: text-glow 2s ease-in-out infinite alternate;
-        }
-        .menu-trigger {
-            background: none; border: none; cursor: pointer; width: 40px; height: 40px;
-            display: flex; flex-direction: column; justify-content: space-around; z-index: 1002;
-        }
-        .menu-trigger .line {
-            width: 100%; height: 3px; background-color: var(--color-white); border-radius: 2px;
-            transition: all 0.3s ease; filter: drop-shadow(0 0 2px var(--color-gold));
-        }
-        .slide-out-nav {
-            position: fixed; top: 0; right: 0; width: 50%; max-width: 400px; height: 100vh;
-            background-color: rgba(10, 10, 10, 0.9); backdrop-filter: blur(15px); z-index: 1001;
-            transform: translateX(100%); transition: transform 0.4s ease; padding: 100px 40px;
-        }
-        .slide-out-nav.open { transform: translateX(0); }
-        .nav-close-btn {
-            position: absolute; top: 20px; right: 20px; background: none; border: none;
-            color: var(--color-white); font-size: 2.5rem; cursor: pointer; line-height: 1;
-            text-shadow: 0 0 5px var(--color-gold);
-        }
-        .nav-list { list-style: none; }
-        .nav-list li { margin-bottom: 20px; }
-        .nav-list a { color: var(--color-white); text-decoration: none; font-size: 1.2rem; }
-        .nav-list a:hover { text-shadow: 0 0 5px var(--color-white); }
-        
-        /* --- MAIN CONTENT & TABS --- */
-        .main-content { padding: 20px; max-width: 1200px; margin: 0 auto; text-align: center; }
+        /* Tabs and Content */
         .promo-gif { max-width: 300px; margin-bottom: 30px; border-radius: 10px; border: 2px solid var(--color-gold); }
         .tab-buttons { margin-bottom: 30px; }
         .tab-btn {
@@ -176,113 +224,60 @@
             animation: slow-beep-glow 3s linear infinite;
         }
         .content-image { width: 100%; max-width: 600px; border-radius: 10px; margin-bottom: 30px; }
-
-        /* --- TOKEN & COIN BOXES --- */
-        .token-container {
-            display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 40px;
-        }
+        
+        /* Token Boxes */
+        .token-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 40px; }
         .token-box {
-            background: var(--color-dark-grey); border: 1px solid var(--color-gold);
-            padding: 15px 20px; border-radius: 10px; cursor: pointer; flex: 1; min-width: 200px;
-            max-width: 250px; text-align: center; transition: all 0.3s;
+            background: var(--color-dark-grey); border: 1px solid var(--color-gold); padding: 15px 20px;
+            border-radius: 10px; cursor: pointer; flex: 1; min-width: 200px; max-width: 250px; text-align: center;
         }
-        .token-box:hover { transform: translateY(-5px); box-shadow: 0 5px 20px var(--color-orange); }
-        .token-box h3 { font-size: 1.2rem; margin-bottom: 5px; }
         .token-box .balance { font-size: 1.5rem; font-weight: bold; }
         #red-token-balance { color: var(--color-red); }
         #blue-token-balance { color: var(--color-blue); }
         #power-coin-balance { color: var(--color-gold); }
 
-        /* --- TOURNAMENT CARDS --- */
-        .tournaments-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
+        /* Tournament Cards */
+        .tournaments-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
         .tournament-card {
-            background: var(--color-dark-grey); border: 1px solid var(--color-gold);
-            border-radius: 15px; overflow: hidden; text-align: center;
-            padding-bottom: 20px; box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
-            display: flex; flex-direction: column;
+            background: var(--color-dark-grey); border: 1px solid var(--color-gold); border-radius: 15px;
+            overflow: hidden; text-align: center; padding-bottom: 20px; display: flex; flex-direction: column;
         }
-        .card-header { position: relative; }
         .tournament-number {
             position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7);
             color: var(--color-gold); width: 40px; height: 40px; border-radius: 50%;
             display: flex; justify-content: center; align-items: center; font-weight: bold;
-            border: 2px solid var(--color-gold);
         }
         .card-img, .card-gif { width: 100%; height: 180px; object-fit: cover; }
-        .card-body { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;}
-        .card-body p { margin-bottom: 8px; }
+        .card-body { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
         .card-body .glowing { text-shadow: 0 0 5px var(--color-white); font-weight: bold; }
-        .card-body .date-time { font-size: 0.9rem; color: var(--color-orange); }
         .card-actions { display: flex; gap: 10px; margin-top: 15px; }
         .card-btn {
             padding: 8px 10px; border: 1px solid var(--color-gold); color: var(--color-gold);
-            background: transparent; cursor: pointer; border-radius: 5px; transition: all 0.3s;
-            font-family: inherit; font-size: 0.8rem; flex: 1;
+            background: transparent; cursor: pointer; border-radius: 5px; font-family: inherit; flex: 1;
         }
-        .card-btn:hover { background: var(--color-gold); color: var(--color-black); }
         .join-btn {
             background: linear-gradient(45deg, var(--color-orange), var(--color-gold));
-            color: var(--color-black); border: none; font-weight: bold;
-            font-size: 1rem;
+            color: var(--color-black); border: none; font-weight: bold; font-size: 1rem;
         }
-        .join-btn:disabled { background: #555; color: #aaa; cursor: not-allowed; }
+        .join-btn:disabled { background: #555; cursor: not-allowed; }
         .join-btn.add-tokens { background: var(--color-red); color: white; }
-        .join-btn.joined {
-            background: linear-gradient(45deg, #1dd1a1, var(--color-green));
-            color: var(--color-black);
-            font-weight: bold; cursor: not-allowed;
-            animation: green-glow 2s infinite alternate;
-        }
+        .join-btn.joined { background: linear-gradient(45deg, #1dd1a1, var(--color-green)); animation: green-glow 2s infinite alternate; }
         .countdown-timer { font-size: 1.2rem; padding: 10px; color: var(--color-gold); }
-
-        /* --- MODAL / POPUP --- */
+        
+        /* Modal, Buttons, Utilities */
         .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); z-index: 2000; display: none;
-            justify-content: center; align-items: center;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8);
+            z-index: 2000; display: none; justify-content: center; align-items: center;
         }
         .modal-overlay.active { display: flex; }
         .modal-content {
             background: var(--color-dark-grey); padding: 30px; border-radius: 10px;
-            border: 2px solid var(--color-gold); width: 90%; max-width: 500px;
-            position: relative; text-align: center;
+            border: 2px solid var(--color-gold); width: 90%; max-width: 500px; position: relative;
         }
         .modal-close {
             position: absolute; top: 10px; right: 15px; background: none; border: none;
             color: white; font-size: 2rem; cursor: pointer;
         }
-        .modal-content h3 { margin-bottom: 15px; font-size: 1.5rem; color: var(--color-orange); }
-        .modal-content p { margin-bottom: 20px; }
-        .modal-btn {
-            padding: 10px 25px; background: var(--color-gold); color: var(--color-black);
-            text-decoration: none; border-radius: 5px; font-weight: bold;
-        }
-
-        /* --- FOOTER & FLOATING WIDGET --- */
-        .site-footer { text-align: center; padding: 40px 20px; border-top: 1px solid rgba(255, 215, 0, 0.2); margin-top: 50px; }
-        .social-links a { color: var(--color-white); font-size: 2.5rem; margin: 0 15px; }
-        .social-links a .fab { filter: drop-shadow(0 0 5px var(--color-gold)); }
-        
-        .support-widget { position: fixed; bottom: 20px; right: 10px; z-index: 1010; }
-        .support-options { display: flex; flex-direction: column; align-items: flex-end; margin-bottom: 15px; }
-        .support-option {
-            display: flex; align-items: center; background-color: var(--color-gold); color: var(--color-black);
-            padding: 8px 15px; border-radius: 20px; text-decoration: none; font-weight: bold;
-            margin-bottom: 10px; opacity: 0; transform: translateY(20px);
-            transition: all 0.3s ease; pointer-events: none;
-        }
-        .support-widget.active .support-option { opacity: 1; transform: translateY(0); pointer-events: auto; }
-        .fab-main {
-            width: 60px; height: 60px; background: linear-gradient(45deg, var(--color-orange), var(--color-gold));
-            border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            cursor: pointer; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-        }
-        .fab-main i { font-size: 1.8rem; color: var(--color-black); }
-
-        /* --- UTILITY & OVERLAYS --- */
         .loading-spinner {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7);
             z-index: 9998; display: none; justify-content: center; align-items: center;
@@ -290,43 +285,55 @@
         .loading-spinner i { font-size: 4rem; color: var(--color-gold); animation: fa-spin 2s linear infinite; }
         .refresh-btn {
             position: fixed; top: 90px; right: 20px; z-index: 999; background: var(--color-gold);
-            color: black; border: none; width: 40px; height: 40px; border-radius: 50%;
-            cursor: pointer; display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 0 10px var(--color-orange); font-size: 1.2rem;
+            color: black; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+            display: flex; justify-content: center; align-items: center; box-shadow: 0 0 10px var(--color-orange);
         }
         .logout-btn {
-            display: block; margin: 20px auto 20px auto; padding: 12px 40px;
-            font-family: 'Orbitron', sans-serif; font-size: 1.1rem; font-weight: bold;
-            background: linear-gradient(45deg, #c0392b, var(--color-red));
-            color: white; border: none; border-radius: 50px; cursor: pointer;
-            box-shadow: 0 0 15px var(--color-red); transition: transform 0.2s;
+            display: block; margin: 20px auto; padding: 12px 40px; font-size: 1.1rem;
+            background: linear-gradient(45deg, #c0392b, var(--color-red)); color: white;
+            border: none; border-radius: 50px; cursor: pointer;
         }
-        .logout-btn:hover { transform: scale(1.05); }
-
         .start-booked-btn {
-            display: block;
-            margin: 40px auto 20px auto;
-            padding: 12px 40px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border-radius: 50px;
-            cursor: pointer;
-            background: linear-gradient(45deg, #1dd1a1, var(--color-green));
-            color: var(--color-black);
-            animation: green-glow 2s infinite alternate;
-            border: none;
-            transition: transform 0.2s;
+            display: block; margin: 40px auto 20px; padding: 12px 40px; font-size: 1.1rem;
+            border-radius: 50px; cursor: pointer;
+            background: linear-gradient(45deg, #1dd1a1, var(--color-green)); color: var(--color-black);
+            animation: green-glow 2s infinite alternate; border: none;
         }
-        .start-booked-btn:hover {
-            transform: scale(1.05);
+
+        /* 4. Footer (from template) */
+        footer {
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
         }
+        .social-links a { color: var(--color-white); font-size: 2rem; margin: 0 15px; }
+        .social-links a i { filter: drop-shadow(0 0 3px var(--color-gold)); }
+        .social-links a:hover { color: var(--color-gold); filter: drop-shadow(0 0 8px var(--color-gold)); }
+
+        /* 5. Floating Support Widget (from template) */
+        .fab-container { position: fixed; bottom: 20px; right: 20px; z-index: 900; }
+        .fab-main {
+            width: 60px; height: 60px; background-color: var(--color-orange); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; cursor: pointer;
+        }
+        .fab-main i { font-size: 1.8rem; color: var(--color-white); filter: drop-shadow(0 0 2px var(--color-gold)); }
+        .fab-options {
+            position: absolute; bottom: 70px; right: 5px; display: flex; flex-direction: column;
+            gap: 10px; visibility: hidden; opacity: 0; transform: translateY(10px);
+            transition: all 0.3s;
+        }
+        .fab-container.active .fab-options { visibility: visible; opacity: 1; transform: translateY(0); }
+        .fab-option {
+            display: flex; align-items: center; background-color: var(--color-orange); color: var(--color-white);
+            padding: 8px 15px; border-radius: 20px; text-decoration: none; white-space: nowrap;
+        }
+        .fab-option i { margin-right: 10px; }
 
     </style>
 </head>
 <body>
 
-    <!-- Login Overlay -->
+    <!-- Unique Content: Login Overlay, Spinner -->
     <div id="login-overlay" class="login-overlay">
         <div class="login-form-container">
             <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-22_00-09-34-964.png?updatedAt=1758480146212&ik-s=4f744f417100daea8710c3389638e583c2987985" alt="Login Logo" class="login-logo">
@@ -341,35 +348,30 @@
                 <button type="submit">Log In</button>
             </form>
             <div id="login-progress-container">
-                <div class="progress-bar-container">
-                    <div class="progress-bar-fill"></div>
-                </div>
+                <div class="progress-bar-container"><div class="progress-bar-fill"></div></div>
                 <p id="login-progress-text">Connecting...</p>
             </div>
             <p id="login-error"></p>
         </div>
     </div>
+    <div id="loading-spinner" class="loading-spinner"><i class="fas fa-spinner"></i></div>
 
-    <!-- Loading Spinner (for general use) -->
-    <div id="loading-spinner" class="loading-spinner">
-        <i class="fas fa-spinner"></i>
-    </div>
-
-    <!-- Header -->
-    <header class="site-header" id="site-header">
-        <a href="index.html" class="logo-link">
-            <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-19_15-42-42-048.png?updatedAt=1758287984590&ik-s=818768f764ed7e928bf055f4f632c881cb77ec24" alt="Logo" class="logo-img">
-        </a>
-        <h1 class="header-title">SILENT GAMERS</h1>
-        <button class="menu-trigger" id="menu-trigger">
-            <span class="line"></span><span class="line"></span><span class="line"></span>
-        </button>
+    <!-- 1. Header (from template) -->
+    <header id="header">
+        <div class="header-logo">
+            <a href="index.html">
+                <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-19_15-42-42-048.png?updatedAt=1758287984590&ik-s=818768f764ed7e928bf055f4f632c881cb77ec24" alt="Silent Gamers Logo">
+            </a>
+        </div>
+        <div class="header-title"><h1>SILENT GAMERS</h1></div>
+        <div class="menu-trigger" id="menu-trigger" role="button" aria-label="Open navigation menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </div>
     </header>
 
-    <!-- Navigation Menu -->
-    <nav class="slide-out-nav" id="slide-out-nav">
-        <button class="nav-close-btn" id="nav-close-btn">&times;</button>
-        <ul class="nav-list">
+    <!-- 2. Slide-Out Navigation Menu (from template) -->
+    <nav id="nav-menu">
+        <ul>
             <li><a href="home.html">home</a></li>
             <li><a href="profile.html">profile</a></li>
             <li><a href="shop.html">shop</a></li>
@@ -383,103 +385,99 @@
         </ul>
     </nav>
 
-    <!-- Main Content -->
-    <main class="site-main">
+    <!-- 3. Main Content Area -->
+    <main id="main-content">
         <div class="main-content">
             <img src="https://ik.imagekit.io/silentgamers/logo?updatedAt=1759325329840&ik-s=187e5d55268ffe33c83cef44eb12c5f9dc086cff" alt="Promo GIF" class="promo-gif">
-            
             <div class="tab-buttons">
                 <button class="tab-btn active" data-tab="1">1</button>
                 <button class="tab-btn" data-tab="2">2</button>
             </div>
-            
-            <!-- Tab 1 Content: Normal Tournaments -->
+            <!-- Tab 1: Normal Tournaments -->
             <div id="tab-1" class="tab-content active">
                 <h2 class="content-title">Normal Tournament</h2>
                 <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-22_00-11-15-740.png?updatedAt=1758480145998&ik-s=9e356d25f22b6b01ba65d7254b79f8aaab614d93" alt="Normal Tournament" class="content-image">
-                
                 <div class="token-container">
-                    <div class="token-box" id="red-token-box">
-                        <h3>Red Token</h3>
-                        <p class="balance" id="red-token-balance">0</p>
-                    </div>
-                    <div class="token-box" id="blue-token-box">
-                        <h3>Blue Token</h3>
-                        <p class="balance" id="blue-token-balance">0</p>
-                    </div>
+                    <div class="token-box" id="red-token-box"><h3>Red Token</h3><p class="balance" id="red-token-balance">0</p></div>
+                    <div class="token-box" id="blue-token-box"><h3>Blue Token</h3><p class="balance" id="blue-token-balance">0</p></div>
                 </div>
-
-                <div class="tournaments-grid" id="normal-tournaments-grid">
-                    <!-- Tournament cards will be dynamically generated here by JS -->
-                </div>
+                <div class="tournaments-grid" id="normal-tournaments-grid"></div>
             </div>
-
-            <!-- Tab 2 Content: Power Tournaments -->
+            <!-- Tab 2: Power Tournaments -->
             <div id="tab-2" class="tab-content">
                 <h2 class="content-title">Power Tournament</h2>
                 <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-19_15-42-42-048.png?updatedAt=1758287984590&ik-s=818768f764ed7e928bf055f4f632c881cb77ec24" alt="Power Tournament" class="content-image">
-                
                 <div class="token-container">
-                    <div class="token-box" id="power-coin-box">
-                        <h3>Power Coin</h3>
-                        <p class="balance" id="power-coin-balance">0</p>
-                    </div>
+                    <div class="token-box" id="power-coin-box"><h3>Power Coin</h3><p class="balance" id="power-coin-balance">0</p></div>
                 </div>
-
-                <div class="tournaments-grid" id="power-tournaments-grid">
-                    <!-- Power tournament cards will be dynamically generated here by JS -->
-                </div>
+                <div class="tournaments-grid" id="power-tournaments-grid"></div>
             </div>
-
-            <button id="start-booked-tournament-btn" class="start-booked-btn" style="display: none;" onclick="window.location.href='start.html'">
-                Start Booked Tournament
-            </button>
+            <button id="start-booked-tournament-btn" class="start-booked-btn" style="display: none;" onclick="window.location.href='tournament.html'">Start Booked Tournament</button>
             <button id="logout-btn" class="logout-btn">Log Out</button>
-
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="site-footer">
+    <!-- 4. Footer (from template) -->
+    <footer>
         <div class="social-links">
-            <a href="https://www.instagram.com/silent.gamers?igsh=MWN6bGdsdzhyb3Nicw==" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.youtube.com/@SilentGaminghub1" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.instagram.com/silent.gamers?igsh=MWN6bGdsdzhyb3Nicw==" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@SilentGaminghub1" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
         </div>
     </footer>
-    
-    <!-- Floating Support Widget -->
-    <div class="support-widget" id="support-widget">
-        <div class="support-options">
-            <a href="https://wa.me/7037843807?text=hello%20sir%20i%20want%20a%20help%20about%20silentgamers" class="support-option" target="_blank"><i class="fab fa-whatsapp"></i> Chat Support</a>
-            <a href="tel:7078343501" class="support-option"><i class="fas fa-phone"></i> Call Support</a>
+
+    <!-- 5. Floating Support Widget (from template) -->
+    <div class="fab-container" id="fab-container">
+        <div class="fab-main" id="fab-main" role="button" aria-label="Open support options"><i class="fas fa-headset"></i></div>
+        <div class="fab-options">
+            <a href="tel:7078343501" class="fab-option"><i class="fas fa-phone-alt"></i><span>Call Support</span></a>
+            <a href="https://wa.me/7037843807?text=hello%20sir%20i%20want%20a%20help%20about%20silentgamers" target="_blank" rel="noopener noreferrer" class="fab-option"><i class="fab fa-whatsapp"></i><span>Chat Support</span></a>
         </div>
-        <button class="fab-main" id="fab-main"><i class="fas fa-headset"></i></button>
     </div>
-
-    <!-- Refresh Button -->
+    
+    <!-- Unique Content: Refresh Button, Modal -->
     <button id="refresh-btn" class="refresh-btn" title="Instant Refresh"><i class="fas fa-sync-alt"></i></button>
-
-    <!-- Generic Modal -->
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
             <button class="modal-close">&times;</button>
             <h3 id="modal-title"></h3>
             <p id="modal-message"></p>
-            <a href="#" id="modal-btn" class="modal-btn" style="display: none;"></a>
         </div>
     </div>
-    
+
+    <!-- Combined JavaScript -->
     <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // --- TEMPLATE UI LOGIC ---
+        const header = document.getElementById('header');
+        const mainContent = document.getElementById('main-content');
+        const menuTrigger = document.getElementById('menu-trigger');
+        const navMenu = document.getElementById('nav-menu');
+        const fabContainer = document.getElementById('fab-container');
+
+        const adjustMainContentPadding = () => {
+            mainContent.style.paddingTop = `${header.offsetHeight + 20}px`;
+        };
+        adjustMainContentPadding();
+        window.addEventListener('resize', adjustMainContentPadding);
+
+        menuTrigger.addEventListener('click', () => navMenu.classList.toggle('menu-open'));
+
+        fabContainer.addEventListener('click', (event) => {
+            if (event.target.closest('#fab-main')) fabContainer.classList.toggle('active');
+        });
+        document.addEventListener('click', (event) => {
+            if (!fabContainer.contains(event.target)) fabContainer.classList.remove('active');
+        });
+
+        // --- PAGE-SPECIFIC DYNAMIC LOGIC ---
+        
         // --- CONFIGURATION ---
         const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz6sNqsp96mcmfZxZ96G7UyzJmtT_IYux1U0emvtg1H8tMIaQIZLRrCVOodiEPQSFvSvA/exec';
 
         // --- API HELPER ---
         async function callAppsScript(functionName, args = []) {
             const response = await fetch(WEB_APP_URL, {
-                method: 'POST',
-                redirect: 'follow', 
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                method: 'POST', redirect: 'follow', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                 body: JSON.stringify({ functionName, args }),
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -488,37 +486,17 @@
             return result.data;
         }
 
-        // --- STATE MANAGEMENT ---
-        let userData = null;
-        let tokenRefreshInterval = null;
-        let loginProgressTimeout = null;
-
-        // --- ELEMENTS & DATA ---
-        const loginOverlay = document.getElementById('login-overlay');
-        const loginForm = document.getElementById('login-form');
-        const loginError = document.getElementById('login-error');
-        const mobileInput = document.getElementById('mobile');
-        const passwordInput = document.getElementById('password');
-        const remindMeCheckbox = document.getElementById('remind-me');
-        const loadingSpinner = document.getElementById('loading-spinner');
-        const menuTrigger = document.getElementById('menu-trigger');
-        const navMenu = document.getElementById('slide-out-nav');
-        const navCloseBtn = document.getElementById('nav-close-btn');
-        const supportWidget = document.getElementById('support-widget');
-        const tabButtons = document.querySelectorAll('.tab-btn');
-        const tabContents = document.querySelectorAll('.tab-content');
-        const refreshBtn = document.getElementById('refresh-btn');
-        const logoutBtn = document.getElementById('logout-btn');
-        const startBookedBtn = document.getElementById('start-booked-tournament-btn');
-        const modal = document.getElementById('modal');
-        const modalTitle = document.getElementById('modal-title');
-        const modalMessage = document.getElementById('modal-message');
-        const modalBtn = document.getElementById('modal-btn');
-
-        // Login animation elements
-        const loginProgressContainer = document.getElementById('login-progress-container');
-        const loginProgressText = document.getElementById('login-progress-text');
-        const loginProgressBarFill = document.querySelector('.progress-bar-fill');
+        // --- STATE & ELEMENTS ---
+        let userData = null, tokenRefreshInterval = null, loginProgressTimeout = null;
+        const loginOverlay = document.getElementById('login-overlay'), loginForm = document.getElementById('login-form'),
+              loginError = document.getElementById('login-error'), mobileInput = document.getElementById('mobile'),
+              passwordInput = document.getElementById('password'), remindMeCheckbox = document.getElementById('remind-me'),
+              loadingSpinner = document.getElementById('loading-spinner'), tabButtons = document.querySelectorAll('.tab-btn'),
+              tabContents = document.querySelectorAll('.tab-content'), refreshBtn = document.getElementById('refresh-btn'),
+              logoutBtn = document.getElementById('logout-btn'), startBookedBtn = document.getElementById('start-booked-tournament-btn'),
+              modal = document.getElementById('modal'), modalTitle = document.getElementById('modal-title'),
+              modalMessage = document.getElementById('modal-message'), loginProgressContainer = document.getElementById('login-progress-container'),
+              loginProgressText = document.getElementById('login-progress-text'), loginProgressBarFill = document.querySelector('.progress-bar-fill');
         
         const normalTournamentsData = [
             { id: 1, time: '12PM', time24: '12:00', fee: 10, img: 'https://ik.imagekit.io/silentgamers/SILENT_20251003_232223_0000.png?updatedAt=1759514171688&ik-s=a8e9a9e69272de1573c60875e2a36d42dbcbf532' },
@@ -526,7 +504,6 @@
             { id: 3, time: '2PM',  time24: '14:00', fee: 10, img: 'https://ik.imagekit.io/silentgamers/SILENT_20251003_231641_0000.png?updatedAt=1759514171839&ik-s=a037d9d67132f851731e18bab67557f48bf8d703' },
             { id: 4, time: '3PM',  time24: '15:00', fee: 50, img: 'https://ik.imagekit.io/silentgamers/SILENT_20251003_232540_0000.png?updatedAt=1759514171791&ik-s=737709b0c3cd2394d1e683a1a1d10fafc428a38c' },
         ];
-        
         const powerTournamentsData = [
             { type: 'solo', fee: 399, gif: 'https://ik.imagekit.io/silentgamers/SOLO_20251005_222034_0006.gif?updatedAt=1759683081062&ik-s=2101dc35a2457bc21add83f3f79ffd3416764077', date: '2026-01-26T12:00:00' },
             { type: 'squad', fee: 499, gif: 'https://ik.imagekit.io/silentgamers/player-1_20251005_213143_0003.gif?updatedAt=1759680194812&ik-s=699301a86a0ca8a25643f1d02460d7a26ed8e4bb', date: '2026-01-01T12:00:00' }
@@ -535,15 +512,9 @@
         // --- UI FUNCTIONS ---
         const showLoader = () => loadingSpinner.style.display = 'flex';
         const hideLoader = () => loadingSpinner.style.display = 'none';
-        
-        const showModal = (title, message, btnText = '', btnLink = '#') => {
+        const showModal = (title, message) => {
             modalTitle.textContent = title;
             modalMessage.innerHTML = message;
-            modalBtn.style.display = (btnText && btnLink) ? 'inline-block' : 'none';
-            if (btnText && btnLink) {
-                modalBtn.textContent = btnText;
-                modalBtn.href = btnLink;
-            }
             modal.classList.add('active');
         };
         const hideModal = () => modal.classList.remove('active');
@@ -554,9 +525,7 @@
                 loginProgressContainer.style.display = 'block';
                 loginProgressBarFill.classList.add('animating');
                 loginProgressText.textContent = 'Connecting...';
-                loginProgressTimeout = setTimeout(() => {
-                    loginProgressText.textContent = 'Authenticating...';
-                }, 1000);
+                loginProgressTimeout = setTimeout(() => loginProgressText.textContent = 'Authenticating...', 1000);
             } else {
                 clearTimeout(loginProgressTimeout);
                 loginForm.style.display = 'block';
@@ -568,11 +537,9 @@
         // --- CORE LOGIC ---
         function handleLogin(e) {
             e.preventDefault();
-            const mobile = mobileInput.value;
-            const password = passwordInput.value;
+            const mobile = mobileInput.value, password = passwordInput.value;
             loginError.textContent = '';
             toggleLoginProgress(true);
-            
             setTimeout(() => {
                 loginProgressText.textContent = 'Access Granted!';
                 callAppsScript('loginUser', [mobile, password]).then(onLoginSuccess).catch(onLoginFailure);
@@ -594,9 +561,7 @@
                     initializeUserSession();
                     toggleLoginProgress(false);
                 }, 500);
-            } else {
-                throw new Error("Invalid login data received.");
-            }
+            } else throw new Error("Invalid login data received.");
         }
 
         function onLoginFailure(error) {
@@ -609,7 +574,6 @@
         }
 
         function initializeUserSession() {
-            populateUserInfo();
             generateNormalTournamentCards();
             generatePowerTournamentCards();
             refreshAllData();
@@ -622,7 +586,6 @@
             document.querySelectorAll('.user-username').forEach(el => el.textContent = userData.username);
             document.querySelectorAll('.user-gamename').forEach(el => el.textContent = userData.gameName);
             document.querySelectorAll('.user-gameuid').forEach(el => el.textContent = userData.gameUid);
-            updateTokenDisplay({ red: userData.redToken, blue: userData.blueToken, power: userData.powerCoin });
         }
 
         function updateTokenDisplay(tokens) {
@@ -639,95 +602,75 @@
         }
         
         function getNextTournamentDate() {
-            let date = new Date();
-            date.setDate(date.getDate() + 1);
-            while (date.getDay() === 1 || date.getDay() === 2) {
-                date.setDate(date.getDate() + 1);
-            }
+            let date = new Date(); date.setDate(date.getDate() + 1);
+            while (date.getDay() === 1 || date.getDay() === 2) date.setDate(date.getDate() + 1);
             return date.toLocaleDateString('en-GB'); // DD/MM/YYYY
         }
 
         function generateNormalTournamentCards() {
-            const container = document.getElementById('normal-tournaments-grid');
-            const tournamentDate = getNextTournamentDate();
+            const container = document.getElementById('normal-tournaments-grid'), date = getNextTournamentDate();
             container.innerHTML = '';
             normalTournamentsData.forEach(t => {
-                container.innerHTML += `
-                    <div class="tournament-card">
-                        <div class="card-header"><span class="tournament-number">${t.id}</span><img src="${t.img}" class="card-img"></div>
-                        <div class="card-body">
-                            <div>
-                                <p>Username: <span class="glowing user-username">${userData.username}</span></p>
-                                <p>Game Name: <span class="glowing user-gamename">${userData.gameName}</span></p>
-                                <p>Game UID: <span class="glowing user-gameuid">${userData.gameUid}</span></p>
-                                <p class="date-time">${tournamentDate} - ${t.time}</p>
-                            </div>
-                            <div class="card-actions">
-                                <button class="card-btn rule-btn" data-type="normal">Rule</button>
-                                <a href="https://silentgaminghub8-web.github.io/silent.gamers-web.github.io/calculate.html" target="_blank" class="card-btn">Reward</a>
-                                <button class="card-btn join-btn" data-id="${t.id}" data-time24="${t.time24}" data-fee="${t.fee}" disabled>Checking...</button>
-                            </div>
-                        </div>
-                    </div>`;
+                container.innerHTML += `<div class="tournament-card">
+                    <div class="card-header"><span class="tournament-number">${t.id}</span><img src="${t.img}" class="card-img"></div>
+                    <div class="card-body"><div>
+                        <p>Username: <span class="glowing user-username"></span></p>
+                        <p>Game Name: <span class="glowing user-gamename"></span></p>
+                        <p>Game UID: <span class="glowing user-gameuid"></span></p>
+                        <p>${date} - ${t.time}</p></div>
+                        <div class="card-actions">
+                            <button class="card-btn rule-btn" data-type="normal">Rule</button>
+                            <a href="https://silentgaminghub8-web.github.io/silent.gamers-web.github.io/calculate.html" target="_blank" class="card-btn">Reward</a>
+                            <button class="card-btn join-btn" data-id="${t.id}" data-time24="${t.time24}" data-fee="${t.fee}" disabled>Checking...</button>
+                        </div></div></div>`;
             });
+            populateUserInfo();
         }
         
         function generatePowerTournamentCards() {
             const container = document.getElementById('power-tournaments-grid');
             container.innerHTML = '';
             powerTournamentsData.forEach(t => {
-                container.innerHTML += `
-                    <div class="tournament-card">
-                        <div class="card-header"><img src="${t.gif}" class="card-gif"></div>
-                        <div class="card-body">
-                            <div>
-                                <p>Username: <span class="glowing user-username">${userData.username}</span></p>
-                                <p>Game Name: <span class="glowing user-gamename">${userData.gameName}</span></p>
-                                <p>Game UID: <span class="glowing user-gameuid">${userData.gameUid}</span></p>
-                            </div>
-                            <div class="card-actions">
-                                <button class="card-btn rule-btn" data-type="${t.type}">Rule</button>
-                                <button class="card-btn reward-btn" data-type="${t.type}">Reward</button>
-                            </div>
-                            <div id="join-container-${t.type}">
-                                <button class="card-btn join-btn" data-type="${t.type}" data-fee="${t.fee}" disabled>Checking...</button>
-                            </div>
+                container.innerHTML += `<div class="tournament-card">
+                    <div class="card-header"><img src="${t.gif}" class="card-gif"></div>
+                    <div class="card-body"><div>
+                        <p>Username: <span class="glowing user-username"></span></p>
+                        <p>Game Name: <span class="glowing user-gamename"></span></p>
+                        <p>Game UID: <span class="glowing user-gameuid"></span></p></div>
+                        <div class="card-actions">
+                            <button class="card-btn rule-btn" data-type="${t.type}">Rule</button>
+                            <button class="card-btn reward-btn" data-type="${t.type}">Reward</button>
                         </div>
-                    </div>`;
+                        <div id="join-container-${t.type}"><button class="card-btn join-btn" data-type="${t.type}" data-fee="${t.fee}" disabled>Checking...</button></div>
+                    </div></div>`;
             });
+            populateUserInfo();
         }
 
         async function refreshAllData() {
             showLoader();
             try {
-                const tokens = await callAppsScript('getUserTokens', [userData.mobile]);
+                const [tokens, joinedData] = await Promise.all([
+                    callAppsScript('getUserTokens', [userData.mobile]),
+                    callAppsScript('getJoinedTournaments', [userData.mobile])
+                ]);
                 updateTokenDisplay(tokens);
-                const joinedData = await callAppsScript('getJoinedTournaments', [userData.mobile]);
                 updateUIWithJoinedStatus(joinedData);
-            } catch (error) {
-                onFailure(error);
-            }
+            } catch (error) { onFailure(error); }
         }
 
         async function refreshTokenData() {
              try {
                 const tokens = await callAppsScript('getUserTokens', [userData.mobile]);
                 updateTokenDisplay(tokens);
-            } catch (error) {
-                console.error("Token refresh failed:", error.message);
-            }
+            } catch (error) { console.error("Token refresh failed:", error.message); }
         }
         
         function updateUIWithJoinedStatus(joinedData) {
             document.querySelectorAll('#normal-tournaments-grid .join-btn').forEach(btn => {
-                const tournamentId = parseInt(btn.dataset.id);
-                if (joinedData.normal.includes(tournamentId)) {
-                    btn.disabled = true;
-                    btn.textContent = 'Joined';
-                    btn.classList.add('joined');
-                } else {
-                    btn.disabled = false;
-                }
+                if (joinedData.normal.includes(parseInt(btn.dataset.id))) {
+                    btn.disabled = true; btn.textContent = 'Joined'; btn.classList.add('joined');
+                } else btn.disabled = false;
             });
             powerTournamentsData.forEach(t => {
                 if (joinedData.power.includes(t.type)) {
@@ -739,150 +682,96 @@
                     if(btn) btn.disabled = false;
                 }
             });
-            
-            updateJoinButtonStatus(); 
-            hideLoader();
+            updateJoinButtonStatus(); hideLoader();
         }
         
         function updateJoinButtonStatus() {
             if (!userData) return;
             document.querySelectorAll('#normal-tournaments-grid .join-btn').forEach(btn => {
-                 if (!btn.disabled) {
+                if (!btn.disabled) {
                     const fee = parseInt(btn.dataset.fee);
-                    if (userData.redToken < fee) {
-                        btn.textContent = 'Add Red Tokens';
-                        btn.classList.add('add-tokens');
-                    } else {
-                        btn.textContent = `Join (${fee} RT)`;
-                        btn.classList.remove('add-tokens');
-                    }
-                 }
-            });
-             document.querySelectorAll('#power-tournaments-grid .join-btn').forEach(btn => {
-                if (!btn.disabled && !btn.closest('.countdown-timer')) {
-                    const fee = parseInt(btn.dataset.fee);
-                    if (userData.powerCoin < fee) {
-                        btn.disabled = true;
-                        btn.textContent = 'Not Enough PC';
-                    } else {
-                        btn.disabled = false;
-                        btn.textContent = `Join (${fee} PC)`;
-                    }
+                    btn.textContent = (userData.redToken < fee) ? 'Add Red Tokens' : `Join (${fee} RT)`;
+                    btn.classList.toggle('add-tokens', userData.redToken < fee);
                 }
-             });
+            });
+            document.querySelectorAll('#power-tournaments-grid .join-btn').forEach(btn => {
+                if (!btn.disabled) {
+                    const fee = parseInt(btn.dataset.fee);
+                    btn.disabled = userData.powerCoin < fee;
+                    btn.textContent = userData.powerCoin < fee ? 'Not Enough PC' : `Join (${fee} PC)`;
+                }
+            });
         }
 
         function handleJoinClick(e) {
             const target = e.target.closest('.join-btn');
             if (!target || target.disabled) return;
             showLoader();
-            const isNormal = target.dataset.id;
-            if (isNormal) {
-                if (target.classList.contains('add-tokens')) {
-                    window.location.href = "shop.html";
-                    hideLoader(); return;
-                }
+            if (target.dataset.id) {
+                if (target.classList.contains('add-tokens')) { window.location.href = "shop.html"; hideLoader(); return; }
                 const joinData = {
-                    tournamentNumber: target.dataset.id, time: target.dataset.time24,
-                    entryFee: target.dataset.fee, tournamentDate: getNextTournamentDate(), 
-                    mobile: userData.mobile, gameName: userData.gameName, gameUid: userData.gameUid
+                    tournamentNumber: target.dataset.id, time: target.dataset.time24, entryFee: target.dataset.fee,
+                    tournamentDate: getNextTournamentDate(), mobile: userData.mobile,
+                    gameName: userData.gameName, gameUid: userData.gameUid
                 };
                 callAppsScript('processNormalJoin', [joinData]).then(onJoinSuccess).catch(onFailure);
             } else {
-                const joinData = {
+                callAppsScript('processPowerJoin', [{
                     tournamentType: target.dataset.type, entryFee: target.dataset.fee, mobile: userData.mobile,
                     gameName: userData.gameName, gameUid: userData.gameUid,
-                };
-                callAppsScript('processPowerJoin', [joinData]).then(onJoinSuccess).catch(onFailure);
+                }]).then(onJoinSuccess).catch(onFailure);
             }
         }
         
-        function onJoinSuccess(message) {
-            showModal('Success!', message);
-            refreshAllData();
-        }
-        function onFailure(error) {
-            showModal('Error!', error.message || 'An unexpected error occurred.');
-            hideLoader();
-        }
+        const onJoinSuccess = (message) => { showModal('Success!', message); refreshAllData(); };
+        const onFailure = (error) => { showModal('Error!', error.message); hideLoader(); };
 
         function handleLogout() {
-            userData = null;
-            clearInterval(tokenRefreshInterval);
-            localStorage.removeItem('savedMobile');
-            localStorage.removeItem('savedPassword');
-            startBookedBtn.style.display = 'none';
-            loginOverlay.classList.remove('hidden');
-            loginForm.reset();
-            loginError.textContent = '';
+            userData = null; clearInterval(tokenRefreshInterval);
+            localStorage.clear(); startBookedBtn.style.display = 'none';
+            loginOverlay.classList.remove('hidden'); loginForm.reset(); loginError.textContent = '';
         }
 
         function startCountdown(elementId, targetDateStr) {
-            const countDownDate = new Date(targetDateStr).getTime();
-            const el = document.getElementById(elementId);
-            if (!el) return;
+            const el = document.getElementById(elementId); if (!el) return;
             const interval = setInterval(() => {
-                const now = new Date().getTime();
-                const distance = countDownDate - now;
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                el.innerHTML = `Starts in: <br> ${days}d ${hours}h ${minutes}m ${seconds}s`;
-                if (distance < 0) {
-                    clearInterval(interval);
-                    el.innerHTML = "Tournament has started!";
-                }
+                const distance = new Date(targetDateStr).getTime() - new Date().getTime();
+                if (distance < 0) { clearInterval(interval); el.innerHTML = "Tournament has started!"; return; }
+                const d = Math.floor(distance / 864e5), h = Math.floor(distance % 864e5 / 36e5),
+                      m = Math.floor(distance % 36e5 / 6e4), s = Math.floor(distance % 6e4 / 1e3);
+                el.innerHTML = `Starts in: <br> ${d}d ${h}h ${m}m ${s}s`;
             }, 1000);
         }
 
         function handleModalPopup(e) {
             const target = e.target.closest('.token-box, .card-btn');
             if (!target) return;
-            if (target.closest('#red-token-box')) {
-                showModal('Red Tokens', 'These are the entry tokens for tournaments.', 'Go to Shop', 'shop.html');
-            } else if (target.closest('#blue-token-box')) {
-                showModal('Blue Tokens', 'This is your winning amount. Go to your dashboard to withdraw or convert into red.', 'Dashboard', 'profile.html');
-            } else if (target.closest('#power-coin-box')) {
-                showModal('Power Coins', 'Please go to shop for Power Coins.', 'Go to Shop', 'shop.html');
-            } else if (target.classList.contains('rule-btn')) {
-                const type = target.dataset.type;
+            if (target.closest('#red-token-box')) showModal('Red Tokens', 'Entry tokens for tournaments. Go to Shop to buy more.', 'Go to Shop', 'shop.html');
+            else if (target.closest('#blue-token-box')) showModal('Blue Tokens', 'Your winning amount. Go to your dashboard to withdraw or convert.', 'Dashboard', 'profile.html');
+            else if (target.closest('#power-coin-box')) showModal('Power Coins', 'Entry currency for Power Tournaments. Go to Shop to buy more.', 'Go to Shop', 'shop.html');
+            else if (target.classList.contains('rule-btn')) {
                 let rules = '';
-                if (type === 'normal') rules = "If we find anybody using a hack, we will suspend their tournament account. If we find anyone teaming up with opponents, we will apply a 5-day ban.";
-                else if (type === 'solo') rules = "Common Rule: No hacking or teaming up. ⚔️ Special Rule: If we find anyone teaming up with opponents to grab kills, we apply a restriction on their Silent Gamers profile (ban).";
-                else if (type === 'squad') rules = "Common Rule: No hacking or teaming up. ⚔️ Special Last-Zone Rule: If the final circle has 5 players (4 from one team and 1 solo), and the solo player eliminates all 4 opponents, that solo player's team is declared the winner.";
+                switch (target.dataset.type) {
+                    case 'normal': rules = "No hacking or teaming up."; break;
+                    case 'solo': rules = "No hacking. If you team up with opponents, your account will be banned."; break;
+                    case 'squad': rules = "No hacking. Last Zone Rule: If a solo player eliminates a full 4-person squad, the solo player's team wins."; break;
+                }
                 showModal('Rules', rules);
             } else if (target.classList.contains('reward-btn')) {
-                 const type = target.dataset.type;
-                 let rewards = '';
-                 if(type === 'solo') rewards = '1500 blue tokens per kill. <br> 1,50,000 cash prize for the winner.';
-                 else if (type === 'squad') rewards = '2000 blue tokens per kill. <br> 2,00,000 cash prize for the winning team.';
-                 showModal('Rewards', rewards);
+                 showModal('Rewards', target.dataset.type === 'solo' ? '1500 BT per kill. 1,50,000 cash prize.' : '2000 BT per kill. 2,00,000 cash prize.');
             }
         }
         
         // --- AUTO-LOGIN & EVENT LISTENERS ---
-        const savedMobile = localStorage.getItem('savedMobile');
-        const savedPassword = localStorage.getItem('savedPassword');
+        const savedMobile = localStorage.getItem('savedMobile'), savedPassword = localStorage.getItem('savedPassword');
         if (savedMobile && savedPassword) {
-            mobileInput.value = savedMobile;
-            passwordInput.value = savedPassword;
-            remindMeCheckbox.checked = true;
-            loginError.textContent = 'Attempting auto-login...';
-            handleLogin(new Event('submit'));
+            mobileInput.value = savedMobile; passwordInput.value = savedPassword; remindMeCheckbox.checked = true;
+            loginError.textContent = 'Attempting auto-login...'; handleLogin(new Event('submit'));
         }
 
         loginForm.addEventListener('submit', handleLogin);
         refreshBtn.addEventListener('click', refreshAllData);
         logoutBtn.addEventListener('click', handleLogout);
-        menuTrigger.addEventListener('click', () => navMenu.classList.toggle('open'));
-        navCloseBtn.addEventListener('click', () => navMenu.classList.remove('open'));
-        supportWidget.addEventListener('click', (e) => {
-            if(e.target.closest('.fab-main')) supportWidget.classList.toggle('active')
-        });
-        document.addEventListener('click', (e) => {
-            if (!supportWidget.contains(e.target)) supportWidget.classList.remove('active');
-        });
         tabButtons.forEach(button => {
             button.addEventListener('click', () => {
                 tabButtons.forEach(btn => btn.classList.remove('active'));
@@ -894,7 +783,7 @@
         document.body.addEventListener('click', handleJoinClick);
         document.body.addEventListener('click', handleModalPopup);
         modal.addEventListener('click', (e) => {
-            if (e.target.classList.contains('modal-overlay') || e.target.classList.contains('modal-close')) hideModal();
+            if (e.target.matches('.modal-overlay, .modal-close')) hideModal();
         });
     });
     </script>
