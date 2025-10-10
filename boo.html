@@ -4,26 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Silent Gamers - Anti-Hack Department</title>
-    
-    <!-- CDN for Font Awesome (for icons) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <!-- CDN for Google Fonts (for premium title font) -->
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts for luxury title -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS Variables for Color Palette */
+        /* CSS Reset and Global Styles */
         :root {
             --color-black: #0a0a0a;
             --color-white: #ffffff;
             --color-gold: #ffd700;
             --color-orange: #ff8c00;
-            --header-height: 80px; /* Default header height */
+            --header-height: 70px; /* Default header height */
         }
 
-        /* --- 1. Overall Page Structure & Base Styles --- */
         * {
             margin: 0;
             padding: 0;
@@ -38,134 +34,92 @@
             font-family: 'Roboto', sans-serif;
             background-color: var(--color-black);
             color: var(--color-white);
-            line-height: 1.6;
-            /* Padding top is set by JavaScript to avoid content being hidden by the fixed header */
-        }
-        
-        /* Utility class to handle body scroll lock when menu is open */
-        .no-scroll {
-            overflow: hidden;
+            padding-top: var(--header-height); /* Space for fixed header */
         }
 
-        /* --- 2. Header --- */
+        /* 1. Header Styling */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: var(--header-height);
-            z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 5%;
-            
-            /* "Black liquid glass" effect */
-            background-color: rgba(10, 10, 10, 0.7);
+            padding: 0 20px;
+            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px); /* For Safari */
+            -webkit-backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 215, 0, 0.2);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-            transition: height 0.3s ease;
         }
 
-        /* Left Column (Logo) */
         .header-logo a {
-            display: inline-block;
+            display: block;
         }
 
         .header-logo img {
-            height: 60px;
+            height: 50px;
             width: auto;
+            border: 2px solid var(--color-gold);
             border-radius: 50%;
+            box-shadow: 0 0 5px var(--color-gold), 0 0 10px var(--color-gold), 0 0 15px var(--color-orange), inset 0 0 5px rgba(255, 255, 255, 0.5);
             transition: transform 0.3s ease;
-            
-            /* "Glossy border" effect */
-            border: 3px solid var(--color-gold);
-            box-shadow: 
-                0 0 5px var(--color-gold),
-                0 0 10px var(--color-orange),
-                0 0 15px rgba(255, 140, 0, 0.5),
-                inset 0 0 5px rgba(255, 255, 255, 0.3);
         }
-
         .header-logo img:hover {
-            transform: scale(1.1) rotate(5deg);
+            transform: scale(1.1);
         }
 
-        /* Middle Column (Title) */
+        .header-title {
+            flex-grow: 1;
+            text-align: center;
+        }
+
         .header-title h1 {
             font-family: 'Cinzel', serif;
-            font-size: 2rem;
-            font-weight: 700;
+            font-size: 2.5rem;
             color: var(--color-white);
-            
-            /* "Glow with luxury touch" effect */
-            text-shadow: 
-                0 0 5px var(--color-white),
-                0 0 10px var(--color-gold),
-                0 0 20px var(--color-orange),
-                0 0 30px var(--color-orange);
+            text-shadow: 0 0 5px var(--color-white), 0 0 10px var(--color-gold), 0 0 20px var(--color-gold), 0 0 30px var(--color-orange);
         }
 
-        /* Right Column (Menu Trigger) */
         .menu-trigger {
-            background: none;
-            border: none;
             cursor: pointer;
-            width: 40px;
-            height: 30px;
+            width: 30px;
+            height: 22px;
             display: flex;
             flex-direction: column;
-            justify-content: space-around;
-            z-index: 1100; /* Ensure it's above the nav menu's overlay */
+            justify-content: space-between;
         }
-        
-        .menu-trigger .line {
+
+        .menu-trigger span {
+            display: block;
             width: 100%;
             height: 3px;
             background-color: var(--color-white);
-            border-radius: 2px;
-            transition: all 0.3s ease-in-out;
-             /* Gold glow effect on icons */
-            filter: drop-shadow(0 0 3px var(--color-gold));
+            border-radius: 3px;
+            filter: drop-shadow(0 0 2px var(--color-gold));
         }
-
-        /* Animate hamburger to 'X' when active */
-        body.menu-open .menu-trigger .line1 {
-            transform: rotate(45deg) translate(8px, 8px);
-        }
-        body.menu-open .menu-trigger .line2 {
-            opacity: 0;
-        }
-        body.menu-open .menu-trigger .line3 {
-            transform: rotate(-45deg) translate(8px, -8px);
-        }
-
-
-        /* --- 3. Slide-Out Navigation Menu --- */
+        
+        /* 2. Slide-Out Navigation Menu */
         nav {
             position: fixed;
             top: 0;
             right: 0;
             width: 50%;
-            max-width: 400px;
             height: 100vh;
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: rgba(10, 10, 10, 0.9);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             z-index: 999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            
-            /* Initial State: Hidden off-screen */
             transform: translateX(100%);
             transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        
-        /* Active State: Slide into view */
-        body.menu-open nav {
+
+        nav.menu-open {
             transform: translateX(0);
         }
 
@@ -175,34 +129,31 @@
             text-align: center;
         }
 
-        nav ul li {
-            margin: 25px 0;
-        }
-
         nav ul li a {
+            display: block;
+            padding: 15px 20px;
             color: var(--color-white);
             text-decoration: none;
-            font-size: 1.5rem;
-            font-weight: bold;
+            font-size: 1.2rem;
             text-transform: uppercase;
-            padding: 10px;
-            transition: color 0.3s, text-shadow 0.3s;
+            transition: text-shadow 0.3s ease, color 0.3s ease;
         }
-        
+
         nav ul li a:hover,
         nav ul li a:focus {
             color: var(--color-gold);
-            /* Minimal white glow effect on hover/focus */
-            text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.7), 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
-        /* --- 4. Main Content Area --- */
+        /* 3. Main Content Area */
         main {
-            padding: 2rem 5%;
+            padding: 40px 20px;
+            min-height: calc(100vh - var(--header-height) - 100px);
             max-width: 900px;
             margin: 0 auto;
         }
-
+        
+        /* STYLES FOR THIS PAGE'S UNIQUE CONTENT */
         .content-section {
             margin-bottom: 3rem;
             text-align: center;
@@ -228,6 +179,7 @@
             max-width: 700px;
             margin-left: auto;
             margin-right: auto;
+            line-height: 1.7;
         }
 
         .content-section img, .content-section .gif {
@@ -239,191 +191,149 @@
             margin-bottom: 1.5rem;
         }
 
-        /* --- 5. Footer --- */
+
+        /* 4. Footer */
         footer {
+            padding: 20px;
             text-align: center;
-            padding: 2rem 5%;
             border-top: 1px solid rgba(255, 215, 0, 0.2);
-            margin-top: 2rem;
         }
 
         .social-links a {
             color: var(--color-white);
-            font-size: 2.5rem;
+            font-size: 2rem;
             margin: 0 15px;
-            transition: transform 0.3s, color 0.3s;
+            transition: color 0.3s, filter 0.3s;
+        }
+        
+        .social-links a i {
+            filter: drop-shadow(0 0 3px var(--color-gold));
         }
 
         .social-links a:hover {
             color: var(--color-gold);
-            transform: scale(1.2);
-        }
-        
-        .social-links .fab {
-            /* Gold glow effect on icons */
-            filter: drop-shadow(0 0 5px var(--color-gold));
+            filter: drop-shadow(0 0 8px var(--color-gold));
         }
 
-        /* --- 6. Floating Support Widget --- */
-        .support-widget {
+        /* 5. Floating Support Widget */
+        .fab-container {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            z-index: 1001;
-        }
-        
-        .support-options {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            margin-bottom: 10px;
+            z-index: 900;
         }
 
-        .support-option {
-            display: flex;
-            align-items: center;
-            background-color: var(--color-orange);
-            color: var(--color-black);
-            font-weight: bold;
-            text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 20px;
-            margin-bottom: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-
-            /* Initial state: hidden */
-            opacity: 0;
-            transform: translateY(20px);
-            visibility: hidden;
-        }
-
-        .support-option i {
-            margin-right: 8px;
-        }
-
-        /* Active State: show options */
-        .support-widget.active .support-option {
-            opacity: 1;
-            transform: translateY(0);
-            visibility: visible;
-        }
-        
-        .support-option:hover {
-            background-color: var(--color-gold);
-            transform: translateX(-5px);
-        }
-        
         .fab-main {
             width: 60px;
             height: 60px;
-            background: linear-gradient(45deg, var(--color-orange), var(--color-gold));
+            background-color: var(--color-orange);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 140, 0, 0.5);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             transition: transform 0.3s ease;
         }
-        
         .fab-main:hover {
             transform: scale(1.1);
         }
-        
+
         .fab-main i {
             font-size: 1.8rem;
             color: var(--color-white);
-             /* Gold glow effect on icon */
-            filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.5));
+            filter: drop-shadow(0 0 2px var(--color-gold));
+        }
+        
+        .fab-options {
+            position: absolute;
+            bottom: 70px; /* Position above the main FAB */
+            right: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            visibility: hidden;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+        }
+        
+        .fab-container.active .fab-options {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .fab-option {
+            display: flex;
+            align-items: center;
+            background-color: var(--color-orange);
+            color: var(--color-white);
+            padding: 8px 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            white-space: nowrap;
         }
 
+        .fab-option i {
+            font-size: 1.2rem;
+            margin-right: 10px;
+            filter: drop-shadow(0 0 2px var(--color-gold));
+        }
 
-        /* --- 7. Responsiveness --- */
+        /* Responsive Design */
         @media (max-width: 768px) {
             :root {
-                --header-height: 70px; /* Smaller header on mobile */
+                --header-height: 60px;
             }
-
-            header {
-                padding: 0 3%;
-            }
-
-            .header-logo img {
-                height: 50px;
-            }
-
             .header-title h1 {
                 font-size: 1.5rem;
             }
-
+            .header-logo img {
+                height: 40px;
+            }
             nav {
-                width: 80%; /* Wider menu on mobile */
+                width: 80%; /* Wider menu on smaller screens */
             }
-
-            main {
-                padding: 2rem 3%;
-            }
-            
             .content-section h2 {
                 font-size: 2rem;
             }
-            
             .content-section h3 {
                 font-size: 1.3rem;
             }
-            
             .content-section p {
                 font-size: 1rem;
             }
         }
-        
-        @media (max-width: 480px) {
-            :root {
-                --header-height: 60px; /* Even smaller header */
-            }
-            
-            .header-logo {
-                flex-shrink: 0;
-            }
-            
-            .header-logo img {
-                height: 40px;
-            }
-            
+         @media (max-width: 480px) {
             .header-title h1 {
-                font-size: 1.1rem;
-                margin: 0 10px;
-            }
-            
-            nav ul li a {
                 font-size: 1.2rem;
             }
-        }
-
+         }
     </style>
 </head>
 <body>
 
     <!-- 1. Header -->
-    <header id="main-header">
+    <header id="header">
         <div class="header-logo">
-            <a href="/">
+            <a href="index.html">
                 <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-19_15-42-42-048.png?updatedAt=1758287984590&ik-s=818768f764ed7e928bf055f4f632c881cb77ec24" alt="Silent Gamers Logo">
             </a>
         </div>
         <div class="header-title">
             <h1>SILENT GAMERS</h1>
         </div>
-        <button class="menu-trigger" id="menu-trigger" aria-label="Open navigation menu" aria-controls="main-nav" aria-expanded="false">
-            <div class="line line1"></div>
-            <div class="line line2"></div>
-            <div class="line line3"></div>
-        </button>
+        <div class="menu-trigger" id="menu-trigger" role="button" aria-label="Open navigation menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </header>
 
     <!-- 2. Slide-Out Navigation Menu -->
-    <nav id="main-nav">
+    <nav id="nav-menu">
         <ul>
             <li><a href="home.html">home</a></li>
             <li><a href="profile.html">profile</a></li>
@@ -475,7 +385,6 @@
             • Ye sab admin verify karega, fake proof par koi paisa nahi milega.
             </p>
         </section>
-        
     </main>
 
     <!-- 4. Footer -->
@@ -491,72 +400,61 @@
     </footer>
 
     <!-- 5. Floating Support Widget -->
-    <div class="support-widget" id="support-widget">
-        <div class="support-options">
-            <a href="tel:7078343501" class="support-option">
-                <i class="fas fa-phone"></i> Call Support
-            </a>
-            <a href="https://wa.me/7037843807?text=hello%20sir%20i%20want%20a%20help%20about%20silentgamers" target="_blank" rel="noopener noreferrer" class="support-option">
-                <i class="fab fa-whatsapp"></i> Chat Support
-            </a>
-        </div>
-        <div class="fab-main" id="fab-main" aria-label="Open support options">
+    <div class="fab-container" id="fab-container">
+        <div class="fab-main" id="fab-main" role="button" aria-label="Open support options">
             <i class="fas fa-headset"></i>
+        </div>
+        <div class="fab-options">
+            <a href="tel:7078343501" class="fab-option">
+                <i class="fas fa-phone-alt"></i>
+                <span>Call Support</span>
+            </a>
+            <a href="https://wa.me/7037843807?text=hello%20sir%20i%20want%20a%20help%20about%20silentgamers" target="_blank" rel="noopener noreferrer" class="fab-option">
+                <i class="fab fa-whatsapp"></i>
+                <span>Chat Support</span>
+            </a>
         </div>
     </div>
 
-
+    <!-- JavaScript -->
     <script>
-        // All JavaScript is placed here, just before the closing </body> tag.
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', () => {
 
-            // --- 1. Header Offset Calculation ---
-            // This function ensures the main content starts below the fixed header.
-            const header = document.getElementById('main-header');
+            // --- Get All Necessary Element References ---
+            const header = document.getElementById('header');
             const mainContent = document.getElementById('main-content');
-            
-            function setMainContentPadding() {
+            const menuTrigger = document.getElementById('menu-trigger');
+            const navMenu = document.getElementById('nav-menu');
+            const fabContainer = document.getElementById('fab-container');
+
+            // --- Dynamic Header Padding ---
+            const adjustMainContentPadding = () => {
                 const headerHeight = header.offsetHeight;
                 document.body.style.paddingTop = `${headerHeight}px`;
-            }
+            };
+            adjustMainContentPadding();
+            window.addEventListener('resize', adjustMainContentPadding);
 
-            // Set padding on initial load and on window resize
-            setMainContentPadding();
-            window.addEventListener('resize', setMainContentPadding);
+            // --- Menu Toggle Logic ---
+            menuTrigger.addEventListener('click', () => {
+                navMenu.classList.toggle('menu-open');
+                const isExpanded = navMenu.classList.contains('menu-open');
+                menuTrigger.setAttribute('aria-expanded', isExpanded);
+            });
 
-
-            // --- 2. Slide-Out Menu Toggle Logic ---
-            const menuTrigger = document.getElementById('menu-trigger');
-            const body = document.body;
-
-            menuTrigger.addEventListener('click', function() {
-                // Toggle a class on the body to control the menu and other states (like scroll lock)
-                body.classList.toggle('menu-open');
-
-                // Update ARIA attribute for accessibility
-                const isExpanded = this.getAttribute('aria-expanded') === 'true';
-                this.setAttribute('aria-expanded', !isExpanded);
-                
-                // Optional: Lock body scroll when menu is open
-                if (body.classList.contains('menu-open')) {
-                    body.classList.add('no-scroll');
-                } else {
-                    body.classList.remove('no-scroll');
+            // --- Floating Support Widget Logic ---
+            fabContainer.addEventListener('click', (event) => {
+                if (event.target.closest('#fab-main')) {
+                    fabContainer.classList.toggle('active');
                 }
             });
-
-
-            // --- 3. Floating Support Widget Logic ---
-            const supportWidget = document.getElementById('support-widget');
-            
-            supportWidget.addEventListener('click', function(event) {
-                // We use currentTarget to ensure we toggle the class on the main container,
-                // even if a sub-option is clicked on its way out.
-                event.currentTarget.classList.toggle('active');
+            // Close the FAB options if clicking outside
+            document.addEventListener('click', (event) => {
+                if (!fabContainer.contains(event.target)) {
+                    fabContainer.classList.remove('active');
+                }
             });
-
         });
     </script>
-
 </body>
 </html>
