@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silent Gamers - CEO</title>
+    
+    <!-- Google Fonts for premium title font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* ---------------------------------- */
+        /* --- 1. Global Styles & Setup --- */
+        /* ---------------------------------- */
+        :root {
+            --black: #0a0a0a;
+            --white: #f0f0f0;
+            --gold: #FFD700;
+            --orange: #FFA500;
+            --dark-gray: #1a1a1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+        }
+
+        /* ----------------------------- */
+        /* --- 2. Header & Title --- */
+        /* ----------------------------- */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            
+            /* Black liquid glass effect */
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); /* For Safari */
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            transition: padding 0.3s ease;
+        }
+
+        .header-logo a {
+            display: inline-block;
+        }
+
+        .header-logo img {
+            height: 50px;
+            width: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+            /* Glossy border effect */
+            border: 2px solid var(--gold);
+            box-shadow: 0 0 10px var(--gold), 0 0 20px var(--orange), inset 0 0 5px rgba(255, 255, 255, 0.5);
+            transition: transform 0.3s ease;
+        }
+        .header-logo img:hover {
+            transform: scale(1.1);
+        }
+
+        .header-title h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: var(--white);
+            flex-grow: 1;
+            text-align: center;
+            /* Glow with luxury touch effect */
+            text-shadow: 0 0 5px var(--gold), 0 0 10px var(--gold), 0 0 15px var(--orange), 0 0 20px var(--orange);
+            margin: 0; /* Reset margin */
+        }
+        
+        .menu-trigger {
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 1001; /* Above nav */
+            padding: 10px;
+        }
+        .hamburger-icon {
+            width: 30px;
+            height: 22px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .hamburger-icon span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: var(--white);
+            border-radius: 3px;
+            transition: all 0.3s ease-in-out;
+            filter: drop-shadow(0 0 3px var(--gold));
+        }
+
+        /* ------------------------------------- */
+        /* --- 3. Slide-Out Navigation Menu --- */
+        /* ------------------------------------- */
+        .main-nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100vh;
+            background-color: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 999;
+            
+            /* Hidden off-screen by default */
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main-nav.is-active {
+            /* Slide into view */
+            transform: translateX(0);
+        }
+
+        .main-nav ul {
+            list-style: none;
+            text-align: center;
+        }
+
+        .main-nav li {
+            margin: 20px 0;
+        }
+
+        .main-nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 10px;
+            transition: text-shadow 0.3s ease;
+        }
+
+        .main-nav a:hover,
+        .main-nav a:focus {
+            /* Minimal white glow effect */
+            text-shadow: 0 0 8px var(--white), 0 0 12px var(--gold);
+            outline: none;
+        }
+        
+        /* --------------------------- */
+        /* --- 4. Main Content Area --- */
+        /* --------------------------- */
+        main {
+            padding: 2rem 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .content-section {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--gold);
+            text-shadow: 0 0 10px var(--orange);
+            margin-bottom: 1rem;
+        }
+
+        .ceo-logo {
+            max-width: 150px;
+            margin-bottom: 2rem;
+        }
+        
+        .content-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Special framing with animation for content images */
+        .special-frame {
+            border: 3px solid var(--gold);
+            padding: 5px;
+            background-color: var(--black);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5), 0 0 25px rgba(255, 165, 0, 0.3);
+            animation: pulse-glow 4s infinite alternate;
+        }
+        
+        @keyframes pulse-glow {
+            from {
+                box-shadow: 0 0 15px rgba(255, 215, 0, 0.5), 0 0 25px rgba(255, 165, 0, 0.3);
+            }
+            to {
+                box-shadow: 0 0 25px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 165, 0, 0.5);
+            }
+        }
+
+        .content-note {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+            background: var(--dark-gray);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 5px solid var(--orange);
+        }
+        
+        /* Action Button Styling */
+        .action-button {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--orange), var(--gold));
+            color: var(--black);
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 1.5rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .action-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 165, 0, 0.3);
+        }
+
+        .instagram-link img {
+            width: 50px;
+            transition: transform 0.3s;
+        }
+        .instagram-link img:hover {
+            transform: scale(1.15);
+        }
+
+        /* Modal / Popup Styling */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: var(--dark-gray);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid var(--gold);
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 2rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+        
+        /* ---------------------- */
+        /* --- 5. Footer --- */
+        /* ---------------------- */
+        .site-footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            margin-top: 40px;
+        }
+
+        .social-links a {
+            margin: 0 15px;
+            color: var(--white);
+            font-size: 2rem;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* Glow effect for icons */
+        .icon-glow {
+            filter: drop-shadow(0 0 5px var(--gold));
+        }
+
+        /* ---------------------------------- */
+        /* --- 6. Floating Support Widget --- */
+        /* ---------------------------------- */
+        .fab-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1100;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+        }
+
+        .fab-main {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--orange), var(--gold));
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .fab-main:hover {
+            transform: scale(1.1);
+        }
+        .fab-main i {
+            color: var(--black);
+            font-size: 1.8rem;
+        }
+
+        .fab-options {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            
+            /* Hidden by default */
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+        }
+        
+        /* When active, show the options */
+        .fab-container.active .fab-options {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .fab-option {
+            display: flex;
+            align-items: center;
+            background: var(--dark-gray);
+            border-radius: 50px;
+            padding: 8px 15px;
+            margin-top: 10px;
+            text-decoration: none;
+            color: var(--white);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            white-space: nowrap;
+            transition: background-color 0.3s ease;
+        }
+        
+        .fab-option:hover {
+            background-color: #333;
+        }
+
+        .fab-option i {
+            font-size: 1.2rem;
+            margin-right: 10px;
+            color: var(--white);
+        }
+        
+        /* ---------------------------- */
+        /* --- 7. Responsiveness --- */
+        /* ---------------------------- */
+        @media (max-width: 768px) {
+            .site-header {
+                padding: 10px 15px;
+            }
+            
+            .header-title h1 {
+                font-size: 1.4rem;
+            }
+            
+            .header-logo img {
+                height: 45px;
+                width: 45px;
+            }
+
+            .main-nav {
+                width: 80%; /* Wider menu on mobile */
+            }
+            .main-nav a {
+                font-size: 1.3rem;
+            }
+            
+            main {
+                padding: 2rem 1rem;
+            }
+            .content-section h2 {
+                font-size: 2rem;
+            }
+            .content-note {
+                font-size: 1rem;
+                padding: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header-title h1 {
+                font-size: 1.2rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- ======================= -->
+    <!-- ====== HEADER ========= -->
+    <!-- ======================= -->
+    <header class="site-header" id="site-header">
+        <div class="header-logo">
+            <a href="index.html">
+                <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-19_15-42-42-048.png?updatedAt=1758287984590&ik-s=818768f764ed7e928bf055f4f632c881cb77ec24" alt="Silent Gamers Logo">
+            </a>
+        </div>
+        <div class="header-title">
+            <h1>SILENT GAMERS</h1>
+        </div>
+        <button class="menu-trigger" aria-controls="main-nav" aria-expanded="false" aria-label="Open navigation menu">
+            <div class="hamburger-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>
+    </header>
+
+    <!-- ======================= -->
+    <!-- ===== NAV MENU ======== -->
+    <!-- ======================= -->
+    <nav class="main-nav" id="main-nav">
+        <ul>
+            <li><a href="home.html">home</a></li>
+            <li><a href="profile.html">profile</a></li>
+            <li><a href="shop.html">shop</a></li>
+            <li><a href="signup.html">create new account</a></li>
+            <li><a href="ceo.html">ceo</a></li>
+            <li><a href="coo.html">coo</a></li>
+            <li><a href="boo.html">anti-hacker</a></li>
+            <li><a href="roshi.html">management</a></li>
+            <li><a href="esport.html">e-sport</a></li>
+            <li><a href="tutorial.html">Tutorial ?</a></li>
+        </ul>
+    </nav>
+
+    <!-- ======================= -->
+    <!-- ===== MAIN CONTENT ==== -->
+    <!-- ======================= -->
+    <main>
+        <section class="content-section">
+            <h2>CEO</h2>
+            <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-22_00-09-34-964.png?updatedAt=1758480146212&ik-s=4f744f417100daea8710c3389638e583c2987985" alt="CEO Logo" class="ceo-logo">
+            
+            <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-18_23-29-48-120.jpg?updatedAt=1758219956149&ik-s=5462f428ee0787efbef9f514b6cbddba19ec22ba" alt="Ujjawal Malik Photo 1" class="content-image special-frame">
+            <div class="content-note">
+                <p><strong>Name:</strong> Ujjawal Malik</p>
+                <p><strong>Nickname:</strong> Raj</p>
+                <p><strong>Qualification:</strong> graduated , iti</p>
+                <p>मैं एक simple इंसान हूँ जिसने अपने सपनों को हकीकत बनाने के लिए मेहनत शुरू की। पढ़ाई के साथ-साथ मैंने technology और gaming में अपना interest बनाया और धीरे-धीरे उसे अपनी life का हिस्सा बना लिया।</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-18_23-41-39-582.jpg?updatedAt=1758219956081&ik-s=0bd9e5412f4086d18bca2af50da6a9bfc471563c" alt="Ujjawal Malik Photo 2" class="content-image special-frame">
+            <div class="content-note">
+                <p><strong>My Passion & Purpose</strong></p>
+                <p>2019 में मैं एक e-sport player था, gaming ही मेरी ज़िंदगी थी। लेकिन एक accident ने मेरी life बदल दी और मेरी player journey वहीं खत्म हो गई।</p>
+                <p>तभी से मैंने तय किया कि अगर मैं खुद नहीं खेल सकता, तो दूसरों को मौका दूँगा।</p>
+                <p>इसलिए मैंने tournament hosting शुरू की – ताकि जिन खिलाड़ियों के पास पैसे नहीं हैं वो भी perform कर सकें और earn कर सकें।</p>
+                <p>👉 और इसमें हमारा कोई personal profit नहीं है, ये सिर्फ players के लिए है।</p>
+                <p><strong>My Vision:</strong><br>मेरा vision है कि मैं India का सबसे अच्छा tournament hoster बनूँ और हर खिलाड़ी को बराबर का मौका दे सकूँ।</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-18_23-46-43-142.jpg?updatedAt=1758219955824&ik-s=868e7f46e8761f545958b18e213a7df861bc10da" alt="Ujjawal Malik Photo 3" class="content-image special-frame">
+            <div class="content-note">
+                <p><strong>My Journey</strong></p>
+                <p>मेरी journey 2020 से शुरू हुई, जब मैंने अपना पहला project बनाने का सोचा। उसके लिए मुझे web coding सीखनी पड़ी, जिसकी वजह से काफी समय लग गया।</p>
+                <p>इस दौरान मेरी सबसे बड़ी struggle रही – lack of time और lack of support। लेकिन मैंने कभी हार नहीं मानी।</p>
+                <p>मेरी पहली achievement थी जब मेरे परिवार ने मुझ पर भरोसा किया और मुझे पैसा व समय दिया ताकि मैं अपने passion पर काम कर सकूँ – tournament hosting।</p>
+            </div>
+            <button class="action-button" id="sideIncomeBtn">side income ?</button>
+        </section>
+
+        <section class="content-section">
+            <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-23_05-35-36-905.jpg?updatedAt=1758585972484&ik-s=501e4b88eeb6d5cead71bcd478e25e634973d3c8" alt="Ujjawal Malik Photo 4" class="content-image special-frame">
+            <div class="content-note">
+                <p>मैं मानता हूँ कि ज़िंदगी में आगे बढ़ने के लिए सिर्फ सपने देखना काफी नहीं, बल्कि मेहनत करना और दूसरों के लिए कुछ करना भी ज़रूरी है।</p>
+                <p>मेरे लिए tournament सिर्फ game नहीं है – ये players के लिए एक नया मौका और एक नई उम्मीद है।</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-18_22-50-11-848.jpg?updatedAt=1758219981179&ik-s=35d9b4c777129345625654212b417c50d3f49014" alt="Ujjawal Malik Photo 5" class="content-image special-frame">
+            <a href="https://www.instagram.com/rajmalik_99?igsh=NHhxbXk5bWxudTlw" target="_blank" rel="noopener noreferrer" class="instagram-link">
+                 <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram Logo" style="width: 60px; filter: drop-shadow(0 0 8px #E4405F);">
+            </a>
+        </section>
+        
+        <section class="content-section">
+            <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-18_02-49-16-996.jpg?updatedAt=1758210646096&ik-s=27b563dd19b086b5a19cb5c89f8b3c2253c469e6" alt="Ujjawal Malik Photo 6" class="content-image special-frame">
+        </section>
+
+    </main>
+    
+    <!-- Side Income Popup/Modal -->
+    <div class="modal-overlay" id="sideIncomeModal">
+        <div class="modal-content">
+            <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close popup">&times;</button>
+            <p><strong>Professional Side</strong></p>
+            <p>Gaming और tournament hosting के साथ-साथ मैं trading भी करता हूँ। लेकिन मैं उस तरह का trader नहीं हूँ जो courses बेचता है या Instagram पर show-off करता है।</p>
+            <p>ये मेरे लिए सिर्फ एक side income source है, main focus हमेशा gaming और tournaments पर ही रहेगा।</p>
+        </div>
+    </div>
+
+
+    <!-- ======================= -->
+    <!-- ====== FOOTER ========= -->
+    <!-- ======================= -->
+    <footer class="site-footer">
+        <div class="social-links">
+            <a href="https://www.instagram.com/silent.gamers?igsh=MWN6bGdsdzhyb3Nicw==" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <i class="fa-brands fa-instagram icon-glow"></i>
+            </a>
+            <a href="https://www.youtube.com/@SilentGaminghub1" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                <i class="fa-brands fa-youtube icon-glow"></i>
+            </a>
+        </div>
+    </footer>
+
+    <!-- ======================= -->
+    <!-- ===== FAB WIDGET ====== -->
+    <!-- ======================= -->
+    <div class="fab-container" id="fab-container">
+        <div class="fab-options">
+            <a href="tel:7078343501" class="fab-option">
+                <i class="fa-solid fa-phone icon-glow"></i>
+                <span>Call Support</span>
+            </a>
+            <a href="https://wa.me/7037843807?text=hello%20sir%20i%20want%20a%20help%20about%20silentgamers" target="_blank" rel="noopener noreferrer" class="fab-option">
+                <i class="fa-brands fa-whatsapp icon-glow"></i>
+                <span>Chat Support</span>
+            </a>
+        </div>
+        <div class="fab-main" id="fab-main" role="button" aria-expanded="false" aria-label="Open support options">
+            <i class="fa-solid fa-headset"></i>
+        </div>
+    </div>
+
+    <script>
+        // Use DOMContentLoaded to ensure the script runs after the document is fully loaded.
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Element Selections ---
+            const header = document.getElementById('site-header');
+            const menuTrigger = document.querySelector('.menu-trigger');
+            const navMenu = document.getElementById('main-nav');
+            const fabContainer = document.getElementById('fab-container');
+            const fabMain = document.getElementById('fab-main');
+            const sideIncomeBtn = document.getElementById('sideIncomeBtn');
+            const sideIncomeModal = document.getElementById('sideIncomeModal');
+            const modalCloseBtn = document.getElementById('modalCloseBtn');
+            
+            // --- Function to set dynamic padding for fixed header ---
+            // This prevents the main content from being obscured by the header.
+            function setBodyPadding() {
+                const headerHeight = header.offsetHeight;
+                document.body.style.paddingTop = `${headerHeight}px`;
+            }
+
+            // --- Menu Toggle Logic ---
+            // Toggles the 'is-active' class on the nav menu to show/hide it.
+            if (menuTrigger && navMenu) {
+                menuTrigger.addEventListener('click', () => {
+                    navMenu.classList.toggle('is-active');
+                    const isExpanded = menuTrigger.getAttribute('aria-expanded') === 'true';
+                    menuTrigger.setAttribute('aria-expanded', !isExpanded);
+                });
+            }
+
+            // --- Floating Action Button (FAB) Logic ---
+            // Toggles the 'active' class on the FAB container to show/hide support options.
+            if (fabMain && fabContainer) {
+                fabMain.addEventListener('click', () => {
+                    fabContainer.classList.toggle('active');
+                    const isExpanded = fabMain.getAttribute('aria-expanded') === 'true';
+                    fabMain.setAttribute('aria-expanded', !isExpanded);
+                });
+            }
+            
+            // --- Side Income Modal/Popup Logic ---
+            if(sideIncomeBtn && sideIncomeModal && modalCloseBtn){
+                // Show modal on button click
+                sideIncomeBtn.addEventListener('click', () => {
+                    sideIncomeModal.style.display = 'flex';
+                });
+                
+                // Hide modal on close button click
+                modalCloseBtn.addEventListener('click', () => {
+                    sideIncomeModal.style.display = 'none';
+                });
+                
+                // Hide modal on overlay click
+                sideIncomeModal.addEventListener('click', (event) => {
+                    if (event.target === sideIncomeModal) {
+                        sideIncomeModal.style.display = 'none';
+                    }
+                });
+            }
+            
+            // --- Initial and Responsive Setup ---
+            // Set the padding initially when the page loads.
+            setBodyPadding();
+            // Recalculate the padding if the window is resized (e.g., orientation change).
+            window.addEventListener('resize', setBodyPadding);
+        });
+    </script>
+</body>
+</html>
