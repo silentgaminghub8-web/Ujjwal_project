@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <!-- QR Code Generator Library -->
     <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
@@ -17,8 +17,9 @@
         :root {
             --color-black: #0a0a0a;
             --color-white: #ffffff;
-            --color-gold: #ffd700;
-            --color-orange: #ff8c00;
+            --color-silver: #c0c0c0; /* Main theme color */
+            --color-dark-grey: #1a1a1a;
+            --color-yellow: #ffd700; /* For action buttons */
             --header-height: 70px; /* Default header height */
         }
 
@@ -54,7 +55,7 @@
             background-color: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            border-bottom: 1px solid rgba(192, 192, 192, 0.2);
         }
 
         .header-logo a {
@@ -63,9 +64,9 @@
         .header-logo img {
             height: 50px;
             width: auto;
-            border: 2px solid var(--color-gold);
+            border: 2px solid var(--color-silver);
             border-radius: 50%;
-            box-shadow: 0 0 5px var(--color-gold), 0 0 10px var(--color-gold), 0 0 15px var(--color-orange), inset 0 0 5px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 5px var(--color-silver), 0 0 10px var(--color-silver), inset 0 0 5px rgba(255, 255, 255, 0.5);
             transition: transform 0.3s ease;
         }
         .header-logo img:hover {
@@ -79,7 +80,7 @@
             font-family: 'Cinzel', serif;
             font-size: 2.5rem;
             color: var(--color-white);
-            text-shadow: 0 0 5px var(--color-white), 0 0 10px var(--color-gold), 0 0 20px var(--color-gold), 0 0 30px var(--color-orange);
+            text-shadow: 0 0 5px var(--color-white), 0 0 10px var(--color-silver), 0 0 20px var(--color-silver);
         }
         .menu-trigger {
             cursor: pointer;
@@ -95,7 +96,7 @@
             height: 3px;
             background-color: var(--color-white);
             border-radius: 3px;
-            filter: drop-shadow(0 0 2px var(--color-gold));
+            filter: drop-shadow(0 0 2px var(--color-silver));
         }
         
         /* 2. Slide-Out Navigation Menu */
@@ -135,7 +136,7 @@
         }
         nav ul li a:hover,
         nav ul li a:focus {
-            color: var(--color-gold);
+            color: var(--color-silver);
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.7), 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
@@ -156,8 +157,8 @@
             font-family: 'Cinzel', serif;
             font-size: 2.5rem;
             text-align: center;
-            color: var(--color-orange);
-            text-shadow: 0 0 8px var(--color-gold);
+            color: var(--color-silver);
+            text-shadow: 0 0 8px var(--color-silver);
         }
         .product-image-container {
             position: relative;
@@ -169,17 +170,17 @@
             height: auto;
             display: none;
             border-radius: 15px;
-            box-shadow: 0 0 20px rgba(255, 171, 0, 0.5);
+            box-shadow: 0 0 20px rgba(192, 192, 192, 0.5);
         }
         .product-image-container img.active {
             display: block;
         }
         .form-container {
             width: 100%;
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--color-dark-grey);
             padding: 2rem;
             border-radius: 15px;
-            border: 1px solid rgba(255, 215, 0, 0.3);
+            border: 1px solid rgba(192, 192, 192, 0.3);
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
@@ -191,7 +192,7 @@
         }
         .form-group label {
             font-weight: 500;
-            color: var(--color-orange);
+            color: var(--color-silver);
         }
         .token-toggle {
             display: flex;
@@ -204,38 +205,49 @@
             flex: 1;
             text-align: center;
             padding: 0.75rem;
-            border: 2px solid var(--color-gold);
+            border: 2px solid var(--color-silver);
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
         }
         .token-toggle input[type="radio"]:checked + label {
-            background-color: var(--color-gold);
+            background-color: var(--color-silver);
             color: var(--color-black);
-            box-shadow: 0 0 15px var(--color-orange);
+            box-shadow: 0 0 15px var(--color-silver);
             font-weight: bold;
         }
         .form-control {
             width: 100%;
             padding: 0.75rem;
             background: rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--color-gold);
+            border: 1px solid var(--color-silver);
             border-radius: 8px;
             color: var(--color-white);
             font-size: 1rem;
         }
         .form-control:focus {
             outline: none;
-            box-shadow: 0 0 10px var(--color-orange);
+            box-shadow: 0 0 10px var(--color-silver);
         }
         .checkbox-group {
             display: flex;
             align-items: center;
+            justify-content: center; /* Centered checkbox */
             gap: 0.5rem;
         }
+        
+        /* --- NEW ACTION GROUP FOR BUTTONS --- */
+        .action-group {
+            margin-top: 1.5rem; /* Creates space above the buttons */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
         .btn-primary {
             padding: 0.8rem 1.5rem;
-            background: var(--color-orange);
+            background: var(--color-yellow);
             color: var(--color-black);
             border: none;
             border-radius: 8px;
@@ -245,12 +257,12 @@
             transition: background-color 0.3s, box-shadow 0.3s;
         }
         .btn-primary:hover {
-            background: var(--color-gold);
-            box-shadow: 0 0 15px var(--color-orange);
+            box-shadow: 0 0 15px var(--color-yellow);
         }
         .btn-primary:disabled {
             background: #555;
             cursor: not-allowed;
+            box-shadow: none;
         }
         #payoutSection {
             display: none;
@@ -287,11 +299,11 @@
         .popup-content {
             background: var(--color-black);
             border-radius: 15px;
-            border: 2px solid var(--color-gold);
+            border: 2px solid var(--color-silver);
             text-align: center;
             max-width: 95vw;
             width: 450px;
-            box-shadow: 0 0 30px var(--color-orange);
+            box-shadow: 0 0 30px var(--color-silver);
             overflow: hidden;
         }
         .popup-content img {
@@ -307,7 +319,7 @@
         footer {
             padding: 20px;
             text-align: center;
-            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            border-top: 1px solid rgba(192, 192, 192, 0.2);
         }
         .social-links a {
             color: var(--color-white);
@@ -316,11 +328,11 @@
             transition: color 0.3s, filter 0.3s;
         }
         .social-links a i {
-            filter: drop-shadow(0 0 3px var(--color-gold));
+            filter: drop-shadow(0 0 3px var(--color-silver));
         }
         .social-links a:hover {
-            color: var(--color-gold);
-            filter: drop-shadow(0 0 8px var(--color-gold));
+            color: var(--color-silver);
+            filter: drop-shadow(0 0 8px var(--color-silver));
         }
 
         /* 5. Floating Support Widget */
@@ -333,7 +345,8 @@
         .fab-main {
             width: 60px;
             height: 60px;
-            background-color: var(--color-orange);
+            background-color: var(--color-dark-grey);
+            border: 1px solid var(--color-silver);
             border-radius: 50%;
             display: flex;
             justify-content: center;
@@ -343,7 +356,7 @@
         .fab-main i {
             font-size: 1.8rem;
             color: var(--color-white);
-            filter: drop-shadow(0 0 2px var(--color-gold));
+            filter: drop-shadow(0 0 2px var(--color-silver));
         }
         .fab-options {
             position: absolute;
@@ -365,7 +378,8 @@
         .fab-option {
             display: flex;
             align-items: center;
-            background-color: var(--color-orange);
+            background-color: var(--color-dark-grey);
+            border: 1px solid var(--color-silver);
             color: var(--color-white);
             padding: 8px 15px;
             border-radius: 20px;
@@ -450,7 +464,10 @@
                     <div class="form-group checkbox-group">
                         <input type="checkbox" id="rememberMe"><label for="rememberMe">Remember me</label>
                     </div>
-                    <button type="button" id="proceedBtn" class="btn-primary">PROCEED</button>
+                    <!-- NEW WRAPPER DIV -->
+                    <div class="action-group">
+                        <button type="button" id="proceedBtn" class="btn-primary">PROCEED</button>
+                    </div>
                     <p id="formError" class="error-message"></p>
                 </div>
                 <div id="payoutSection">
@@ -460,10 +477,13 @@
                         <label for="upiId">Your UPI ID</label>
                         <input type="text" id="upiId" name="upiId" class="form-control" placeholder="Enter your UPI ID" required>
                     </div>
-                    <div class="form-group checkbox-group">
-                        <input type="checkbox" id="paymentConfirm"><label for="paymentConfirm">I have completed the payment.</label>
+                    <!-- NEW WRAPPER DIV -->
+                    <div class="action-group">
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="paymentConfirm"><label for="paymentConfirm">I have completed the payment.</label>
+                        </div>
+                        <button type="submit" id="paymentDoneBtn" class="btn-primary" disabled>Payment Done</button>
                     </div>
-                    <button type="submit" id="paymentDoneBtn" class="btn-primary" disabled>Payment Done</button>
                     <p id="submitError" class="error-message"></p>
                 </div>
             </form>
@@ -473,8 +493,8 @@
     <!-- 4. Footer -->
     <footer>
         <div class="social-links">
-            <a href="https://www.instagram.com/silent.gamers?igsh=MWN6bGdsdzhyb3Nicw==" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.youtube.com/@SilentGaminghub1" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.instagram.com/silent.gamers?igsh=MWN6bGdsdzhyb3Nicw==" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@SilentGaminghub1" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube"></i></a>
         </div>
     </footer>
 
@@ -591,7 +611,8 @@
 
             closePopupBtn.addEventListener('click', () => {
                 successPopup.style.display = 'none'; shopForm.reset();
-                purchaseSection.style.display = 'block'; payoutSection.style.display = 'none';
+                purchaseSection.style.display = 'flex'; // Use flex to show it again
+                payoutSection.style.display = 'none';
                 paymentDoneBtn.disabled = true; imgDefault.classList.add('active');
                 imgRedToken.classList.remove('active'); imgPowerCoin.classList.remove('active');
             });
