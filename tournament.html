@@ -15,14 +15,13 @@
         :root {
             --color-black: #0a0a0a;
             --color-white: #ffffff;
-            --color-gold: #ffd700;
-            --color-orange: #ff8c00;
-            --header-height: 70px; /* Default header height */
-            /* Additional colors from this page's content */
+            --color-silver: #c0c0c0; /* NEW THEME COLOR */
             --color-dark-grey: #1a1a1a;
-            --color-red: #ff4757;
-            --color-blue: #3742fa;
-            --color-green: #2ed573;
+            --header-height: 70px; /* Default header height */
+            /* Specific button colors as requested */
+            --color-button-red: #ff4757;
+            --color-button-green: #2ed573;
+            --color-yellow: #ffd700; /* NEW: Yellow for card buttons */
         }
 
         * {
@@ -36,7 +35,7 @@
         }
 
         body {
-            font-family: 'Orbitron', sans-serif; /* Font for this page's content */
+            font-family: 'Orbitron', sans-serif;
             background-color: var(--color-black);
             color: var(--color-white);
             padding-top: var(--header-height); /* Space for fixed header */
@@ -44,23 +43,23 @@
         }
 
         @keyframes text-glow {
-            from { text-shadow: 0 0 5px var(--color-white), 0 0 10px var(--color-gold), 0 0 15px var(--color-orange); }
-            to { text-shadow: 0 0 10px var(--color-white), 0 0 20px var(--color-gold), 0 0 30px var(--color-orange); }
+            from { text-shadow: 0 0 5px var(--color-white), 0 0 10px var(--color-silver), 0 0 15px var(--color-silver); }
+            to { text-shadow: 0 0 10px var(--color-white), 0 0 20px var(--color-silver), 0 0 30px var(--color-silver); }
         }
         @keyframes slow-beep-glow {
-            0%, 100% { text-shadow: 0 0 8px var(--color-orange), 0 0 16px var(--color-orange); opacity: 0.8; }
-            50% { text-shadow: 0 0 12px var(--color-gold), 0 0 24px var(--color-gold); opacity: 1; }
+            0%, 100% { text-shadow: 0 0 8px var(--color-silver), 0 0 16px var(--color-silver); opacity: 0.8; }
+            50% { text-shadow: 0 0 12px var(--color-silver), 0 0 24px var(--color-silver); opacity: 1; }
         }
         @keyframes green-glow {
-            from { box-shadow: 0 0 5px var(--color-green), 0 0 10px var(--color-green); }
-            to { box-shadow: 0 0 15px var(--color-green), 0 0 20px var(--color-green); }
+            from { box-shadow: 0 0 5px var(--color-button-green), 0 0 10px var(--color-button-green); }
+            to { box-shadow: 0 0 15px var(--color-button-green), 0 0 20px var(--color-button-green); }
         }
         @keyframes fill-progress {
             0% { width: 0%; }
             100% { width: 100%; }
         }
 
-        /* 1. Header Styling (from template) */
+        /* 1. Header Styling */
         header {
             position: fixed;
             top: 0;
@@ -75,7 +74,7 @@
             background-color: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            border-bottom: 1px solid rgba(192, 192, 192, 0.2);
         }
 
         .header-logo a { display: block; }
@@ -83,9 +82,9 @@
         .header-logo img {
             height: 50px;
             width: auto;
-            border: 2px solid var(--color-gold);
+            border: 2px solid var(--color-silver);
             border-radius: 50%;
-            box-shadow: 0 0 5px var(--color-gold), 0 0 10px var(--color-gold), 0 0 15px var(--color-orange), inset 0 0 5px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 5px var(--color-silver), 0 0 10px var(--color-silver), inset 0 0 5px rgba(255, 255, 255, 0.5);
             transition: transform 0.3s ease;
         }
         .header-logo img:hover { transform: scale(1.1); }
@@ -93,7 +92,7 @@
         .header-title { flex-grow: 1; text-align: center; }
 
         .header-title h1 {
-            font-family: 'Cinzel', serif; /* Font from template */
+            font-family: 'Cinzel', serif;
             font-size: clamp(1.5rem, 5vw, 2.5rem);
             color: var(--color-white);
             animation: text-glow 2s ease-in-out infinite alternate;
@@ -114,10 +113,10 @@
             height: 3px;
             background-color: var(--color-white);
             border-radius: 3px;
-            filter: drop-shadow(0 0 2px var(--color-gold));
+            filter: drop-shadow(0 0 2px var(--color-silver));
         }
         
-        /* 2. Slide-Out Navigation Menu (from template) */
+        /* 2. Slide-Out Navigation Menu */
         nav {
             position: fixed;
             top: 0;
@@ -144,7 +143,7 @@
             transition: text-shadow 0.3s ease, color 0.3s ease; font-family: 'Roboto', sans-serif;
         }
         nav ul li a:hover, nav ul li a:focus {
-            color: var(--color-gold);
+            color: var(--color-silver);
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.7), 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
@@ -166,57 +165,74 @@
         }
         .login-overlay.hidden { opacity: 0; pointer-events: none; }
         .login-form-container {
-            background: var(--color-dark-grey); border: 2px solid var(--color-gold);
+            background: var(--color-dark-grey); border: 2px solid var(--color-silver);
             padding: 25px 40px 40px 40px; border-radius: 15px; text-align: center;
-            box-shadow: 0 0 30px var(--color-orange); width: 90%; max-width: 400px;
+            box-shadow: 0 0 30px var(--color-silver); width: 90%; max-width: 400px;
         }
         .login-logo {
             width: 100px; height: 100px; border-radius: 50%; object-fit: cover;
-            border: 3px solid var(--color-gold); margin-bottom: 15px;
+            border: 3px solid var(--color-silver); margin-bottom: 15px;
         }
         .login-form-container h2 { margin-bottom: 20px; font-size: 1.8rem; }
         .login-form-container input {
             width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 5px;
-            border: 1px solid var(--color-gold); background: #333; color: white; font-family: inherit;
+            border: 1px solid var(--color-silver); background: #333; color: white; font-family: inherit;
             transition: box-shadow 0.3s ease, border-color 0.3s ease;
         }
         .login-form-container input:focus {
-            outline: none; border-color: var(--color-orange);
-            box-shadow: 0 0 15px var(--color-orange);
+            outline: none; border-color: var(--color-silver);
+            box-shadow: 0 0 15px var(--color-silver);
         }
-        .login-form-container button {
-            width: 100%; padding: 12px; background: linear-gradient(45deg, var(--color-orange), var(--color-gold));
+        .login-form-container button[type="submit"] {
+            width: 100%; padding: 12px; background: var(--color-silver);
             color: var(--color-black); border: none; border-radius: 5px; cursor: pointer;
             font-weight: bold; font-size: 1.1rem; transition: transform 0.2s; margin-top: 10px;
         }
-        #login-error { color: var(--color-red); margin-top: 15px; min-height: 20px; }
+        .create-account-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            background-color: var(--color-button-green);
+            color: var(--color-white);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-decoration: none;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        #login-error { color: var(--color-button-red); margin-top: 15px; min-height: 20px; }
         .remind-me-container { display: flex; align-items: center; margin-bottom: 15px; }
         .remind-me-container input[type="checkbox"] { width: auto; margin: 0 10px 0 0; }
         
         #login-progress-container { display: none; text-align: center; }
         .progress-bar-container {
             width: 90%; height: 10px; background: #333; border-radius: 5px;
-            border: 1px solid var(--color-gold); overflow: hidden; margin: 20px auto;
+            border: 1px solid var(--color-silver); overflow: hidden; margin: 20px auto;
         }
         .progress-bar-fill {
-            width: 0%; height: 100%; background: linear-gradient(90deg, var(--color-orange), var(--color-gold));
+            width: 0%; height: 100%; background: var(--color-silver);
             border-radius: 5px;
         }
         .progress-bar-fill.animating { animation: fill-progress 2.5s ease-out forwards; }
         #login-progress-text {
-            color: var(--color-gold); margin-top: 15px; font-size: 1.2rem;
+            color: var(--color-silver); margin-top: 15px; font-size: 1.2rem;
             animation: slow-beep-glow 2s linear infinite;
         }
 
         /* Tabs and Content */
-        .promo-gif { max-width: 300px; margin-bottom: 30px; border-radius: 10px; border: 2px solid var(--color-gold); }
+        .promo-gif { max-width: 300px; margin-bottom: 30px; border-radius: 10px; border: 2px solid var(--color-silver); }
         .tab-buttons { margin-bottom: 30px; }
         .tab-btn {
-            background: var(--color-dark-grey); color: var(--color-gold); border: 2px solid var(--color-gold);
+            background: var(--color-dark-grey); color: var(--color-silver); border: 2px solid var(--color-silver);
             padding: 10px 30px; margin: 0 10px; font-size: 1.2rem; cursor: pointer; transition: all 0.3s ease;
             font-family: 'Orbitron', sans-serif; border-radius: 8px;
         }
-        .tab-btn.active { background: var(--color-gold); color: var(--color-black); box-shadow: 0 0 15px var(--color-gold); }
+        .tab-btn.active { background: var(--color-silver); color: var(--color-black); box-shadow: 0 0 15px var(--color-silver); }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
         .content-title {
@@ -228,41 +244,56 @@
         /* Token Boxes */
         .token-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 40px; }
         .token-box {
-            background: var(--color-dark-grey); border: 1px solid var(--color-gold); padding: 15px 20px;
+            background: var(--color-dark-grey); border: 1px solid var(--color-silver); padding: 15px 20px;
             border-radius: 10px; cursor: pointer; flex: 1; min-width: 200px; max-width: 250px; text-align: center;
         }
         .token-box .balance { font-size: 1.5rem; font-weight: bold; }
-        #red-token-balance { color: var(--color-red); }
-        #blue-token-balance { color: var(--color-blue); }
-        #power-coin-balance { color: var(--color-gold); }
+        #red-token-balance { color: var(--color-white); }
+        #blue-token-balance { color: var(--color-white); }
+        #power-coin-balance { color: var(--color-silver); }
 
         /* Tournament Cards */
         .tournaments-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
         .tournament-card {
-            background: var(--color-dark-grey); border: 1px solid var(--color-gold); border-radius: 15px;
+            background: var(--color-dark-grey); border: 1px solid var(--color-silver); border-radius: 15px;
             overflow: hidden; text-align: center; padding-bottom: 20px; display: flex; flex-direction: column;
         }
         .tournament-number {
             position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7);
-            color: var(--color-gold); width: 40px; height: 40px; border-radius: 50%;
+            color: var(--color-silver); width: 40px; height: 40px; border-radius: 50%;
             display: flex; justify-content: center; align-items: center; font-weight: bold;
         }
         .card-img, .card-gif { width: 100%; height: 180px; object-fit: cover; }
         .card-body { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
         .card-body .glowing { text-shadow: 0 0 5px var(--color-white); font-weight: bold; }
         .card-actions { display: flex; gap: 10px; margin-top: 15px; }
+
+        /* --- BUTTON COLOR CHANGE HERE --- */
         .card-btn {
-            padding: 8px 10px; border: 1px solid var(--color-gold); color: var(--color-gold);
-            background: transparent; cursor: pointer; border-radius: 5px; font-family: inherit; flex: 1;
+            padding: 8px 10px;
+            border: 1px solid var(--color-yellow); /* Changed from silver to yellow */
+            color: var(--color-yellow); /* Changed from silver to yellow */
+            background: transparent;
+            cursor: pointer;
+            border-radius: 5px;
+            font-family: inherit;
+            flex: 1;
+            transition: all 0.3s ease; /* Added for hover effect */
         }
+        /* Added hover effect for the yellow buttons */
+        .card-btn:hover:not(.joined):not(:disabled):not(.add-tokens) {
+            background-color: var(--color-yellow);
+            color: var(--color-black);
+        }
+
         .join-btn {
-            background: linear-gradient(45deg, var(--color-orange), var(--color-gold));
-            color: var(--color-black); border: none; font-weight: bold; font-size: 1rem;
+            font-weight: bold;
+            font-size: 1rem;
         }
-        .join-btn:disabled { background: #555; cursor: not-allowed; }
-        .join-btn.add-tokens { background: var(--color-red); color: white; }
-        .join-btn.joined { background: linear-gradient(45deg, #1dd1a1, var(--color-green)); animation: green-glow 2s infinite alternate; }
-        .countdown-timer { font-size: 1.2rem; padding: 10px; color: var(--color-gold); }
+        .join-btn:disabled { background: #555; cursor: not-allowed; border-color: #555; color: #888; }
+        .join-btn.add-tokens { background: var(--color-button-red); color: white; border: none; }
+        .join-btn.joined { background: var(--color-button-green); animation: green-glow 2s infinite alternate; border: none; color: var(--color-white); }
+        .countdown-timer { font-size: 1.2rem; padding: 10px; color: var(--color-silver); }
         
         /* Modal, Buttons, Utilities */
         .modal-overlay {
@@ -272,7 +303,7 @@
         .modal-overlay.active { display: flex; }
         .modal-content {
             background: var(--color-dark-grey); padding: 30px; border-radius: 10px;
-            border: 2px solid var(--color-gold); width: 90%; max-width: 500px; position: relative;
+            border: 2px solid var(--color-silver); width: 90%; max-width: 500px; position: relative;
         }
         .modal-close {
             position: absolute; top: 10px; right: 15px; background: none; border: none;
@@ -282,41 +313,41 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7);
             z-index: 9998; display: none; justify-content: center; align-items: center;
         }
-        .loading-spinner i { font-size: 4rem; color: var(--color-gold); animation: fa-spin 2s linear infinite; }
+        .loading-spinner i { font-size: 4rem; color: var(--color-silver); animation: fa-spin 2s linear infinite; }
         .refresh-btn {
-            position: fixed; top: 90px; right: 20px; z-index: 999; background: var(--color-gold);
+            position: fixed; top: 90px; right: 20px; z-index: 999; background: var(--color-silver);
             color: black; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
-            display: flex; justify-content: center; align-items: center; box-shadow: 0 0 10px var(--color-orange);
+            display: flex; justify-content: center; align-items: center; box-shadow: 0 0 10px var(--color-silver);
         }
         .logout-btn {
             display: block; margin: 20px auto; padding: 12px 40px; font-size: 1.1rem;
-            background: linear-gradient(45deg, #c0392b, var(--color-red)); color: white;
+            background: var(--color-button-red); color: white;
             border: none; border-radius: 50px; cursor: pointer;
         }
         .start-booked-btn {
             display: block; margin: 40px auto 20px; padding: 12px 40px; font-size: 1.1rem;
             border-radius: 50px; cursor: pointer;
-            background: linear-gradient(45deg, #1dd1a1, var(--color-green)); color: var(--color-black);
+            background: var(--color-button-green); color: var(--color-black);
             animation: green-glow 2s infinite alternate; border: none;
         }
 
-        /* 4. Footer (from template) */
+        /* 4. Footer */
         footer {
             padding: 20px;
             text-align: center;
-            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            border-top: 1px solid rgba(192, 192, 192, 0.2);
         }
         .social-links a { color: var(--color-white); font-size: 2rem; margin: 0 15px; }
-        .social-links a i { filter: drop-shadow(0 0 3px var(--color-gold)); }
-        .social-links a:hover { color: var(--color-gold); filter: drop-shadow(0 0 8px var(--color-gold)); }
+        .social-links a i { filter: drop-shadow(0 0 3px var(--color-silver)); }
+        .social-links a:hover { color: var(--color-silver); filter: drop-shadow(0 0 8px var(--color-silver)); }
 
-        /* 5. Floating Support Widget (from template) */
+        /* 5. Floating Support Widget */
         .fab-container { position: fixed; bottom: 20px; right: 20px; z-index: 900; }
         .fab-main {
-            width: 60px; height: 60px; background-color: var(--color-orange); border-radius: 50%;
-            display: flex; justify-content: center; align-items: center; cursor: pointer;
+            width: 60px; height: 60px; background-color: var(--color-dark-grey); border: 1px solid var(--color-silver);
+            border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer;
         }
-        .fab-main i { font-size: 1.8rem; color: var(--color-white); filter: drop-shadow(0 0 2px var(--color-gold)); }
+        .fab-main i { font-size: 1.8rem; color: var(--color-white); filter: drop-shadow(0 0 2px var(--color-silver)); }
         .fab-options {
             position: absolute; bottom: 70px; right: 5px; display: flex; flex-direction: column;
             gap: 10px; visibility: hidden; opacity: 0; transform: translateY(10px);
@@ -324,8 +355,8 @@
         }
         .fab-container.active .fab-options { visibility: visible; opacity: 1; transform: translateY(0); }
         .fab-option {
-            display: flex; align-items: center; background-color: var(--color-orange); color: var(--color-white);
-            padding: 8px 15px; border-radius: 20px; text-decoration: none; white-space: nowrap;
+            display: flex; align-items: center; background-color: var(--color-dark-grey); border: 1px solid var(--color-silver);
+            color: var(--color-white); padding: 8px 15px; border-radius: 20px; text-decoration: none; white-space: nowrap;
         }
         .fab-option i { margin-right: 10px; }
 
@@ -347,6 +378,7 @@
                 </div>
                 <button type="submit">Log In</button>
             </form>
+            <a href="signup.html" class="create-account-btn">Create Account</a>
             <div id="login-progress-container">
                 <div class="progress-bar-container"><div class="progress-bar-fill"></div></div>
                 <p id="login-progress-text">Connecting...</p>
@@ -444,7 +476,7 @@
         </div>
     </div>
 
-    <!-- Combined JavaScript -->
+    <!-- Combined JavaScript (No changes needed here as it's for functionality) -->
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         // --- TEMPLATE UI LOGIC ---
