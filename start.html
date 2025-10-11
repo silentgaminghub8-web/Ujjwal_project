@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Google Fonts for luxury title and body -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Poppins:wght@400;500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
         /* CSS Reset and Global Styles */
@@ -407,6 +407,40 @@
             filter: drop-shadow(0 0 2px var(--color-silver));
         }
 
+        /* 6. NEW: Custom Alert Styling */
+        .custom-alert {
+            position: fixed;
+            top: -150px; /* Start off-screen */
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 16px 30px;
+            background-color: var(--color-dark-grey);
+            border: 1px solid #444;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.6);
+            z-index: 9999;
+            color: var(--color-white);
+            font-family: var(--font-body);
+            font-weight: 500;
+            transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            min-width: 300px;
+            max-width: 90%;
+            text-align: center;
+        }
+
+        .custom-alert.show {
+            top: 85px; /* Position below the header */
+        }
+
+        .custom-alert.success {
+            border-left: 6px solid var(--color-yellow);
+        }
+
+        .custom-alert.error {
+            border-left: 6px solid #e74c3c; /* A clean, thematic red for errors */
+        }
+
+
         /* Responsive Design */
         @media (max-width: 768px) {
             :root {
@@ -426,6 +460,10 @@
             }
             .main-content h2 {
                 font-size: 2rem;
+            }
+            /* Adjust alert position for smaller header */
+            .custom-alert.show {
+                top: 75px;
             }
         }
     </style>
@@ -476,6 +514,11 @@
         </div>
     </main>
     
+    <!-- NEW: Custom Alert Box -->
+    <div id="custom-alert" class="custom-alert">
+        <p id="custom-alert-message"></p>
+    </div>
+
     <!-- Tournament Start Modal -->
     <div class="modal-overlay" id="tournamentModal">
         <div class="modal-content">
@@ -574,6 +617,25 @@
             const rememberMeCheckbox = document.getElementById('rememberMe');
             const startNote = document.getElementById('startNote');
             const modalStartBtn = document.getElementById('modalStartBtn');
+            
+            // NEW: Custom Alert elements
+            const customAlert = document.getElementById('custom-alert');
+            const customAlertMessage = document.getElementById('custom-alert-message');
+            let alertTimeout;
+
+            // --- NEW: Custom Alert Function ---
+            function showCustomAlert(message, type = 'success') {
+                clearTimeout(alertTimeout);
+                customAlertMessage.textContent = message;
+                customAlert.className = 'custom-alert'; // Reset classes
+                customAlert.classList.add(type);      // Add 'success' or 'error'
+                customAlert.classList.add('show');
+
+                alertTimeout = setTimeout(() => {
+                    customAlert.classList.remove('show');
+                }, 4000); // Hide after 4 seconds
+            }
+
 
             // --- C. General Page Logic (Menu, FAB, Padding) ---
             const adjustMainContentPadding = () => {
@@ -661,13 +723,17 @@
                     });
                     const result = await response.json();
                     if (result.status === 'success') {
-                        alert('Verification successful! Redirecting to tournament...');
-                        window.location.href = result.url;
+                        // --- MODIFIED ---
+                        showCustomAlert('Verification successful! Redirecting...', 'success');
+                        setTimeout(() => { // Delay redirect to allow user to see message
+                           window.location.href = result.url;
+                        }, 1500);
                     } else {
                         throw new Error(result.message || 'Verification failed.');
                     }
                 } catch (error) {
-                    alert(`Error: ${error.message}`);
+                    // --- MODIFIED ---
+                    showCustomAlert(error.message, 'error');
                 } finally {
                     modalStartBtn.disabled = false;
                     modalStartBtn.textContent = 'Start';
