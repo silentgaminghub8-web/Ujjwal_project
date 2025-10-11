@@ -8,17 +8,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@400;500&family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <style>
         /* CSS Reset and Global Styles */
         :root {
             --color-black: #0a0a0a;
             --color-white: #ffffff;
-            --color-gold: #ffd700;
-            --color-orange: #ff8c00;
+            --color-silver: #c0c0c0; /* Main theme color */
+            --color-dark-grey: #1a1a1a;
             --header-height: 70px; /* Default header height */
-            --dark-gray: #1a1a1a;
         }
 
         * {
@@ -53,7 +52,7 @@
             background-color: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            border-bottom: 1px solid rgba(192, 192, 192, 0.2);
         }
 
         .header-logo a {
@@ -63,9 +62,9 @@
         .header-logo img {
             height: 50px;
             width: auto;
-            border: 2px solid var(--color-gold);
+            border: 2px solid var(--color-silver);
             border-radius: 50%;
-            box-shadow: 0 0 5px var(--color-gold), 0 0 10px var(--color-gold), 0 0 15px var(--color-orange), inset 0 0 5px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 5px var(--color-silver), 0 0 10px var(--color-silver), inset 0 0 5px rgba(255, 255, 255, 0.5);
             transition: transform 0.3s ease;
         }
         .header-logo img:hover {
@@ -81,7 +80,7 @@
             font-family: 'Cinzel', serif;
             font-size: 2.5rem;
             color: var(--color-white);
-            text-shadow: 0 0 5px var(--color-white), 0 0 10px var(--color-gold), 0 0 20px var(--color-gold), 0 0 30px var(--color-orange);
+            text-shadow: 0 0 5px var(--color-white), 0 0 10px var(--color-silver), 0 0 20px var(--color-silver);
         }
 
         .menu-trigger {
@@ -99,7 +98,7 @@
             height: 3px;
             background-color: var(--color-white);
             border-radius: 3px;
-            filter: drop-shadow(0 0 2px var(--color-gold));
+            filter: drop-shadow(0 0 2px var(--color-silver));
         }
         
         /* 2. Slide-Out Navigation Menu */
@@ -142,7 +141,7 @@
 
         nav ul li a:hover,
         nav ul li a:focus {
-            color: var(--color-gold);
+            color: var(--color-silver);
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.7), 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
@@ -163,8 +162,8 @@
         .page-title {
             font-size: 2.5rem;
             font-family: 'Orbitron', sans-serif;
-            color: var(--color-gold);
-            text-shadow: 0 0 10px var(--color-orange);
+            color: var(--color-silver);
+            text-shadow: 0 0 10px var(--color-silver);
             margin-bottom: 1rem;
         }
 
@@ -175,7 +174,7 @@
         
         .headline {
             font-size: 1.8rem;
-            color: var(--color-orange);
+            color: var(--color-silver);
             margin-bottom: 1rem;
         }
 
@@ -184,10 +183,10 @@
             height: auto;
             border-radius: 15px;
             margin: 1.5rem 0;
-            border: 3px solid var(--color-gold);
+            border: 3px solid var(--color-silver);
             padding: 5px;
             background-color: var(--color-black);
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5), 0 0 25px rgba(255, 165, 0, 0.3);
+            box-shadow: 0 0 15px rgba(192, 192, 192, 0.5), 0 0 25px rgba(192, 192, 192, 0.3);
         }
 
         .content-note {
@@ -198,7 +197,7 @@
             background: var(--dark-gray);
             padding: 1.5rem;
             border-radius: 10px;
-            border-left: 5px solid var(--color-orange);
+            border-left: 5px solid var(--color-silver);
         }
         
         .instagram-link {
@@ -212,14 +211,14 @@
         .instagram-link i {
             font-size: 3rem;
             color: var(--color-white);
-            filter: drop-shadow(0 0 5px var(--color-gold));
+            filter: drop-shadow(0 0 5px var(--color-silver));
         }
 
         /* 4. Footer */
         footer {
             padding: 20px;
             text-align: center;
-            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            border-top: 1px solid rgba(192, 192, 192, 0.2);
         }
 
         .social-links a {
@@ -230,12 +229,12 @@
         }
         
         .social-links a i {
-            filter: drop-shadow(0 0 3px var(--color-gold));
+            filter: drop-shadow(0 0 3px var(--color-silver));
         }
 
         .social-links a:hover {
-            color: var(--color-gold);
-            filter: drop-shadow(0 0 8px var(--color-gold));
+            color: var(--color-silver);
+            filter: drop-shadow(0 0 8px var(--color-silver));
         }
 
         /* 5. Floating Support Widget */
@@ -249,7 +248,8 @@
         .fab-main {
             width: 60px;
             height: 60px;
-            background-color: var(--color-orange);
+            background-color: var(--color-dark-grey);
+            border: 1px solid var(--color-silver);
             border-radius: 50%;
             display: flex;
             justify-content: center;
@@ -265,7 +265,7 @@
         .fab-main i {
             font-size: 1.8rem;
             color: var(--color-white);
-            filter: drop-shadow(0 0 2px var(--color-gold));
+            filter: drop-shadow(0 0 2px var(--color-silver));
         }
         
         .fab-options {
@@ -290,7 +290,8 @@
         .fab-option {
             display: flex;
             align-items: center;
-            background-color: var(--color-orange);
+            background-color: var(--color-dark-grey);
+            border: 1px solid var(--color-silver);
             color: var(--color-white);
             padding: 8px 15px;
             border-radius: 20px;
@@ -302,7 +303,7 @@
         .fab-option i {
             font-size: 1.2rem;
             margin-right: 10px;
-            filter: drop-shadow(0 0 2px var(--color-gold));
+            filter: drop-shadow(0 0 2px var(--color-silver));
         }
 
         /* Responsive Design */
@@ -391,7 +392,7 @@
             <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-23_05-16-07-573.jpg?updatedAt=1758584798495&ik-s=edc43a9e32ff2f3f58c4589fbab6324ae7eafb74" alt="Aakarsh Tomar Photo 2" class="content-image">
             
             <a href="https://www.instagram.com/aakarsh_tomar_?igsh=MXZxNDZmNml6cGV6dg==" target="_blank" rel="noopener noreferrer" class="instagram-link" aria-label="Aakarsh Tomar's Instagram">
-                 <i class="fab fa-instagram"></i>
+                 <i class="fa-brands fa-instagram"></i>
             </a>
         </section>
     </main>
@@ -400,10 +401,10 @@
     <footer>
         <div class="social-links">
             <a href="https://www.instagram.com/silent.gamers?igsh=MWN6bGdsdzhyb3Nicw==" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                <i class="fab fa-instagram"></i>
+                <i class="fa-brands fa-instagram"></i>
             </a>
             <a href="https://www.youtube.com/@SilentGaminghub1" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-                <i class="fab fa-youtube"></i>
+                <i class="fa-brands fa-youtube"></i>
             </a>
         </div>
     </footer>
