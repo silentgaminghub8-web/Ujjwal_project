@@ -1,11 +1,11 @@
 {
   "name": "Silent Tournaments",
-  "short_name": "Silent Tour",
-  "description": "Join daily gaming tournaments and win prizes.",
-  "start_url": "/index.html",
+  "short_name": "SG Tournaments",
+  "description": "Welcome to Silent Gamers. Join Free Fire tournaments and more.",
+  "start_url": "/Ujjwal_project/index.html",
   "display": "standalone",
   "background_color": "#0a0a0a",
-  "theme_color": "#c0c0c0",
+  "theme_color": "#cccccc",
   "orientation": "portrait-primary",
   "icons": [
     {
