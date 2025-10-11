@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@400;500&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     
     <style>
@@ -16,12 +16,11 @@
         :root {
             --color-black: #0a0a0a;
             --color-white: #ffffff;
-            --color-gold: #ffd700;
-            --color-orange: #ff8c00;
+            --color-silver: #c0c0c0; /* Main theme color */
             --color-dark-grey: #1a1a1a;
-            --color-red: #ff4757;
-            --color-blue: #3742fa;
-            --color-green: #2ed573;
+            --color-button-red: #ff4757;
+            --color-button-green: #2ed573;
+            --color-yellow: #ffd700; /* Action button color */
             --header-height: 70px; /* Default header height */
         }
 
@@ -48,8 +47,8 @@
         }
 
         @keyframes text-glow {
-            from { text-shadow: 0 0 5px var(--color-white), 0 0 10px var(--color-gold), 0 0 15px var(--color-orange); }
-            to { text-shadow: 0 0 10px var(--color-white), 0 0 20px var(--color-gold), 0 0 30px var(--color-orange); }
+            from { text-shadow: 0 0 5px var(--color-white), 0 0 10px var(--color-silver), 0 0 15px var(--color-silver); }
+            to { text-shadow: 0 0 10px var(--color-white), 0 0 20px var(--color-silver), 0 0 30px var(--color-silver); }
         }
 
         /* 1. Header Styling */
@@ -64,21 +63,19 @@
             align-items: center;
             padding: 0 20px;
             z-index: 1000;
-            /* "Black liquid glass" effect */
             background-color: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            border-bottom: 1px solid rgba(192, 192, 192, 0.2);
         }
 
         .header-logo a { display: block; }
         .header-logo img {
             height: 50px;
             width: auto;
-            /* "Glossy border" effect */
-            border: 2px solid var(--color-gold);
+            border: 2px solid var(--color-silver);
             border-radius: 50%;
-            box-shadow: 0 0 5px var(--color-gold), 0 0 10px var(--color-gold), 0 0 15px var(--color-orange), inset 0 0 5px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 5px var(--color-silver), 0 0 10px var(--color-silver), inset 0 0 5px rgba(255, 255, 255, 0.5);
             transition: transform 0.3s ease;
         }
         .header-logo img:hover { transform: scale(1.1); }
@@ -88,7 +85,6 @@
             font-family: 'Cinzel', serif;
             font-size: clamp(1.5rem, 5vw, 2.5rem);
             color: var(--color-white);
-            /* "Glow with luxury touch" effect */
             animation: text-glow 2s ease-in-out infinite alternate;
         }
 
@@ -108,7 +104,7 @@
             height: 3px;
             background-color: var(--color-white);
             border-radius: 3px;
-            filter: drop-shadow(0 0 2px var(--color-gold)); /* Gold glow on icons */
+            filter: drop-shadow(0 0 2px var(--color-silver));
         }
         
         /* 2. Slide-Out Navigation Menu */
@@ -123,7 +119,7 @@
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             z-index: 999;
-            transform: translateX(100%); /* Initially hidden off-screen */
+            transform: translateX(100%);
             transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             display: flex;
             align-items: center;
@@ -137,28 +133,36 @@
             transition: text-shadow 0.3s ease, color 0.3s ease;
         }
         nav ul li a:hover, nav ul li a:focus {
-            color: var(--color-gold);
-            /* Minimal white glow on hover */
+            color: var(--color-silver);
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.7), 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
         /* 3. Main Content Area */
         main {
             padding: 40px 20px;
-            min-height: calc(100vh - var(--header-height) - 100px); /* Adjust for header and footer */
+            min-height: calc(100vh - var(--header-height) - 100px);
         }
         .main-content {
             max-width: 900px;
             margin: 0 auto;
             text-align: center;
-            display: none; /* Hidden until user is logged in */
+            display: none;
         }
         .main-content.visible {
             display: block;
         }
+        .profile-banner-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--color-silver);
+            margin-bottom: 30px;
+            box-shadow: 0 0 15px var(--color-silver);
+        }
         .welcome-message {
             background: var(--color-dark-grey);
-            border: 1px solid var(--color-gold);
+            border: 1px solid var(--color-silver);
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 30px;
@@ -166,7 +170,7 @@
         .welcome-message h2 {
             font-size: 2rem;
             margin-bottom: 10px;
-            color: var(--color-gold);
+            color: var(--color-silver);
         }
         .welcome-message p {
             font-size: 1rem;
@@ -184,7 +188,7 @@
             background: var(--color-dark-grey);
             padding: 15px;
             border-radius: 8px;
-            border-left: 4px solid var(--color-orange);
+            border-left: 4px solid var(--color-silver);
         }
         .data-item .label {
             font-weight: bold;
@@ -198,10 +202,7 @@
             color: var(--color-white);
             word-wrap: break-word;
         }
-        .data-item .value .token-red { color: var(--color-red); }
-        .data-item .value .token-blue { color: var(--color-blue); }
-        .data-item .value .token-power { color: var(--color-gold); }
-
+        
         .conversion-section h2 {
             font-size: 2.5rem;
             margin-bottom: 30px;
@@ -210,7 +211,7 @@
 
         .conversion-box {
             background: var(--color-dark-grey);
-            border: 1px solid var(--color-gold);
+            border: 1px solid var(--color-silver);
             border-radius: 10px;
             padding: 25px;
             margin-bottom: 25px;
@@ -227,7 +228,7 @@
             flex-grow: 1;
             padding: 12px;
             border-radius: 5px;
-            border: 1px solid var(--color-gold);
+            border: 1px solid var(--color-silver);
             background: #333;
             color: white;
             font-family: inherit;
@@ -235,12 +236,14 @@
         }
         .input-group input:focus {
             outline: none;
-            border-color: var(--color-orange);
-            box-shadow: 0 0 10px var(--color-orange);
+            border-color: var(--color-yellow);
+            box-shadow: 0 0 10px var(--color-yellow);
         }
+        
+        /* --- BUTTONS CHANGED HERE --- */
         .btn-convert, .btn-withdraw {
             padding: 12px 25px;
-            background: linear-gradient(45deg, var(--color-orange), var(--color-gold));
+            background: var(--color-yellow); /* CHANGED HERE */
             color: var(--color-black);
             border: none;
             border-radius: 5px;
@@ -257,12 +260,13 @@
             transform: none;
         }
 
+        /* --- LOG OUT BUTTON (JUSTIFIED) --- */
         .logout-btn {
             display: inline-block;
             margin-top: 20px;
             padding: 12px 40px;
             font-size: 1.1rem;
-            background: linear-gradient(45deg, #c0392b, var(--color-red));
+            background: var(--color-button-red);
             color: white;
             border: none;
             border-radius: 50px;
@@ -277,30 +281,46 @@
         }
         .login-overlay.hidden { display: none; }
         .login-form-container {
-            background: var(--color-dark-grey); border: 2px solid var(--color-gold);
+            background: var(--color-dark-grey); border: 2px solid var(--color-silver);
             padding: 40px; border-radius: 15px; text-align: center;
-            box-shadow: 0 0 30px var(--color-orange); width: 90%; max-width: 400px;
+            box-shadow: 0 0 30px var(--color-silver); width: 90%; max-width: 400px;
         }
         .login-form-container h2 { margin-bottom: 20px; font-size: 1.8rem; }
-        .login-form-container input { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 5px; border: 1px solid var(--color-gold); background: #333; color: white; font-family: inherit; }
-        .login-form-container button { width: 100%; padding: 12px; background: linear-gradient(45deg, var(--color-orange), var(--color-gold)); color: var(--color-black); border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1.1rem; margin-top: 10px; }
-        .login-error { color: var(--color-red); margin-top: 15px; min-height: 20px; }
+        .login-form-container input { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 5px; border: 1px solid var(--color-silver); background: #333; color: white; font-family: inherit; }
+        
+        /* --- LOG IN BUTTON CHANGED HERE --- */
+        .login-form-container button[type="submit"] {
+            width: 100%; padding: 12px;
+            background: var(--color-yellow); /* CHANGED HERE */
+            color: var(--color-black);
+            border: none; border-radius: 5px; cursor: pointer;
+            font-weight: bold; font-size: 1.1rem; margin-top: 10px;
+        }
+        .login-error { color: var(--color-button-red); margin-top: 15px; min-height: 20px; }
         .remind-me-container { display: flex; align-items: center; justify-content: start; margin-bottom: 15px; font-size: 0.9rem; }
         .remind-me-container input[type="checkbox"] { width: auto; margin: 0 10px 0 0; }
+        
+        /* --- CREATE ACCOUNT BUTTON (JUSTIFIED) --- */
+        .create-account-btn {
+            display: block; width: 100%; padding: 12px; margin-top: 10px;
+            background-color: var(--color-button-green); color: var(--color-white);
+            border: none; border-radius: 5px; cursor: pointer; font-weight: bold;
+            font-size: 1.1rem; text-decoration: none; text-align: center;
+        }
 
         /* Loading Spinner & Modal */
         .loading-spinner { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 10001; display: none; justify-content: center; align-items: center; }
-        .loading-spinner i { font-size: 4rem; color: var(--color-gold); animation: fa-spin 2s linear infinite; }
+        .loading-spinner i { font-size: 4rem; color: var(--color-silver); animation: fa-spin 2s linear infinite; }
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10002; display: none; justify-content: center; align-items: center; }
         .modal-overlay.active { display: flex; }
-        .modal-content { background: var(--color-dark-grey); padding: 30px; border-radius: 10px; border: 2px solid var(--color-gold); width: 90%; max-width: 500px; position: relative; text-align: center; }
+        .modal-content { background: var(--color-dark-grey); padding: 30px; border-radius: 10px; border: 2px solid var(--color-silver); width: 90%; max-width: 500px; position: relative; text-align: center; }
         .modal-close { position: absolute; top: 10px; right: 15px; background: none; border: none; color: white; font-size: 2rem; cursor: pointer; }
 
         /* 4. Footer */
         footer {
             padding: 20px;
             text-align: center;
-            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            border-top: 1px solid rgba(192, 192, 192, 0.2);
         }
         .social-links a {
             color: var(--color-white);
@@ -310,21 +330,21 @@
             transition: color 0.3s ease, filter 0.3s ease;
         }
         .social-links a i {
-            filter: drop-shadow(0 0 3px var(--color-gold)); /* Gold glow on icons */
+            filter: drop-shadow(0 0 3px var(--color-silver));
         }
         .social-links a:hover {
-            color: var(--color-gold);
-            filter: drop-shadow(0 0 8px var(--color-gold));
+            color: var(--color-silver);
+            filter: drop-shadow(0 0 8px var(--color-silver));
         }
 
         /* 5. Floating Support Widget */
         .fab-container { position: fixed; bottom: 20px; right: 20px; z-index: 900; }
         .fab-main {
-            width: 60px; height: 60px; background-color: var(--color-orange); border-radius: 50%;
-            display: flex; justify-content: center; align-items: center; cursor: pointer;
+            width: 60px; height: 60px; background-color: var(--color-dark-grey); border: 1px solid var(--color-silver);
+            border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer;
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
-        .fab-main i { font-size: 1.8rem; color: var(--color-white); filter: drop-shadow(0 0 2px var(--color-gold)); }
+        .fab-main i { font-size: 1.8rem; color: var(--color-white); filter: drop-shadow(0 0 2px var(--color-silver)); }
         .fab-options {
             position: absolute; bottom: 70px; right: 5px; display: flex; flex-direction: column;
             gap: 10px; visibility: hidden; opacity: 0; transform: translateY(10px);
@@ -332,8 +352,8 @@
         }
         .fab-container.active .fab-options { visibility: visible; opacity: 1; transform: translateY(0); }
         .fab-option {
-            display: flex; align-items: center; background-color: var(--color-orange); color: var(--color-white);
-            padding: 8px 15px; border-radius: 20px; text-decoration: none; white-space: nowrap;
+            display: flex; align-items: center; background-color: var(--color-dark-grey); border: 1px solid var(--color-silver);
+            color: var(--color-white); padding: 8px 15px; border-radius: 20px; text-decoration: none; white-space: nowrap;
             box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
         .fab-option i { margin-right: 10px; }
@@ -354,6 +374,7 @@
                     <label for="remind-me">Remember Me</label>
                 </div>
                 <button type="submit">Log In</button>
+                <a href="signup.html" class="create-account-btn">Create Account</a>
                 <p class="login-error" id="login-error"></p>
             </form>
         </div>
@@ -402,6 +423,9 @@
     <main id="main-container">
         <!-- This content is revealed after successful login -->
         <div class="main-content" id="main-content">
+            
+            <img src="https://ik.imagekit.io/silentgamers/6d37cee8dd5105cda3fb25fa287c1819.jpg?updatedAt=1760167768059&ik-s=47f862d8c94abb4a628fcb722d38992f87cd6c88" alt="Profile Banner" class="profile-banner-img">
+
             <div class="welcome-message">
                 <h2>Welcome, <span id="welcome-username">Username</span></h2>
                 <p>
@@ -415,9 +439,9 @@
                 <div class="data-item"><span class="label">Username</span><span class="value" id="user-username"></span></div>
                 <div class="data-item"><span class="label">Mobile Number</span><span class="value" id="user-mobile"></span></div>
                 <div class="data-item"><span class="label">Email</span><span class="value" id="user-email"></span></div>
-                <div class="data-item"><span class="label">Red Token</span><span class="value token-red" id="user-red-token">0</span></div>
-                <div class="data-item"><span class="label">Blue Token</span><span class="value token-blue" id="user-blue-token">0</span></div>
-                <div class="data-item"><span class="label">Power Coin</span><span class="value token-power" id="user-power-coin">0</span></div>
+                <div class="data-item"><span class="label">Red Token</span><span class="value" id="user-red-token">0</span></div>
+                <div class="data-item"><span class="label">Blue Token</span><span class="value" id="user-blue-token">0</span></div>
+                <div class="data-item"><span class="label">Power Coin</span><span class="value" id="user-power-coin">0</span></div>
                 <div class="data-item"><span class="label">UPI ID (for withdrawals)</span><span class="value" id="user-upi"></span></div>
             </div>
 
@@ -463,8 +487,8 @@
     <!-- 4. Footer -->
     <footer>
         <div class="social-links">
-            <a href="https://www.instagram.com/silent.gamers?igsh=MWN6bGdsdzhyb3Nicw==" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.youtube.com/@SilentGaminghub1" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.instagram.com/silent.gamers?igsh=MWN6bGdsdzhyb3Nicw==" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@SilentGaminghub1" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
         </div>
     </footer>
 
@@ -480,7 +504,6 @@
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         // --- CONFIGURATION ---
-        // Your Deployed Google Apps Script Web App URL is now here.
         const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwAaFmX9XyrV-QkF0nBSLrflCtSJK-tjCtQ_RapXT803mH981VfmLybV614N7nSp9ZWiQ/exec';
 
         // --- STATE MANAGEMENT ---
@@ -516,27 +539,22 @@
         const withdrawUpiInput = document.getElementById('withdraw-upi');
 
         // --- CORE UI LOGIC (Template) ---
-
-        // Adjust main content padding to account for fixed header height
         const adjustMainContentPadding = () => {
             mainContainer.style.paddingTop = `${header.offsetHeight}px`;
         };
         adjustMainContentPadding();
         window.addEventListener('resize', adjustMainContentPadding);
 
-        // Toggle slide-out navigation menu
         menuTrigger.addEventListener('click', () => {
             const isExpanded = navMenu.classList.toggle('menu-open');
             menuTrigger.setAttribute('aria-expanded', isExpanded);
         });
 
-        // Toggle Floating Action Button (FAB) options
         fabContainer.addEventListener('click', (event) => {
             if (event.target.closest('#fab-main')) {
                 fabContainer.classList.toggle('active');
             }
         });
-        // Close FAB if clicking outside of it
         document.addEventListener('click', (event) => {
             if (!fabContainer.contains(event.target)) {
                 fabContainer.classList.remove('active');
@@ -558,12 +576,6 @@
              if (e.target === feedbackModal) hideModal();
         });
 
-        /**
-         * A centralized function to communicate with the Google Apps Script Web App.
-         * @param {string} functionName - The name of the function to call in your Apps Script.
-         * @param {Array} args - An array of arguments to pass to the function.
-         * @returns {Promise<any>} - The data returned from the script.
-         */
         async function callAppsScript(functionName, args = []) {
             showLoader();
             try {
@@ -580,27 +592,19 @@
             } catch (error) {
                 console.error('Apps Script Call Error:', error);
                 showModal('Error', error.message || 'An unexpected error occurred. Please try again.');
-                throw error; // Re-throw to be caught by the calling function
+                throw error;
             } finally {
                 hideLoader();
             }
         }
 
         // --- APPLICATION LOGIC (Profile Page) ---
-
-        /**
-         * Populates the entire UI with the fetched user data.
-         * @param {object} data - The user data object from the Google Sheet.
-         */
         function populateUI(data) {
             if (!data) return;
-            // Welcome Message
             document.getElementById('welcome-username').textContent = data.Username || 'User';
             document.getElementById('msg-username').textContent = data.Username || 'N/A';
             document.getElementById('msg-game-uid').textContent = data['Game UID'] || 'N/A';
             document.getElementById('msg-game-name').textContent = data['Game Name'] || 'N/A';
-
-            // User Data Grid
             document.getElementById('user-username').textContent = data.Username || 'N/A';
             document.getElementById('user-mobile').textContent = data['Mobile Number'] || 'N/A';
             document.getElementById('user-email').textContent = data.Email || 'N/A';
@@ -608,15 +612,9 @@
             document.getElementById('user-blue-token').textContent = data['Blue Token'] || 0;
             document.getElementById('user-power-coin').textContent = data['Power Coin'] || 0;
             document.getElementById('user-upi').textContent = data['UPI id'] || 'Not set';
-            
-            // Pre-fill UPI for withdrawal
             withdrawUpiInput.value = data['UPI id'] || '';
         }
 
-        /**
-         * Handles the login form submission.
-         * @param {Event} e - The form submit event.
-         */
         async function handleLogin(e) {
             e.preventDefault();
             const mobile = mobileInput.value;
@@ -642,10 +640,6 @@
             }
         }
 
-        /**
-         * Actions to perform after a successful login.
-         * @param {object} data - The logged-in user's data.
-         */
         function onLoginSuccess(data) {
             userData = data;
             populateUI(userData);
@@ -653,23 +647,17 @@
             mainContent.classList.add('visible');
         }
 
-        /**
-         * Fetches the latest user data and updates the UI.
-         */
         async function refreshUserData() {
             if (!userData || !userData['Mobile Number']) return;
             try {
                 const updatedData = await callAppsScript('getUserData', [userData['Mobile Number']]);
-                userData = updatedData; // Update global state
+                userData = updatedData;
                 populateUI(userData);
             } catch (error) {
-                // Error is already shown by callAppsScript, just log it
                 console.error("Failed to refresh user data.");
             }
         }
         
-        // --- Conversion Event Handlers ---
-
         b2rBtn.addEventListener('click', async () => {
             const amount = parseInt(b2rAmountInput.value, 10);
             if (isNaN(amount) || amount <= 0) {
@@ -725,12 +713,10 @@
                 const result = await callAppsScript('withdrawBlueTokens', [userData['Mobile Number'], amount, upiId]);
                 showModal('Success', result.message);
                 withdrawAmountInput.value = '';
-                // Don't clear UPI ID in case they want to do another one
                 await refreshUserData();
             } catch (error) {/* Error handled in callAppsScript */}
         });
 
-        // --- Logout Logic ---
         function handleLogout() {
             userData = null;
             localStorage.clear();
@@ -740,10 +726,8 @@
         }
         logoutBtn.addEventListener('click', handleLogout);
 
-        // --- Initialisation ---
         loginForm.addEventListener('submit', handleLogin);
 
-        // Attempt auto-login if credentials are saved
         const savedMobile = localStorage.getItem('savedMobile');
         const savedPassword = localStorage.getItem('savedPassword');
         if (savedMobile && savedPassword) {
