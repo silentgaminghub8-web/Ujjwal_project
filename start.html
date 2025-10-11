@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
     <title>Silent Gamers - Tournament</title>
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -291,6 +291,17 @@
             box-shadow: 0 0 8px var(--color-silver);
         }
 
+        .checkbox-group {
+            flex-direction: row;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+        }
+
         #tournamentTime {
             background-color: rgba(255, 255, 255, 0.1);
             cursor: not-allowed;
@@ -496,6 +507,10 @@
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" placeholder="Enter your password" required>
                 </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="rememberMe">
+                    <label for="rememberMe">Remember Me</label>
+                </div>
                 <div class="start-button-container">
                     <button type="submit" class="cta-button" id="modalStartBtn">Start</button>
                     <p id="startNote">Select a tournament to see start time details.</p>
@@ -554,6 +569,9 @@
             const tournamentForm = document.getElementById('tournamentForm');
             const tournamentTypeSelect = document.getElementById('tournamentType');
             const tournamentTimeInput = document.getElementById('tournamentTime');
+            const mobileNumberInput = document.getElementById('mobileNumber');
+            const passwordInput = document.getElementById('password');
+            const rememberMeCheckbox = document.getElementById('rememberMe');
             const startNote = document.getElementById('startNote');
             const modalStartBtn = document.getElementById('modalStartBtn');
 
@@ -615,10 +633,22 @@
                 modalStartBtn.classList.add('loading');
                 
                 const formData = new FormData(tournamentForm);
+                const mobile = formData.get('mobileNumber');
+                const password = formData.get('password');
+
+                // Handle Remember Me logic
+                if (rememberMeCheckbox.checked) {
+                    localStorage.setItem('savedTournamentMobile', mobile);
+                    localStorage.setItem('savedTournamentPassword', password);
+                } else {
+                    localStorage.removeItem('savedTournamentMobile');
+                    localStorage.removeItem('savedTournamentPassword');
+                }
+
                 const payload = {
                     tournamentType: formData.get('tournamentType'),
-                    mobileNumber: formData.get('mobileNumber'),
-                    password: formData.get('password')
+                    mobileNumber: mobile,
+                    password: password
                 };
 
                 try {
@@ -646,7 +676,17 @@
             }
             
             // Event listeners for modal
-            openModalBtn.addEventListener('click', () => toggleModal(true));
+            openModalBtn.addEventListener('click', () => {
+                // Populate fields from localStorage when modal opens
+                const savedMobile = localStorage.getItem('savedTournamentMobile');
+                const savedPassword = localStorage.getItem('savedTournamentPassword');
+                if (savedMobile && savedPassword) {
+                    mobileNumberInput.value = savedMobile;
+                    passwordInput.value = savedPassword;
+                    rememberMeCheckbox.checked = true;
+                }
+                toggleModal(true);
+            });
             closeModalBtn.addEventListener('click', () => toggleModal(false));
             tournamentModal.addEventListener('click', (e) => {
                 if (e.target === tournamentModal) { toggleModal(false); }
