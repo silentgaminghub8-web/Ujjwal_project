@@ -17,6 +17,7 @@
             --color-white: #ffffff;
             --color-silver: #c0c0c0; /* Main theme color */
             --color-dark-grey: #1a1a1a;
+            --color-yellow: #ffd700; /* For action buttons */
             --header-height: 70px; /* Default header height */
             --font-title: 'Cinzel', serif;
             --font-body: 'Poppins', sans-serif;
@@ -180,8 +181,9 @@
             margin-top: 20px;
         }
 
+        /* --- ACTION BUTTONS SET TO YELLOW --- */
         .cta-button {
-            background: var(--color-silver);
+            background: var(--color-yellow);
             color: var(--color-black);
             font-weight: bold;
             padding: 15px 30px;
@@ -190,13 +192,13 @@
             font-size: 1.2rem;
             cursor: pointer;
             text-transform: uppercase;
-            box-shadow: 0 4px 15px rgba(192, 192, 192, 0.4);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .cta-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(192, 192, 192, 0.6);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
         }
         
         .cta-button.loading {
@@ -506,10 +508,10 @@
     <footer>
         <div class="social-links">
             <a href="https://www.instagram.com/silent.gamers?igsh=MWN6bGdsdzhyb3Nicw==" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                <i class="fab fa-instagram"></i>
+                <i class="fa-brands fa-instagram"></i>
             </a>
             <a href="https://www.youtube.com/@SilentGaminghub1" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-                <i class="fab fa-youtube"></i>
+                <i class="fa-brands fa-youtube"></i>
             </a>
         </div>
     </footer>
