@@ -1,0 +1,24 @@
+{
+  "name": "Silent Tournaments",
+  "short_name": "Silent Tour",
+  "description": "Join daily gaming tournaments and win prizes.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#c0c0c0",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://ik.imagekit.io/silentgamers/Picsart_25-09-20_09-43-31-711.png?updatedAt=1758341648411&ik-s=583bf42e1bb1db446f7ebc75d215c510586d5e54",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://ik.imagekit.io/silentgamers/Picsart_25-09-20_09-43-31-711.png?updatedAt=1758341648411&ik-s=583bf42e1bb1db446f7ebc75d215c510586d5e54",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ]
+}
