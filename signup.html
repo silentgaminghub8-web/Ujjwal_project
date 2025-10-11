@@ -8,15 +8,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Google Fonts for luxury title -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
         /* CSS Reset and Global Styles */
         :root {
             --color-black: #0a0a0a;
             --color-white: #ffffff;
-            --color-gold: #ffd700;
-            --color-orange: #ff8c00;
+            --color-silver: #c0c0c0; /* Main theme color */
+            --color-dark-grey: #1a1a1a;
+            --color-button-green: #2ed573; /* Justified button color */
             --header-height: 70px; /* Default header height */
         }
 
@@ -49,11 +50,10 @@
             align-items: center;
             padding: 0 20px;
             z-index: 1000;
-            /* Black liquid glass effect */
             background-color: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            border-bottom: 1px solid rgba(192, 192, 192, 0.2);
         }
 
         .header-logo a {
@@ -63,10 +63,9 @@
         .header-logo img {
             height: 50px;
             width: auto;
-            /* Glossy border effect */
-            border: 2px solid var(--color-gold);
+            border: 2px solid var(--color-silver);
             border-radius: 50%;
-            box-shadow: 0 0 5px var(--color-gold), 0 0 10px var(--color-gold), 0 0 15px var(--color-orange), inset 0 0 5px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 5px var(--color-silver), 0 0 10px var(--color-silver), inset 0 0 5px rgba(255, 255, 255, 0.5);
             transition: transform 0.3s ease;
         }
         .header-logo img:hover {
@@ -82,8 +81,7 @@
             font-family: 'Cinzel', serif;
             font-size: 2.5rem;
             color: var(--color-white);
-            /* Glow with luxury touch effect */
-            text-shadow: 0 0 5px var(--color-white), 0 0 10px var(--color-gold), 0 0 20px var(--color-gold), 0 0 30px var(--color-orange);
+            text-shadow: 0 0 5px var(--color-white), 0 0 10px var(--color-silver), 0 0 20px var(--color-silver);
         }
 
         .menu-trigger {
@@ -101,7 +99,7 @@
             height: 3px;
             background-color: var(--color-white);
             border-radius: 3px;
-            filter: drop-shadow(0 0 2px var(--color-gold));
+            filter: drop-shadow(0 0 2px var(--color-silver));
         }
         
         /* 2. Slide-Out Navigation Menu */
@@ -144,8 +142,7 @@
 
         nav ul li a:hover,
         nav ul li a:focus {
-            color: var(--color-gold);
-            /* Minimal white glow */
+            color: var(--color-silver);
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.7), 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
@@ -159,8 +156,8 @@
         main .welcome-headline {
             font-size: 3rem;
             margin-bottom: 20px;
-            color: var(--color-gold);
-            text-shadow: 0 0 10px var(--color-orange);
+            color: var(--color-silver);
+            text-shadow: 0 0 10px var(--color-silver);
         }
 
         main .main-logo {
@@ -187,26 +184,26 @@
         .form-group label {
             margin-bottom: 5px;
             font-weight: 500;
-            color: var(--color-orange);
+            color: var(--color-silver);
         }
 
         .form-group input {
             padding: 12px;
             background-color: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--color-gold);
+            border: 1px solid var(--color-silver);
             border-radius: 5px;
             color: var(--color-white);
             font-size: 1rem;
         }
         .form-group input:focus {
             outline: none;
-            box-shadow: 0 0 10px var(--color-gold);
+            box-shadow: 0 0 10px var(--color-silver);
         }
 
         .submit-btn {
             padding: 15px;
-            background-color: var(--color-orange);
-            color: var(--color-black);
+            background-color: var(--color-button-green);
+            color: var(--color-white);
             border: none;
             border-radius: 5px;
             font-size: 1.1rem;
@@ -215,8 +212,7 @@
             transition: background-color 0.3s, box-shadow 0.3s;
         }
         .submit-btn:hover {
-            background-color: var(--color-gold);
-            box-shadow: 0 0 15px var(--color-gold);
+            box-shadow: 0 0 15px var(--color-button-green);
         }
         .submit-btn:disabled {
             background-color: #555;
@@ -252,7 +248,7 @@
             position: relative;
             padding: 20px;
             background: var(--color-black);
-            border: 2px solid var(--color-gold);
+            border: 2px solid var(--color-silver);
             border-radius: 10px;
             width: 90%;
             max-width: 600px;
@@ -263,10 +259,10 @@
             right: -15px;
             width: 35px;
             height: 35px;
-            background: var(--color-orange);
-            color: var(--color-black);
+            background: var(--color-dark-grey);
+            border: 1px solid var(--color-silver);
+            color: var(--color-white);
             border-radius: 50%;
-            border: 2px solid var(--color-gold);
             font-size: 1.5rem;
             display: flex;
             justify-content: center;
@@ -292,7 +288,7 @@
         footer {
             padding: 20px;
             text-align: center;
-            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            border-top: 1px solid rgba(192, 192, 192, 0.2);
         }
 
         .social-links a {
@@ -303,13 +299,12 @@
         }
         
         .social-links a i {
-            /* White icon with gold glow */
-            filter: drop-shadow(0 0 3px var(--color-gold));
+            filter: drop-shadow(0 0 3px var(--color-silver));
         }
 
         .social-links a:hover {
-            color: var(--color-gold);
-            filter: drop-shadow(0 0 8px var(--color-gold));
+            color: var(--color-silver);
+            filter: drop-shadow(0 0 8px var(--color-silver));
         }
 
         /* 5. Floating Support Widget */
@@ -323,7 +318,8 @@
         .fab-main {
             width: 60px;
             height: 60px;
-            background-color: var(--color-orange);
+            background-color: var(--color-dark-grey);
+            border: 1px solid var(--color-silver);
             border-radius: 50%;
             display: flex;
             justify-content: center;
@@ -339,7 +335,7 @@
         .fab-main i {
             font-size: 1.8rem;
             color: var(--color-white);
-            filter: drop-shadow(0 0 2px var(--color-gold));
+            filter: drop-shadow(0 0 2px var(--color-silver));
         }
         
         .fab-options {
@@ -364,7 +360,8 @@
         .fab-option {
             display: flex;
             align-items: center;
-            background-color: var(--color-orange);
+            background-color: var(--color-dark-grey);
+            border: 1px solid var(--color-silver);
             color: var(--color-white);
             padding: 8px 15px;
             border-radius: 20px;
@@ -376,7 +373,7 @@
         .fab-option i {
             font-size: 1.2rem;
             margin-right: 10px;
-            filter: drop-shadow(0 0 2px var(--color-gold));
+            filter: drop-shadow(0 0 2px var(--color-silver));
         }
 
         /* Responsive Design */
@@ -490,10 +487,10 @@
     <footer>
         <div class="social-links">
             <a href="https://www.instagram.com/silent.gamers?igsh=MWN6bGdsdzhyb3Nicw==" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                <i class="fab fa-instagram"></i>
+                <i class="fa-brands fa-instagram"></i>
             </a>
             <a href="https://www.youtube.com/@SilentGaminghub1" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-                <i class="fab fa-youtube"></i>
+                <i class="fa-brands fa-youtube"></i>
             </a>
         </div>
     </footer>
@@ -533,17 +530,14 @@
             const formStatus = document.getElementById('form-status');
 
             // --- B. Dynamic Header Padding ---
-            // This function sets the main content's top padding to the header's height,
-            // preventing the fixed header from overlapping the content.
             const adjustMainContentPadding = () => {
                 const headerHeight = header.offsetHeight;
-                mainContent.style.paddingTop = `${headerHeight + 40}px`; // 40px is original top padding
+                mainContent.style.paddingTop = `${headerHeight + 40}px`;
             };
             adjustMainContentPadding();
-            window.addEventListener('resize', adjustMainContentPadding); // Adjust on window resize
+            window.addEventListener('resize', adjustMainContentPadding);
 
             // --- C. Menu Toggle Logic ---
-            // Toggles a class on the nav menu to trigger the slide-in/out animation.
             menuTrigger.addEventListener('click', () => {
                 navMenu.classList.toggle('menu-open');
                 const isExpanded = navMenu.classList.contains('menu-open');
@@ -551,14 +545,11 @@
             });
 
             // --- D. Floating Support Widget Logic ---
-            // Toggles an 'active' class on the container to show/hide support options.
             fabContainer.addEventListener('click', (event) => {
-                // We check if the click is on the main button itself, not the options
                 if (event.target.closest('#fab-main')) {
                     fabContainer.classList.toggle('active');
                 }
             });
-            // Close the FAB options if clicking outside
             document.addEventListener('click', (event) => {
                 if (!fabContainer.contains(event.target)) {
                     fabContainer.classList.remove('active');
@@ -566,12 +557,12 @@
             });
 
             // --- E. Game Name Video Modal Logic ---
-            let gameNameFirstClick = true; // Flag to ensure modal only shows once per page load
+            let gameNameFirstClick = true;
             
             const showModal = () => {
                 if (gameNameFirstClick) {
                     videoModal.classList.add('show');
-                    gameNameFirstClick = false; // Prevent it from showing again
+                    gameNameFirstClick = false;
                 }
             };
 
@@ -579,9 +570,8 @@
                 videoModal.classList.remove('show');
             };
 
-            gameNameInput.addEventListener('focus', showModal); // Show on focus for accessibility
+            gameNameInput.addEventListener('focus', showModal);
             modalClose.addEventListener('click', hideModal);
-            // Also close modal if user clicks the background overlay
             videoModal.addEventListener('click', (event) => {
                 if (event.target === videoModal) {
                     hideModal();
@@ -589,17 +579,16 @@
             });
 
             // --- F. Form Submission Logic to Google Apps Script ---
-            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxFMV6GgMz5axsNn8cGqKcQ3I6Wiz-SALPura5nhrD3FaJ1Am9iBIhnXNw1WKiFLphqJw/exec'; // IMPORTANT: Replace with your actual Web App URL
+            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxFMV6GgMz5axsNn8cGqKcQ3I6Wiz-SALPura5nhrD3FaJ1Am9iBIhnXNw1WKiFLphqJw/exec';
 
             signupForm.addEventListener('submit', (e) => {
-                e.preventDefault(); // Prevent default form submission
+                e.preventDefault();
 
                 submitBtn.disabled = true;
                 submitBtn.textContent = 'Creating Account...';
                 formStatus.textContent = '';
                 formStatus.className = '';
 
-                // Create a FormData object and then convert it to a plain object
                 const formData = new FormData(signupForm);
                 const data = {};
                 formData.forEach((value, key) => {
@@ -608,10 +597,10 @@
                 
                 fetch(SCRIPT_URL, {
                     method: 'POST',
-                    mode: 'cors', // Required for cross-origin requests
+                    mode: 'cors',
                     cache: 'no-cache',
                     headers: {
-                        'Content-Type': 'text/plain;charset=utf-8', // Apps Script needs text/plain for this method
+                        'Content-Type': 'text/plain;charset=utf-8',
                     },
                     body: JSON.stringify(data)
                 })
@@ -620,7 +609,7 @@
                     if (result.status === 'success') {
                         formStatus.textContent = result.message;
                         formStatus.classList.add('status-success');
-                        signupForm.reset(); // Clear the form on success
+                        signupForm.reset();
                     } else {
                         throw new Error(result.message || 'An unknown error occurred.');
                     }
