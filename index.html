@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- PWA: Viewport to prevent zooming -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Silent Gamers - Free Fire</title>
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -10,6 +11,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- PWA: Manifest Link -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- PWA: Theme Color for Browser UI -->
+    <meta name="theme-color" content="#cccccc">
+    
+    <!-- PWA: Apple Touch Icon (for iOS "Add to Home Screen") -->
+    <link rel="apple-touch-icon" href="https://ik.imagekit.io/silentgamers/Picsart_25-09-20_09-43-31-711.png?updatedAt=1758341648411&ik-s=583bf42e1bb1db446f7ebc75d215c510586d5e54">
+    
     <style>
         /* CSS Reset and NEW Monochromatic Global Styles */
         :root {
@@ -154,9 +165,41 @@
             nav { width: 80%; }
         }
          @media (max-width: 480px) { .header-title h1 { font-size: 1.2rem; } }
+         
+        /* PWA: Styles for Install Prompt */
+        #install-prompt-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--color-black); z-index: 10000;
+            display: flex; justify-content: center; align-items: center;
+            text-align: center; padding: 20px; color: var(--color-white);
+            flex-direction: column;
+        }
+        .install-prompt-content img { width: 150px; height: 150px; border-radius: 20px; margin-bottom: 20px; }
+        .install-prompt-content h1 { font-family: 'Cinzel', serif; font-size: 2rem; margin-bottom: 10px; color: var(--color-grey-accent); }
+        .install-prompt-content p { font-family: 'Roboto', sans-serif; font-size: 1.1rem; line-height: 1.5; max-width: 400px; }
+        .install-instructions { margin-top: 30px; background: var(--color-grey-dark); padding: 15px; border-radius: 10px; border: 1px solid var(--color-grey-accent); max-width: 90%; }
+        .install-instructions p { margin: 10px 0; }
+        .install-instructions i { color: var(--color-grey-accent); }
     </style>
 </head>
 <body>
+
+    <!-- PWA: Install Prompt Overlay. This will be hidden by JS if the app is installed. -->
+    <div id="install-prompt-overlay">
+        <div class="install-prompt-content">
+            <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-20_09-43-31-711.png?updatedAt=1758341648411&ik-s=583bf42e1bb1db446f7ebc75d215c510586d5e54" alt="Silent Tournaments Logo">
+            <h1>Install Silent Tournaments App</h1>
+            <p>For the best experience, please install our app on your home screen.</p>
+            <div class="install-instructions">
+                <div class="android-instruction">
+                    <p><strong>Android:</strong> Tap the 'Install' button or the three dots in your browser and select 'Add to Home Screen'.</p>
+                </div>
+                <div class="ios-instruction">
+                    <p><strong>iOS (iPhone/iPad):</strong> Tap the 'Share' <i class="fas fa-share-square"></i> icon in your browser and then select 'Add to Home Screen' <i class="fas fa-plus-square"></i>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- 1. Header -->
     <header id="header">
@@ -249,6 +292,28 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- PWA: SERVICE WORKER & PROMPT LOGIC ---
+            // Register the Service Worker for offline capabilities and updates
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/sw.js')
+                        .then(registration => console.log('ServiceWorker registered successfully.'))
+                        .catch(err => console.log('ServiceWorker registration failed: ', err));
+                });
+            }
+
+            // Check if the app is running in standalone mode (as an installed PWA)
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+            if (isStandalone) {
+                // If it is an installed app, hide the install prompt overlay completely.
+                const installPrompt = document.getElementById('install-prompt-overlay');
+                if (installPrompt) {
+                    installPrompt.style.display = 'none';
+                }
+            }
+            // --- END OF PWA LOGIC ---
+
+            // --- Original page script ---
             const header = document.getElementById('header');
             const mainContent = document.getElementById('main-content');
             const menuTrigger = document.getElementById('menu-trigger');
