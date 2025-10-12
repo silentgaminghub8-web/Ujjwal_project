@@ -279,6 +279,10 @@
             font-family: inherit;
             flex: 1;
             transition: all 0.3s ease; /* Added for hover effect */
+            text-decoration: none; /* Added for <a> tags styled as buttons */
+            display: inline-flex; /* Added for <a> tags styled as buttons */
+            justify-content: center; /* Added for <a> tags styled as buttons */
+            align-items: center; /* Added for <a> tags styled as buttons */
         }
         /* Added hover effect for the yellow buttons */
         .card-btn:hover:not(.joined):not(:disabled):not(.add-tokens) {
@@ -653,7 +657,7 @@
                         <p>${date} - ${t.time}</p></div>
                         <div class="card-actions">
                             <button class="card-btn rule-btn" data-type="normal">Rule</button>
-                            <a href="https://silentgaminghub8-web.github.io/silent.gamers-web.github.io/calculate.html" target="_blank" class="card-btn">Reward</a>
+                            <a href="calculate.html" class="card-btn">Reward</a>
                             <button class="card-btn join-btn" data-id="${t.id}" data-time24="${t.time24}" data-fee="${t.fee}" disabled>Checking...</button>
                         </div></div></div>`;
             });
@@ -778,7 +782,7 @@
 
         function handleModalPopup(e) {
             const target = e.target.closest('.token-box, .card-btn');
-            if (!target) return;
+            if (!target || target.closest('a')) return; // Ignore clicks on actual links like the reward button
             if (target.closest('#red-token-box')) showModal('Red Tokens', 'Entry tokens for tournaments. Go to Shop to buy more.', 'Go to Shop', 'shop.html');
             else if (target.closest('#blue-token-box')) showModal('Blue Tokens', 'Your winning amount. Go to your dashboard to withdraw or convert.', 'Dashboard', 'profile.html');
             else if (target.closest('#power-coin-box')) showModal('Power Coins', 'Entry currency for Power Tournaments. Go to Shop to buy more.', 'Go to Shop', 'shop.html');
