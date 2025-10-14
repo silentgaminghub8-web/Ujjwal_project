@@ -223,6 +223,7 @@
             margin-top: 15px;
             font-size: 1rem;
             min-height: 24px;
+            line-height: 1.5;
         }
         .status-success { color: #28a745; }
         .status-error { color: #dc3545; }
@@ -499,7 +500,6 @@
                 <label for="game_name">Game Name</label>
                 <input type="text" id="game_name" name="game_name" required>
             </div>
-            <!-- UPI ID field is now in the modal -->
             <button type="button" id="continue-btn" class="submit-btn">Continue</button>
             <div id="form-status"></div>
         </form>
@@ -589,6 +589,11 @@
             const upiInputInModal = document.getElementById('upi_id_modal');
             const finalSubmitBtn = document.getElementById('final-submit-btn');
 
+            // Form field references for validation
+            const emailInput = document.getElementById('email');
+            const mobileInput = document.getElementById('mobile');
+            const instagramInput = document.getElementById('instagram');
+
             // --- B. Dynamic Header Padding ---
             const adjustMainContentPadding = () => {
                 const headerHeight = header.offsetHeight;
@@ -631,30 +636,69 @@
                 if (event.target === videoModal) hideVideoModal();
             });
 
-            // --- F. UPI Modal and Form Submission Logic ---
+            // --- F. Real-time Mobile Number Formatting ---
+            mobileInput.addEventListener('input', () => {
+                // Remove any character that is not a digit
+                mobileInput.value = mobileInput.value.replace(/\D/g, '');
+            });
+
+            // --- G. UPI Modal and Form Submission Logic ---
             const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxhIe6c1TpoYcAiEF9n5vedshFAaPc_v03kq5l-EYJT4yslwQp8Yp0Oo_to35Kpktiz6g/exec';
 
-            // Step 1: Handle the "Continue" button click
+            // Step 1: Handle the "Continue" button click with enhanced validation
             continueBtn.addEventListener('click', () => {
-                // Basic validation for the main form
                 const requiredFields = signupForm.querySelectorAll('input[required]');
-                let allValid = true;
+                let errorMessages = [];
+
+                // Reset all field styles
+                requiredFields.forEach(field => {
+                    field.style.borderColor = 'var(--color-silver)';
+                });
+
+                // --- Validation Checks ---
+                // 1. Check for empty fields
                 requiredFields.forEach(field => {
                     if (!field.value.trim()) {
-                        allValid = false;
-                        field.style.borderColor = '#dc3545'; // Highlight empty fields
-                    } else {
-                        field.style.borderColor = 'var(--color-silver)'; // Reset border color
+                        const fieldName = field.previousElementSibling.textContent;
+                        errorMessages.push(`${fieldName} is required.`);
+                        field.style.borderColor = '#dc3545';
                     }
                 });
 
-                if (allValid) {
-                    upiModal.classList.add('show');
+                // If fields are empty, stop here and show the message.
+                if (errorMessages.length > 0) {
+                     formStatus.innerHTML = "Please fill in all the required fields.";
+                     formStatus.className = 'status-error';
+                     return;
+                }
+
+                // 2. Email Validation (xyz@domain.com)
+                const emailRegex = /^\S+@\S+\.\S+$/;
+                if (!emailRegex.test(emailInput.value)) {
+                    errorMessages.push('Invalid email format (e.g., user@example.com).');
+                    emailInput.style.borderColor = '#dc3545';
+                }
+
+                // 3. Mobile Number Validation (exactly 10 digits)
+                if (mobileInput.value.length !== 10) {
+                    errorMessages.push('Mobile number must be exactly 10 digits.');
+                    mobileInput.style.borderColor = '#dc3545';
+                }
+                
+                // 4. Instagram Validation (no '@' symbol)
+                if (instagramInput.value.includes('@')) {
+                    errorMessages.push("Do not include the '@' symbol in the Instagram username.");
+                    instagramInput.style.borderColor = '#dc3545';
+                }
+
+                // --- Final Decision ---
+                if (errorMessages.length > 0) {
+                    formStatus.innerHTML = errorMessages.join('<br>');
+                    formStatus.className = 'status-error';
+                } else {
                     formStatus.textContent = '';
                     formStatus.className = '';
-                } else {
-                    formStatus.textContent = 'Please fill in all the required fields.';
-                    formStatus.className = 'status-error';
+                    upiModal.classList.add('show');
                 }
             });
 
@@ -665,24 +709,19 @@
                 formStatus.textContent = '';
                 formStatus.className = '';
 
-                // Gather data from the main form
                 const formData = new FormData(signupForm);
                 const data = {};
                 formData.forEach((value, key) => {
                     data[key] = value;
                 });
 
-                // Add the UPI ID from the modal
                 data['upi_id'] = upiInputInModal.value.trim();
                 
-                // The actual fetch request to Google Apps Script
                 fetch(SCRIPT_URL, {
                     method: 'POST',
                     mode: 'cors',
                     cache: 'no-cache',
-                    headers: {
-                        'Content-Type': 'text/plain;charset=utf-8',
-                    },
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify(data)
                 })
                 .then(response => response.json())
@@ -692,7 +731,7 @@
                         formStatus.classList.add('status-success');
                         signupForm.reset();
                         upiInputInModal.value = '';
-                        upiModal.classList.remove('show'); // Hide modal on success
+                        upiModal.classList.remove('show');
                     } else {
                         throw new Error(result.message || 'An unknown error occurred.');
                     }
