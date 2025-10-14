@@ -284,6 +284,43 @@
             height: 100%;
         }
 
+        /* UPI Modal Styling */
+        #upi-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            display: none; /* Initially hidden */
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        #upi-modal.show {
+            display: flex;
+        }
+        .upi-modal-body {
+            text-align: left;
+        }
+        .upi-note {
+            color: var(--color-silver);
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+        .upi-note strong {
+            color: var(--color-white);
+            font-weight: 500;
+        }
+        #upi-modal .form-group {
+            margin-bottom: 15px;
+        }
+        #final-submit-btn {
+            width: 100%;
+        }
+
         /* 4. Footer */
         footer {
             padding: 20px;
@@ -462,14 +499,10 @@
                 <label for="game_name">Game Name</label>
                 <input type="text" id="game_name" name="game_name" required>
             </div>
-            <div class="form-group">
-                <label for="upi_id">UPI ID</label>
-                <input type="text" id="upi_id" name="upi_id" required>
-            </div>
-            <button type="submit" id="submit-btn" class="submit-btn">Create Account</button>
+            <!-- UPI ID field is now in the modal -->
+            <button type="button" id="continue-btn" class="submit-btn">Continue</button>
             <div id="form-status"></div>
         </form>
-
     </main>
 
     <!-- Game Name Video Modal -->
@@ -478,6 +511,25 @@
             <span id="modal-close" class="modal-close">&times;</span>
             <div class="video-container">
                 <iframe width="560" height="315" src="https://imagekit.io/player/embed/silentgamers/Screen_Recording_20251005_074131_Free%20Fire%20MAX.mp4?controls=true&autoplay=false&loop=false&background=%23000000&updatedAt=1759630719457&ik-s=f272290247e840d328501590ebeb4d1293c3f37a" title="ImageKit video player" frameBorder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW: UPI ID Modal -->
+    <div id="upi-modal">
+        <div class="modal-content">
+            <span id="upi-modal-close" class="modal-close">&times;</span>
+            <div class="upi-modal-body">
+                <p class="upi-note">
+                    अगर आप टूर्नामेंट जीतते हैं, तो पुरस्कार राशि किस UPI ID पर भेजनी है?
+                    <br><br>
+                    यह बाद में बदला जा सकता है, इसलिए चिंता न करें। अगर अभी आपके पास UPI ID नहीं है, तो बस <strong>अपना मोबाइल नंबर</strong> यहाँ दर्ज करें, हम उसी पर राशि भेज देंगे।
+                </p>
+                <div class="form-group">
+                    <label for="upi_id_modal">UPI ID or Mobile Number</label>
+                    <input type="text" id="upi_id_modal" name="upi_id_modal" required>
+                </div>
+                <button type="button" id="final-submit-btn" class="submit-btn">Create Account</button>
             </div>
         </div>
     </div>
@@ -522,12 +574,20 @@
             const menuTrigger = document.getElementById('menu-trigger');
             const navMenu = document.getElementById('nav-menu');
             const fabContainer = document.getElementById('fab-container');
+            
+            // Video Modal Elements
             const gameNameInput = document.getElementById('game_name');
             const videoModal = document.getElementById('video-modal');
             const modalClose = document.getElementById('modal-close');
+
+            // Form & UPI Modal Elements
             const signupForm = document.getElementById('signupForm');
-            const submitBtn = document.getElementById('submit-btn');
             const formStatus = document.getElementById('form-status');
+            const continueBtn = document.getElementById('continue-btn');
+            const upiModal = document.getElementById('upi-modal');
+            const upiModalClose = document.getElementById('upi-modal-close');
+            const upiInputInModal = document.getElementById('upi_id_modal');
+            const finalSubmitBtn = document.getElementById('final-submit-btn');
 
             // --- B. Dynamic Header Padding ---
             const adjustMainContentPadding = () => {
@@ -558,43 +618,64 @@
 
             // --- E. Game Name Video Modal Logic ---
             let gameNameFirstClick = true;
-            
-            const showModal = () => {
+            const showVideoModal = () => {
                 if (gameNameFirstClick) {
                     videoModal.classList.add('show');
                     gameNameFirstClick = false;
                 }
             };
-
-            const hideModal = () => {
-                videoModal.classList.remove('show');
-            };
-
-            gameNameInput.addEventListener('focus', showModal);
-            modalClose.addEventListener('click', hideModal);
+            const hideVideoModal = () => videoModal.classList.remove('show');
+            gameNameInput.addEventListener('focus', showVideoModal);
+            modalClose.addEventListener('click', hideVideoModal);
             videoModal.addEventListener('click', (event) => {
-                if (event.target === videoModal) {
-                    hideModal();
+                if (event.target === videoModal) hideVideoModal();
+            });
+
+            // --- F. UPI Modal and Form Submission Logic ---
+            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxhIe6c1TpoYcAiEF9n5vedshFAaPc_v03kq5l-EYJT4yslwQp8Yp0Oo_to35Kpktiz6g/exec';
+
+            // Step 1: Handle the "Continue" button click
+            continueBtn.addEventListener('click', () => {
+                // Basic validation for the main form
+                const requiredFields = signupForm.querySelectorAll('input[required]');
+                let allValid = true;
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        allValid = false;
+                        field.style.borderColor = '#dc3545'; // Highlight empty fields
+                    } else {
+                        field.style.borderColor = 'var(--color-silver)'; // Reset border color
+                    }
+                });
+
+                if (allValid) {
+                    upiModal.classList.add('show');
+                    formStatus.textContent = '';
+                    formStatus.className = '';
+                } else {
+                    formStatus.textContent = 'Please fill in all the required fields.';
+                    formStatus.className = 'status-error';
                 }
             });
 
-            // --- F. Form Submission Logic to Google Apps Script ---
-            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxhIe6c1TpoYcAiEF9n5vedshFAaPc_v03kq5l-EYJT4yslwQp8Yp0Oo_to35Kpktiz6g/exec';
-
-            signupForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Creating Account...';
+            // Step 2: Handle the final form submission from the UPI modal
+            finalSubmitBtn.addEventListener('click', () => {
+                finalSubmitBtn.disabled = true;
+                finalSubmitBtn.textContent = 'Creating Account...';
                 formStatus.textContent = '';
                 formStatus.className = '';
 
+                // Gather data from the main form
                 const formData = new FormData(signupForm);
                 const data = {};
                 formData.forEach((value, key) => {
                     data[key] = value;
                 });
+
+                // Add the UPI ID from the modal
+                data['upi_id'] = upiInputInModal.value.trim();
                 
+                // The actual fetch request to Google Apps Script
                 fetch(SCRIPT_URL, {
                     method: 'POST',
                     mode: 'cors',
@@ -610,6 +691,8 @@
                         formStatus.textContent = result.message;
                         formStatus.classList.add('status-success');
                         signupForm.reset();
+                        upiInputInModal.value = '';
+                        upiModal.classList.remove('show'); // Hide modal on success
                     } else {
                         throw new Error(result.message || 'An unknown error occurred.');
                     }
@@ -619,9 +702,16 @@
                     formStatus.classList.add('status-error');
                 })
                 .finally(() => {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Create Account';
+                    finalSubmitBtn.disabled = false;
+                    finalSubmitBtn.textContent = 'Create Account';
                 });
+            });
+
+            // Step 3: Logic to close the UPI modal
+            const hideUpiModal = () => upiModal.classList.remove('show');
+            upiModalClose.addEventListener('click', hideUpiModal);
+            upiModal.addEventListener('click', (event) => {
+                if (event.target === upiModal) hideUpiModal();
             });
         });
     </script>
