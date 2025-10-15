@@ -125,15 +125,15 @@
         .info-pair .label { color: #aaa; font-weight: bold; }
         .info-pair .value { color: var(--color-white); font-size: 1.1rem; }
         
-        /* Conversion Section Styles (ADDED BACK) */
+        /* Conversion Section Styles */
         .conversion-section { margin-bottom: 40px; }
         .conversion-section h2 { font-size: 2.5rem; margin-bottom: 30px; animation: text-glow 3s ease-in-out infinite alternate; }
         .conversion-box { background: var(--color-dark-grey); border: 1px solid var(--color-silver); border-radius: 10px; padding: 25px; margin-bottom: 25px; }
         .conversion-box h3 { margin-bottom: 15px; font-size: 1.5rem; }
         .conversion-box .note { font-size: 0.9rem; color: #aaa; margin-bottom: 20px; }
-        .main-content .input-group { display: flex; gap: 10px; margin-bottom: 15px; align-items: center; }
-        .main-content .input-group input { flex-grow: 1; padding: 12px; border-radius: 5px; border: 1px solid var(--color-silver); background: #333; color: white; font-family: inherit; font-size: 1rem; }
-        .main-content .input-group input:focus { outline: none; border-color: var(--color-yellow); box-shadow: 0 0 10px var(--color-yellow); }
+        .main-content .conversion-input-group { display: flex; gap: 10px; margin-bottom: 15px; align-items: center; }
+        .main-content .conversion-input-group input { flex-grow: 1; padding: 12px; border-radius: 5px; border: 1px solid var(--color-silver); background: #333; color: white; font-family: inherit; font-size: 1rem; }
+        .main-content .conversion-input-group input:focus { outline: none; border-color: var(--color-yellow); box-shadow: 0 0 10px var(--color-yellow); }
         .btn-convert, .btn-withdraw { padding: 12px 25px; background: var(--color-yellow); color: var(--color-black); border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1.1rem; transition: transform 0.2s; font-family: 'Orbitron', sans-serif; }
         .btn-convert:hover, .btn-withdraw:hover { transform: scale(1.05); }
         .btn-convert:disabled, .btn-withdraw:disabled { background: #555; cursor: not-allowed; transform: none; }
@@ -178,9 +178,23 @@
                 <img src="https://ik.imagekit.io/silentgamers/Picsart_25-09-19_15-42-42-048.png?updatedAt=1758287984590&ik-s=818768f764ed7e928bf055f4f632c881cb77ec24" alt="Logo" class="logo">
                 <h1>SILENT GAMER'S PROFILE</h1>
                 <form id="login-form">
-                    <div class="glass-box-input-group"><label for="mobile">Mobile Number</label><input type="tel" id="mobile" placeholder="Enter mobile" required></div>
-                    <div class="glass-box-input-group"><label for="password">Password</label><input type="password" id="password" placeholder="Enter password" required></div>
-                    <div class="options"><label class="remember-me"><input type="checkbox" id="remind-me"><span class="checkmark"></span>Remember Me</label></div>
+                    <div class="input-group">
+                        <label for="mobile">Mobile Number</label>
+                        <input type="tel" id="mobile" placeholder="Enter mobile" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="Enter password" required>
+                    </div>
+                    <div class="options">
+                        <div class="remember-me">
+                           <label for="remind-me">
+                                <input type="checkbox" id="remind-me">
+                                <span class="checkmark"></span>
+                                Remember me
+                           </label>
+                        </div>
+                    </div>
                     <button type="submit" class="login-btn">Log In</button>
                     <a href="signup.html" class="create-account-btn">Create new account</a>
                 </form>
@@ -239,12 +253,12 @@
                 <div class="info-pair"><span class="label">UPI ID</span><span class="value" id="user-upi"></span></div>
             </div>
 
-            <!-- Conversion System (ADDED BACK) -->
+            <!-- Conversion System -->
             <div class="conversion-section">
                 <h2>Convert Tokens</h2>
-                <div class="conversion-box"><h3>Blue to Red Token</h3><div class="input-group"><input type="number" id="b2r-amount" placeholder="Amount of Blue Tokens" min="1"><button class="btn-convert" id="b2r-btn">Convert</button></div></div>
-                <div class="conversion-box"><h3>Red to Power Coin</h3><div class="input-group"><input type="number" id="r2p-amount" placeholder="Amount of Red Tokens" min="1"><button class="btn-convert" id="r2p-btn">Convert</button></div></div>
-                <div class="conversion-box"><h3>Withdraw Blue Token</h3><p class="note">Minimum withdrawal is 50 Blue Tokens.</p><div class="input-group"><input type="number" id="withdraw-amount" placeholder="Amount to Withdraw" min="50"></div><div class="input-group"><input type="text" id="withdraw-upi" placeholder="Your UPI ID"></div><button class="btn-withdraw" id="withdraw-btn">Withdraw</button></div>
+                <div class="conversion-box"><h3>Blue to Red Token</h3><div class="conversion-input-group"><input type="number" id="b2r-amount" placeholder="Amount of Blue Tokens" min="1"><button class="btn-convert" id="b2r-btn">Convert</button></div></div>
+                <div class="conversion-box"><h3>Red to Power Coin</h3><div class="conversion-input-group"><input type="number" id="r2p-amount" placeholder="Amount of Red Tokens" min="1"><button class="btn-convert" id="r2p-btn">Convert</button></div></div>
+                <div class="conversion-box"><h3>Withdraw Blue Token</h3><p class="note">Minimum withdrawal is 50 Blue Tokens.</p><div class="conversion-input-group"><input type="number" id="withdraw-amount" placeholder="Amount to Withdraw" min="50"></div><div class="conversion-input-group"><input type="text" id="withdraw-upi" placeholder="Your UPI ID"></div><button class="btn-withdraw" id="withdraw-btn">Withdraw</button></div>
             </div>
 
             <div class="preloader-container">
@@ -284,7 +298,6 @@
         const modalTitle = document.getElementById('modal-title'); const modalMessage = document.getElementById('modal-message');
         const modalCloseBtn = document.getElementById('modal-close-btn'); const loginContainer = document.getElementById('loginContainer');
         const loadingScreen = document.getElementById('loadingScreen');
-        // Conversion elements
         const b2rBtn = document.getElementById('b2r-btn'); const r2pBtn = document.getElementById('r2p-btn');
         const withdrawBtn = document.getElementById('withdraw-btn'); const b2rAmountInput = document.getElementById('b2r-amount');
         const r2pAmountInput = document.getElementById('r2p-amount'); const withdrawAmountInput = document.getElementById('withdraw-amount');
@@ -372,7 +385,7 @@
             document.getElementById('user-gameuid').textContent = data['Game UID'] || 'N/A';
             document.getElementById('user-email').textContent = data.Email || 'N/A';
             document.getElementById('user-upi').textContent = data['UPI id'] || 'Not set';
-            withdrawUpiInput.value = data['UPI id'] || ''; // Populate UPI field in conversion section
+            withdrawUpiInput.value = data['UPI id'] || '';
         }
 
         async function refreshUserData() {
